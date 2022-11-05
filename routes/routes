@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+var alert = require('alert');
 
 router.get("/home", function (req, res) {
     if (req.session.country == "Egypt" || req.session.country == "United Kingdom") {
@@ -64,19 +65,183 @@ router.post("/signup", function (req, res) {
     res.redirect("/signup");
 })
 
-router.post("/signupAdmin", function (req, res) {
+router.post("/signupAdmin", async (req, res) => {
 
-    res.redirect("/signupAdmin");
+    var { MongoClient } = require('mongodb');
+    var url = 'mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/adminstrator?retryWrites=true&w=majority'
+    var client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true })
+    await client.connect()
+    const inputUsername = req.body.username
+    const inputPassword = req.body.password
+    var output = await client.db('adminstrator').collection('adminstrator').find().toArray()
+    const Country = req.body.country
+    var output2 = await client.db('Instructor').collection('Instructor').find().toArray()
+    var output3 = await client.db('Trainee').collection('Trainee').find().toArray()
+
+
+
+
+    var bool = false
+
+    output3.forEach((item) => {
+        if (item.username == inputUsername)
+            bool = true
+    })
+
+    output2.forEach((item) => {
+        if (item.username == inputUsername)
+            bool = true
+    })
+
+
+    output.forEach((item) => {
+        if (item.username == inputUsername)
+            bool = true
+    })
+    if (Country == "Select Country") {
+        alert('Please select a country')
+    }
+    else if (inputPassword.length == 0 || inputUsername.length == 0) {
+        alert('the password or the username is empty')
+    }
+    else {
+        if (bool == false) {
+            var user = { username: inputUsername, password: inputPassword, Country: Country }
+            await client.db('adminstrator').collection('adminstrator').insertOne(user)
+            alert('registration successful')
+            MongoClient.connect(url, function (err, db) {
+                if (err) throw err;
+
+            });
+            res.redirect('/login')
+        }
+
+
+        else
+            alert('please choose another username')
+    }
+
+
+
+
+
+    //  var user = { username: inputUsername, password: inputPassword }
+    //var cart = {}
+    //await client.db('adminstrtor').collection('adminstrator').insertOne(user)
+
 })
 
-router.post("/signupInstruc", function (req, res) {
+router.post("/signupInstruc", async (req, res) => {
 
-    res.redirect("/signupInstruc");
+    var { MongoClient } = require('mongodb');
+    var url = 'mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/Instructor?retryWrites=true&w=majority'
+    var client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true })
+    await client.connect()
+    const inputUsername = req.body.username
+    const inputPassword = req.body.password
+    var output = await client.db('Instructor').collection('Instructor').find().toArray()
+    const Country = req.body.country
+
+    var output2 = await client.db('adminstrator').collection('adminstrator').find().toArray()
+
+    var output3 = await client.db('Trainee').collection('Trainee').find().toArray()
+
+    var bool = false
+    output3.forEach((item) => {
+        if (item.username == inputUsername)
+            bool = true
+    })
+
+    output2.forEach((item) => {
+        if (item.username == inputUsername)
+            bool = true
+    })
+
+
+
+    output.forEach((item) => {
+        if (item.username == inputUsername)
+            bool = true
+    })
+    if (Country == "Select Country") {
+        alert('Please select a country')
+    }
+    else if (inputPassword.length == 0 || inputUsername.length == 0) {
+        alert('the password or the username is empty')
+    }
+    else {
+        if (bool == false) {
+            var user = { username: inputUsername, password: inputPassword, Country: Country }
+            await client.db('Instructor').collection('Instructor').insertOne(user)
+            alert('registration successful')
+            MongoClient.connect(url, function (err, db) {
+                if (err) throw err;
+
+            });
+            res.redirect('/login')
+        }
+
+
+        else
+            alert('please choose another username')
+    }
+
 })
 
-router.post("/signupTrainee", function (req, res) {
+router.post("/signupTrainee", async (req, res) => {
 
-    res.redirect("/signupTrainee");
+    var { MongoClient } = require('mongodb');
+    var url = 'mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/Trainee?retryWrites=true&w=majority'
+    var client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true })
+    await client.connect()
+    const inputUsername = req.body.username
+    const inputPassword = req.body.password
+    var output = await client.db('Trainee').collection('Trainee').find().toArray()
+    const Country = req.body.country
+
+    var output2 = await client.db('adminstrator').collection('adminstrator').find().toArray()
+
+    var output3 = await client.db('Instructor').collection('Instructor').find().toArray()
+
+    var bool = false
+    output2.forEach((item) => {
+        if (item.username == inputUsername)
+            bool = true
+    })
+
+    output3.forEach((item) => {
+        if (item.username == inputUsername)
+            bool = true
+    })
+
+
+
+    output.forEach((item) => {
+        if (item.username == inputUsername)
+            bool = true
+    })
+    if (Country == "Select Country") {
+        alert('Please select a country')
+    }
+    else if (inputPassword.length == 0 || inputUsername.length == 0) {
+        alert('the password or the username is empty')
+    }
+    else {
+        if (bool == false) {
+            var user = { username: inputUsername, password: inputPassword, Country: Country }
+            await client.db('Trainee').collection('Trainee').insertOne(user)
+            alert('registration successful')
+            MongoClient.connect(url, function (err, db) {
+                if (err) throw err;
+
+            });
+            res.redirect('/login')
+        }
+
+
+        else
+            alert('please choose another username')
+    }
 })
 
 
