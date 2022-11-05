@@ -20,6 +20,22 @@ router.get("/signup", function (req, res) {
     res.render("signup");
 })
 
+router.get("/signupAdmin", function (req, res) {
+    res.render("signupAdmin");
+})
+
+router.get("/signupInstruc", function (req, res) {
+    res.render("signupInstruc");
+})
+
+
+router.get("/signupTrainee", function (req, res) {
+    res.render("signupTrainee");
+})
+
+
+
+
 router.get("/", function (req, res) {
     res.render("firstfirst");
 })
@@ -35,6 +51,7 @@ router.get("/loginInstructor", function (req, res) {
 router.get("/loginTrainee", function (req, res) {
     res.render("loginTrainee");
 })
+
 
 router.post("/home", function (req, res) {
     req.session.country = req.body.country;
@@ -70,4 +87,23 @@ router.post("/loginTrainee", function (req, res) {
 
     res.redirect("/loginTrainee");
 })
+router.post("/signupAdmin", function (req, res) {
+
+    res.redirect("/signupAdmin");
+})
+
+router.post("/signupInstruc", function (req, res) {
+
+    res.redirect("/signupInstruc");
+})
+
+router.post("/signupTrainee", function (req, res) {
+
+    res.redirect("/signupTrainee");
+})
+
+
+
+
+
 module.exports = router;
