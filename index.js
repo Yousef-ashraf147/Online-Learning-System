@@ -3,16 +3,11 @@ const mongoose = require('mongoose');
 const path = require("path");
 const routes = require("./routes/routes")
 const session = require('express-session')
-const bodyParser = require('body-parser')
 require('dotenv').config();
 mongoose.connect(process.env.ATLAS_URI);
 
 const app = express();
-const port = process.env.PORT || "3000";
-
-app.use(bodyParser.urlencoded({
-    extended: true
-  }));
+const port = process.env.PORT || "8000";
 
 app.use(session({
     secret: 'secret',
