@@ -26,6 +26,15 @@ router.get("/", function (req, res) {
 router.get("/firstPage", function (req, res) {
     res.render("firstPage");
 })
+router.get("/loginAdmin", function (req, res) {
+    res.render("loginAdmin");
+})
+router.get("/loginInstructor", function (req, res) {
+    res.render("loginInstructor");
+})
+router.get("/loginTrainee", function (req, res) {
+    res.render("loginTrainee");
+})
 
 router.post("/home", function (req, res) {
     req.session.country = req.body.country;
@@ -47,4 +56,18 @@ router.post("/signup", function (req, res) {
     res.redirect("/signup");
 })
 
+router.post("/loginAdmin", function (req, res) {
+
+    res.redirect("/loginAdmin");
+})
+
+router.post("/loginInstructor", function (req, res) {
+
+    res.redirect("/loginInstructor");
+})
+
+router.post("/loginTrainee", function (req, res) {
+
+    res.redirect("/loginTrainee");
+})
 module.exports = router;
