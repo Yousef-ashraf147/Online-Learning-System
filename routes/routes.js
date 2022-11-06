@@ -134,6 +134,10 @@ router.get("/loginTrainee", function (req, res) {
     res.render("loginTrainee");
 })
 
+router.get("/instructorCourses", function (req, res) {
+    res.render("instructorCourses");
+})
+
 
 router.post("/guestHome", function (req, res) {
     req.session.Country = req.body.country;
@@ -660,6 +664,239 @@ router.post("/instructorSearch", async (req, res) => {
         res.render("instructorHome", { courses: filteredCourses, currency: req.session.currency, offset: 1, price1, price2, price3, price4, price5 })
 
     }
+
+
+
+})
+
+router.post("/SearchMyCourse", async (req, res) => {
+
+
+})
+
+
+router.post("/myCourses", async (req, res) => {
+    const Instructor = req.session.username
+    const courses1 = await Courses.find({}).exec();
+
+    const filteredCourses = courses1.filter(item => (item.instructor.toLowerCase() == (Instructor.toLowerCase()))
+
+    )
+    if (req.session.Country == "Germany") {
+        req.session.currency = "€"
+
+
+        offset = 1
+        price1 = 5;
+        price2 = 20;
+        price3 = 40 * 1;
+        price4 = 60 * 1;
+        price5 = 100 * 1;
+
+        res.render("instructorCourses", { courses: filteredCourses, currency: req.session.currency, offset: 1, price1, price2, price3, price4, price5 })
+    }
+
+    else if (req.session.Country == "Egypt") {
+
+
+        req.session.currency = "£"
+
+
+        price1 = 5 * 23.8;
+        price2 = 20 * 23.8;
+        price3 = 40 * 23.8;
+        price4 = 60 * 23.8;
+        price5 = 100 * 23.8;
+
+        res.render("instructorCourses", { courses: filteredCourses, currency: req.session.currency, offset: 23.8, price1, price2, price3, price4, price5 })
+    }
+
+    else if (req.session.Country == "United Kingdom") {
+        req.session.currency = "£"
+        offset = 0.88
+
+
+        price1 = 5 * 0.88;
+        price2 = 20 * 0.88;
+        price3 = 40 * 0.88;
+        price4 = 60 * 0.88;
+        price5 = 100 * 0.88;
+
+        res.render("instructorCourses", { courses: filteredCourses, currency: req.session.currency, offset: 0.88, price1, price2, price3, price4, price5 })
+
+    }
+    else {
+        req.session.currency = "$"
+        offset = 1
+
+        price1 = 5;
+        price2 = 20;
+        price3 = 40 * 1;
+        price4 = 60 * 1;
+        price5 = 100 * 1;
+        res.render("instructorCourses", { courses: filteredCourses, currency: req.session.currency, offset: 1, price1, price2, price3, price4, price5 })
+    }
+
+})
+
+
+router.post("/TraineeSearch", async (req, res) => {
+
+    var price1 = 5;
+    var price2 = 20;
+    var price3 = 40;
+    var price4 = 60;
+    var price5 = 100;
+    var offset = 23.8
+    if (req.session.Country == "Egypt") {
+        req.session.currency = "£"
+
+
+        price1 = 5 * 23.8;
+        price2 = 20 * 23.8;
+        price3 = 40 * 23.8;
+        price4 = 60 * 23.8;
+        price5 = 100 * 23.8;
+
+        const courses1 = await Courses.find({}).exec();
+        const CourseName = req.body.Search;
+        const Subject = req.body.Subject;
+        const Rating = req.body.Rating;
+        const Price = req.body.Price
+        console.log(courses1)
+        const filtered = []
+
+        const filteredCourses = courses1.filter(item => (item.title.toLowerCase().includes(CourseName.toLowerCase()) ||
+            item.subject.toLowerCase().includes(CourseName) ||
+            item.instructor.toLowerCase().includes(CourseName) ||
+            CourseName == "")
+            && (item.subject == Subject || Subject == "null")
+            && (item.rating <= Rating || Rating == "null")
+            && (item.price <= Price || Price == "null")
+        )
+
+        console.log(filtered)
+
+        res.render("traineeHome", { currency: req.session.currency, courses: filteredCourses, offset: 23.80, price1, price2, price3, price4, price5 })
+
+
+    }
+
+    else if (req.session.Country == "United Kingdom") {
+        req.session.currency = "£"
+        offset = 0.88
+
+
+        price1 = 5 * 0.88;
+        price2 = 20 * 0.88;
+        price3 = 40 * 0.88;
+        price4 = 60 * 0.88;
+        price5 = 100 * 0.88;
+
+
+
+
+        const courses1 = await Courses.find({}).exec();
+        const CourseName = req.body.Search;
+        const Subject = req.body.Subject;
+        const Rating = req.body.Rating;
+        const Price = req.body.Price
+        console.log(courses1)
+        const filtered = []
+
+        const filteredCourses = courses1.filter(item => (item.title.toLowerCase().includes(CourseName.toLowerCase()) ||
+            item.subject.toLowerCase().includes(CourseName) ||
+            item.instructor.toLowerCase().includes(CourseName) ||
+            CourseName == "")
+            && (item.subject == Subject || Subject == "null")
+            && (item.rating <= Rating || Rating == "null")
+            && (item.price <= Price * offset || Price == "null")
+        )
+
+        console.log(filtered)
+
+        res.render("TraineeSearch", { currency: req.session.currency, courses: filteredCourses, offset: 0.88, price1, price2, price3, price4, price5 })
+
+
+    }
+
+    else if (req.session.Country == "Germany") {
+        req.session.currency = "€"
+
+
+        offset = 1
+        price1 = 5;
+        price2 = 20;
+        price3 = 40 * 1;
+        price4 = 60 * 1;
+        price5 = 100 * 1;
+
+
+
+
+        const courses1 = await Courses.find({}).exec();
+        const CourseName = req.body.Search;
+        const Subject = req.body.Subject;
+        const Rating = req.body.Rating;
+        const Price = req.body.Price
+        console.log(courses1)
+        const filtered = []
+
+        const filteredCourses = courses1.filter(item => (item.title.toLowerCase().includes(CourseName.toLowerCase()) ||
+            item.subject.toLowerCase().includes(CourseName) ||
+            item.instructor.toLowerCase().includes(CourseName) ||
+            CourseName == "")
+            && (item.subject == Subject || Subject == "null")
+            && (item.rating <= Rating || Rating == "null")
+            && (item.price <= Price * offset || Price == "null")
+        )
+
+        console.log(filtered)
+
+        res.render("TraineeSearch", { currency: req.session.currency, courses: filteredCourses, offset: 1, price1, price2, price3, price4, price5 })
+
+
+    }
+
+    else {
+        req.session.currency = "$"
+        offset = 1
+
+        price1 = 5;
+        price2 = 20;
+        price3 = 40 * 1;
+        price4 = 60 * 1;
+        price5 = 100 * 1;
+
+
+
+
+        const courses1 = await Courses.find({}).exec();
+        const CourseName = req.body.Search;
+        const Subject = req.body.Subject;
+        const Rating = req.body.Rating;
+        const Price = req.body.Price
+
+        const filteredCourses = courses1.filter(item => (item.title.toLowerCase().includes(CourseName.toLowerCase()) ||
+            item.subject.toLowerCase().includes(CourseName) ||
+            item.instructor.toLowerCase().includes(CourseName) ||
+            CourseName == "")
+            && (item.subject == Subject || Subject == "null")
+            && (item.rating <= Rating || Rating == "null")
+            && (item.price <= Price * offset || Price == "null")
+        )
+
+        console.log(CourseName)
+        console.log(Rating)
+        console.log(Price)
+        console.log(filteredCourses)
+
+        res.render("TraineeSearch", { courses: filteredCourses, currency: req.session.currency, offset: 1, price1, price2, price3, price4, price5 })
+
+    }
+
+
+
 
 
 
