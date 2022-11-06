@@ -41,63 +41,63 @@
                     <br>
                     <br>
 
-                    <form>
-                        <form method="POST" action='/SearchMyCourse'>
-                            <input class="form-control mr-sm-2" name="Search" type="search"
-                                placeholder="Search by course title">
+
+                    <form method="POST" action='/SearchMyCourse'>
+                        <input class="form-control mr-sm-2" name="Search" type="search"
+                            placeholder="Search by course title">
 
 
-                            <select name="Subject">
-                                <option value="null" selected>select a subject</option>
-                                <option value="Math">Math</option>
-                                <option value="English">English</option>
-                                <option value="Science">Science</option>
-                                <option value="Chemistry">Chemistry</option>
-                                <option value="Physics">Physics</option>
-                                <option value="Biology">Biology</option>
-                            </select>
+                        <select name="Subject">
+                            <option value="null" selected>select a subject</option>
+                            <option value="Math">Math</option>
+                            <option value="English">English</option>
+                            <option value="Science">Science</option>
+                            <option value="Chemistry">Chemistry</option>
+                            <option value="Physics">Physics</option>
+                            <option value="Biology">Biology</option>
+                        </select>
 
-                            <select name="Rating">
-                                <option value="null" selected>select a rating</option>
-                                <option value="1">&#128946;</option>
-                                <option value="2">&#128946; &#128946;</option>
-                                <option value="3">&#128946; &#128946; &#128946;</option>
-                                <option value="4"> &#128946; &#128946; &#128946; &#128946;</option>
-                                <option value="5">&#128946; &#128946; &#128946; &#128946; &#128946;</option>
+                        <select name="Rating">
+                            <option value="null" selected>select a rating</option>
+                            <option value="1">&#128946;</option>
+                            <option value="2">&#128946; &#128946;</option>
+                            <option value="3">&#128946; &#128946; &#128946;</option>
+                            <option value="4"> &#128946; &#128946; &#128946; &#128946;</option>
+                            <option value="5">&#128946; &#128946; &#128946; &#128946; &#128946;</option>
 
-                            </select>
-
-
-                            <select name="Price">
-                                <option value="null" selected>Specify prices </option>
-                                <option value="0">Free ("0")</option>
-                                <option value="5">
-                                    &#8804; <%=price1%>
-                                        <%= currency %>
-                                </option>
-                                <option value="20">
-                                    &#8804; <%=price2%>
-                                        <%= currency %>
-                                </option>
-                                <option value="40">
-                                    &#8804; <%=price3%>
-                                        <%= currency %>
-                                </option>
-                                <option value="60">
-                                    &#8804; <%=price4%>
-                                        <%= currency %>
-                                </option>
-                                <option value="100">
-                                    &#8804; <%=price5%>
-                                        <%= currency %>
-                                </option>
-                            </select>
-
-                            <button>Submit</button>
+                        </select>
 
 
+                        <select name="Price">
+                            <option value="null" selected>Specify prices </option>
+                            <option value="0">Free ("0")</option>
+                            <option value="5">
+                                &#8804; <%=price1%>
+                                    <%= currency %>
+                            </option>
+                            <option value="20">
+                                &#8804; <%=price2%>
+                                    <%= currency %>
+                            </option>
+                            <option value="40">
+                                &#8804; <%=price3%>
+                                    <%= currency %>
+                            </option>
+                            <option value="60">
+                                &#8804; <%=price4%>
+                                    <%= currency %>
+                            </option>
+                            <option value="100">
+                                &#8804; <%=price5%>
+                                    <%= currency %>
+                            </option>
+                        </select>
 
-                        </form>
+                        <button>Submit</button>
+
+
+
+                    </form>
 </body>
 
 </html>
