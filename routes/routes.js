@@ -1316,6 +1316,44 @@ router.get("/instructor", async (req, res) => {
 
 })
 
+router.post("/loginCorp", async (req, res) => {
+    const inputUsername = req.body.username
+    req.session.username = inputUsername
+    const inputPassword = req.body.password
+
+    var { MongoClient } = require('mongodb');
+    var url = 'mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/adminstrator?retryWrites=true&w=majority'
+    var client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true })
+    await client.connect()
+
+
+    var output = await client.db('adminstrator').collection('adminstrator').find().toArray()
+    console.log(output)
+    var bool = false
+    //var id = id_find(output, inputUsername)
+    //console.log(id)
+    //req.session.ik = id
+    output.forEach((element) => {
+        if (element.username == inputUsername && element.password == inputPassword) {
+            const s = element.Country
+            req.session.Country = s
+            bool = true
+        }
+    }
+
+    )
+    if (bool) {
+        req.session.isLoggedIn = true
+        req.session.userType = "admin"
+        res.redirect('/adminHome')
+    }
+    else
+        alert('The password or the username is incorrect')
+
+
+})
+
+
 router.post("/loginAdmin", async (req, res) => {
     const inputUsername = req.body.username
     req.session.username = inputUsername
