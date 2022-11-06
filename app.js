@@ -7,9 +7,6 @@ const bodyParser = require('body-parser')
 require('dotenv').config();
 mongoose.connect(process.env.ATLAS_URI);
 
-
-
-
 var fs = require('fs');
 var alert = require('alert');
 var cookie = require('cookie');

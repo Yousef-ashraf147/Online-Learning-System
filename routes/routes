@@ -2,19 +2,32 @@ const express = require("express");
 const router = express.Router();
 var alert = require('alert');
 const session = require("express-session");
+const Courses = require("../models/Courses");
 
-router.get("/home", function (req, res) {
-    if (req.session.Country == "Egypt" || req.session.Country == "United Kingdom") {
+router.get("/home", async (req, res) =>{
+    if (req.session.Country == "Egypt") {
         req.session.currency = "£"
-        res.render("home", { currency: req.session.currency })
+        
+        const courses = await Courses.find({}).exec();
+
+        res.render("home", { currency: req.session.currency, courses, offset: 23.80})
+    }
+    else if (req.session.Country == "United Kingdom") {
+        req.session.currency = "£"
+        
+        const courses = await Courses.find({}).exec();
+
+        res.render("home", { currency: req.session.currency, courses, offset: 0.88})
     }
     else if (req.session.Country == "Germany") {
         req.session.currency = "€"
-        res.render("home", { currency: req.session.currency })
+        const courses = await Courses.find({}).exec();
+        res.render("home", { currency: req.session.currency, courses, offset: 1})
     }
     else {
         req.session.currency = "$"
-        res.render("home", { currency: req.session.currency })
+        const courses = await Courses.find({}).exec();
+        res.render("home", { currency: req.session.currency, courses, offset: 1})
     }
 })
 router.get("/login", function (req, res) {
@@ -37,9 +50,6 @@ router.get("/signupInstruc", function (req, res) {
 router.get("/signupTrainee", function (req, res) {
     res.render("signupTrainee");
 })
-
-
-
 
 router.get("/", function (req, res) {
     res.render("firstfirst");
@@ -133,10 +143,6 @@ router.post("/signupAdmin", async (req, res) => {
         else
             alert('please choose another username')
     }
-
-
-
-
 
     //  var user = { username: inputUsername, password: inputPassword }
     //var cart = {}
@@ -257,6 +263,29 @@ router.post("/signupTrainee", async (req, res) => {
     }
 })
 
+router.post("/addCourse", async(req,res) => {
+    const newCourse = new Courses({
+        title: req.body.title,
+        subtitle: req.body.subtitle,
+        price: req.body.price,
+        summary: req.body.summary,
+        totalHours: req.body.totalHours,
+        rating: req.body.rating,
+        subject: req.body.subject,
+        instructor: req.session.username     
+    });
+    newCourse.save();
+    res.redirect("/instructor")
+})
+
+router.get("/instructor", async (req, res) => {
+    req.session.username = "instructor";
+
+    const courses = await Courses.find({}).exec();
+
+    res.render("instructor", {courses: courses, currency: "EGP", offset: 23.09});
+})
+
 router.post("/loginAdmin", async (req, res) => {
     const inputUsername = req.body.username
     req.session.username = inputUsername
@@ -285,6 +314,7 @@ router.post("/loginAdmin", async (req, res) => {
     )
     if (bool) {
         req.session.isLoggedIn = true
+        req.session.userType = "admin"
         res.redirect('/home')
     }
     else
@@ -292,9 +322,5 @@ router.post("/loginAdmin", async (req, res) => {
 
 
 })
-
-
-
-
 
 module.exports = router;
