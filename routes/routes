@@ -335,7 +335,7 @@ router.post("/guestSearchCourse", async (req, res) => {
     var price3 = 40;
     var price4 = 60;
     var price5 = 100;
-    offset = 23.9
+    var offset = 23.8
     if (req.session.Country == "Egypt") {
         req.session.currency = "£"
 
@@ -360,7 +360,7 @@ router.post("/guestSearchCourse", async (req, res) => {
             CourseName == "")
             && (item.subject == Subject || Subject == "null")
             && (item.rating <= Rating || Rating == "null")
-            && (item.price <= Price * offset || Price == "null")
+            && (item.price <= Price || Price == "null")
         )
 
         console.log(filtered)
