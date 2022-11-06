@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+
+<body>
+    Welcome To This Online Learning Website
+    <br>
+    <br>
+    <br>
+    <% if(courses!=null) { %>
+        <% courses.forEach(function(item){ %>
+            <br>
+            <br>
+            <br>
+            <div>Course Title: <%= item.title%>
+            </div>
+            <div>Course Subtitle: <%= item.subtitle %>
+            </div>
+            <div>Course Price: <%= item.price * offset %>
+                    <%= currency %>
+            </div>
+            <div>Course Summary: <%= item.summary %>
+            </div>
+            <div>Course Total Hours: <%= item.totalHours %>
+            </div>
+            <div>Course Rating: <%= item.rating %>
+            </div>
+            <div>Course Subject: <%= item.subject %>
+            </div>
+            <div>Course Instructor: <%= item.instructor %>
+            </div>
+            <% }) %>
+                <% } %>
+
+
+                    <br>
+                    <br>
+                    <hr>
+                    <form method="POST" action='/search'>
+                        <input class="form-control mr-sm-2" name="Search" type="search"
+                            placeholder="Search by course title">
+
+
+                        <select name="Subject">
+                            <option value="Select a subject" selected>select a subject</option>
+                            <option value="Math">Math</option>
+                            <option value="English">English</option>
+                            <option value="Science">Science</option>
+                            <option value="Chemistry">Chemistry</option>
+                            <option value="Physics">Physics</option>
+                            <option value="Biology">Biology</option>
+                        </select>
+
+                        <select name="Rating">
+                            <option value="Select a rating" selected>select a rating</option>
+                            <option value="1">&#128946;</option>
+                            <option value="2">&#128946; &#128946;</option>
+                            <option value="3">&#128946; &#128946; &#128946;</option>
+                            <option value="4"> &#128946; &#128946; &#128946; &#128946;</option>
+                            <option value="5">&#128946; &#128946; &#128946; &#128946; &#128946;</option>
+
+                        </select>
+
+                        <select name="Price">
+                            <option value="Specify prices" selected>Specify prices </option>
+                            <option value="0">Free ("0")</option>
+                            <option value="5">
+                                <%=price1%>
+                                    <%= currency %>
+                            </option>
+                            <option value="20">
+                                &#8804; <%=price2%>
+                            </option>
+                            <option value="40">
+                                &#8804; <%=price3%>
+                            </option>
+                            <option value="60">
+                                &#8804; <%=price4%>
+                            </option>
+                            <option value="100">
+                                &#8804; <%=price5%>
+                            </option>
+
+                        </select>
+
+
+
+
+
+
+
+                    </form>
+                    <hr>
+
+</body>
+
+</html>

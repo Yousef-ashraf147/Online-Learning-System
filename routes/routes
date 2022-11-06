@@ -4,30 +4,80 @@ var alert = require('alert');
 const session = require("express-session");
 const Courses = require("../models/Courses");
 
-router.get("/home", async (req, res) => {
+router.get("/traineeHome", async (req, res) => {
+    if (req.session.isLoggedIn && req.session.userType == "Trainee") {
+        if (req.session.Country == "Egypt") {
+            req.session.currency = "£"
+
+            const courses = await Courses.find({}).exec();
+
+            res.render("traineeHome", { currency: req.session.currency, courses, offset: 23.80 })
+        }
+        else if (req.session.Country == "United Kingdom") {
+            req.session.currency = "£"
+
+            const courses = await Courses.find({}).exec();
+
+            res.render("traineeHome", { currency: req.session.currency, courses, offset: 0.88 })
+        }
+        else if (req.session.Country == "Germany") {
+            req.session.currency = "€"
+            const courses = await Courses.find({}).exec();
+            res.render("traineeHome", { currency: req.session.currency, courses, offset: 1 })
+        }
+        else {
+            req.session.currency = "$"
+            const courses = await Courses.find({}).exec();
+            res.render("traineeHome", { currency: req.session.currency, courses, offset: 1 })
+        }
+    }
+    else {
+        res.redirect("/login")
+    }
+})
+
+router.get("/guestHome", async (req, res) => {
+    var price1 = 5;
+    var price2 = 20;
+    var price3 = 40;
+    var price4 = 60;
+    var price5 = 100;
+
     if (req.session.Country == "Egypt") {
         req.session.currency = "£"
 
         const courses = await Courses.find({}).exec();
-
-        res.render("home", { currency: req.session.currency, courses, offset: 23.80 })
+        price1 = 5 * 23.8;
+        price2 = 20 * 23.8;
+        price3 = 40 * 23.8;
+        price4 = 60 * 23.8;
+        price5 = 100 * 23.8;
+        res.render("guestHome", {
+            currency: req.session.currency, courses, offset: 23.80, price1, price2, price3, price4, price5
+        })
     }
     else if (req.session.Country == "United Kingdom") {
         req.session.currency = "£"
+        price1 = 5 * 0.88;
+        price2 = 20 * 0.88;
+        price3 = 40 * 0.88;
+        price4 = 60 * 0.88;
+        price5 = 100 * 0.88;
 
         const courses = await Courses.find({}).exec();
 
-        res.render("home", { currency: req.session.currency, courses, offset: 0.88 })
+        res.render("guestHome", { currency: req.session.currency, courses, offset: 0.88, price1, price2, price3, price4, price5 })
     }
     else if (req.session.Country == "Germany") {
         req.session.currency = "€"
+
         const courses = await Courses.find({}).exec();
-        res.render("home", { currency: req.session.currency, courses, offset: 1 })
+        res.render("guestHome", { currency: req.session.currency, courses, offset: 1, price1, price2, price3, price4, price5 })
     }
     else {
         req.session.currency = "$"
         const courses = await Courses.find({}).exec();
-        res.render("home", { currency: req.session.currency, courses, offset: 1 })
+        res.render("guestHome", { currency: req.session.currency, courses, offset: 1, price1, price2, price3, price4, price5 })
     }
 })
 router.get("/login", function (req, res) {
@@ -68,9 +118,9 @@ router.get("/loginTrainee", function (req, res) {
 })
 
 
-router.post("/home", function (req, res) {
-    req.session.country = req.body.country;
-    res.redirect("/home");
+router.post("/guestHome", function (req, res) {
+    req.session.Country = req.body.country;
+    res.redirect("/guestHome");
 })
 
 router.post("/firstPage", function (req, res) {
@@ -339,7 +389,7 @@ router.post("/loginAdmin", async (req, res) => {
     if (bool) {
         req.session.isLoggedIn = true
         req.session.userType = "admin"
-        res.redirect('/home')
+        res.redirect('/guestHome')
     }
     else
         alert('The password or the username is incorrect')
@@ -414,7 +464,7 @@ router.post("/loginTrainee", async (req, res) => {
     if (bool) {
         req.session.isLoggedIn = true
         req.session.userType = "Trainee"
-        res.redirect('/home')
+        res.redirect('/traineeHome')
     }
     else
         alert('The password or the username is incorrect')
