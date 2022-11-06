@@ -118,6 +118,10 @@ router.get("/signupTrainee", function (req, res) {
     res.render("signupTrainee");
 })
 
+router.get("/signupCorp", async (req, res) => {
+    res.render("signupCorp");
+})
+
 router.get("/", function (req, res) {
     res.render("firstfirst");
 })
@@ -133,6 +137,9 @@ router.get("/loginInstructor", function (req, res) {
 router.get("/loginTrainee", function (req, res) {
     res.render("loginTrainee");
 })
+router.get("/loginCorp", function (req, res) {
+    res.render("loginCorp");
+})
 
 router.get("/adminHome", function (req, res) {
     res.render("adminHome")
@@ -140,6 +147,7 @@ router.get("/adminHome", function (req, res) {
 router.get("/instructorCourses", function (req, res) {
     res.render("instructorCourses");
 })
+
 
 
 router.post("/guestHome", function (req, res) {
@@ -337,6 +345,76 @@ router.post("/signupTrainee", async (req, res) => {
             alert('please choose another username')
     }
 })
+
+
+router.post("/signupCorp", async (req, res) => {
+
+    var { MongoClient } = require('mongodb');
+    var url = 'mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/corporate?retryWrites=true&w=majority'
+    var client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true })
+    await client.connect()
+    const inputUsername = req.body.username
+    const inputPassword = req.body.password
+    var output = await client.db('Trainee').collection('Trainee').find().toArray()
+    const Country = req.body.country
+
+    var output2 = await client.db('adminstrator').collection('adminstrator').find().toArray()
+
+    var output3 = await client.db('Instructor').collection('Instructor').find().toArray()
+
+    var output4 = await client.db('corporate').collection('corporate').find().toArray()
+    var bool = false
+
+    output4.forEach((item) => {
+        if (item.username == inputUsername)
+            bool = true
+    })
+
+    output2.forEach((item) => {
+        if (item.username == inputUsername)
+            bool = true
+    })
+
+    output3.forEach((item) => {
+        if (item.username == inputUsername)
+            bool = true
+    })
+
+
+
+    output.forEach((item) => {
+        if (item.username == inputUsername)
+            bool = true
+    })
+    if (Country == "Select Country") {
+        alert('Please select a country')
+    }
+    else if (inputPassword.length == 0 || inputUsername.length == 0) {
+        alert('the password or the username is empty')
+    }
+    else {
+        if (bool == false) {
+            var user = { username: inputUsername, password: inputPassword, Country: Country }
+            await client.db('corporate').collection('corporate').insertOne(user)
+            alert('registration successful')
+            MongoClient.connect(url, function (err, db) {
+                if (err) throw err;
+
+            });
+            res.redirect('/login')
+        }
+
+
+        else
+            alert('please choose another username')
+    }
+})
+
+
+
+
+
+
 
 router.post("/addCourse", async (req, res) => {
     const newCourse = new Courses({
@@ -808,8 +886,6 @@ router.post("/SearchMyCourse", async (req, res) => {
         const Subject = req.body.Subject;
         const Rating = req.body.Rating;
         const Price = req.body.Price
-        console.log(courses1)
-        const filtered = []
 
         const filteredCourses = courses1.filter(item => ((item.instructor.toLowerCase() == req.session.username) && (item.title.toLowerCase().includes(CourseName.toLowerCase()) ||
             item.subject.toLowerCase().includes(CourseName) ||
@@ -819,7 +895,6 @@ router.post("/SearchMyCourse", async (req, res) => {
             && (item.price <= Price * offset || Price == "null"))
         )
 
-        console.log(filtered)
 
         res.render("instructorCourses", { currency: req.session.currency, courses: filteredCourses, offset: 23.80, price1, price2, price3, price4, price5 })
 
