@@ -9,6 +9,16 @@
 </head>
 
 <body>
+    <div>
+        <form action="/myCourses" method="post">
+            <button>View my Courses</button>
+
+
+
+
+        </form>
+    </div>
+
     Welcome Instructor
     <% if(courses!=null) { %>
         <% courses.forEach(function(item){ %>
@@ -48,12 +58,12 @@
                     <br>
                     <hr>
                     <form method="POST" action='/instructorSearch'>
-                        <input class="form-control mr-sm-2" name="Search2" type="search"
+                        <input class="form-control mr-sm-2" name="Search" type="search"
                             placeholder="Search by course title">
 
 
-                        <select name="Subject2">
-                            <option value="Select a subject" selected>select a subject</option>
+                        <select name="Subject">
+                            <option value="null" selected>select a subject</option>
                             <option value="Math">Math</option>
                             <option value="English">English</option>
                             <option value="Science">Science</option>
@@ -62,8 +72,8 @@
                             <option value="Biology">Biology</option>
                         </select>
 
-                        <select name="Rating2">
-                            <option value="Select a rating" selected>select a rating</option>
+                        <select name="Rating">
+                            <option value="null" selected>select a rating</option>
                             <option value="1">&#128946;</option>
                             <option value="2">&#128946; &#128946;</option>
                             <option value="3">&#128946; &#128946; &#128946;</option>
@@ -72,8 +82,9 @@
 
                         </select>
 
-                        <select name="Price2">
-                            <option value="Specify prices" selected>Specify prices </option>
+
+                        <select name="Price">
+                            <option value="null" selected>Specify prices </option>
                             <option value="0">Free ("0")</option>
                             <option value="5">
                                 &#8804; <%=price1%>
@@ -95,10 +106,10 @@
                                 &#8804; <%=price5%>
                                     <%= currency %>
                             </option>
-
                         </select>
 
                         <button>Submit</button>
+
 
 
 
