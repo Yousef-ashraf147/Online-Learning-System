@@ -9,15 +9,9 @@
 </head>
 
 <body>
-    Welcome To This Online Learning Website
-    <br>
-    <br>
-    <br>
+    Welcome Instructor
     <% if(courses!=null) { %>
         <% courses.forEach(function(item){ %>
-            <br>
-            <br>
-            <br>
             <div>Course Title: <%= item.title%>
             </div>
             <div>Course Subtitle: <%= item.subtitle %>
@@ -35,9 +29,20 @@
             </div>
             <div>Course Instructor: <%= item.instructor %>
             </div>
+            <br>
+            <br>
             <% }) %>
                 <% } %>
 
+                    <form action="addCourse" method="post">
+                        <input placeholder="Course Title" name="title">
+                        <input placeholder="Course Subject" name="subject">
+                        <input placeholder="Course Total Hours" name="totalHours">
+                        <input placeholder="Course Rating" name="rating">
+                        <input placeholder="Course Summary" name="summary">
+                        <input placeholder="Course Price" name="price">
+                        <button>Add Course</button>
+                    </form>
 </body>
 
 </html>
