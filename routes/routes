@@ -6,29 +6,46 @@ const Courses = require("../models/Courses");
 
 router.get("/traineeHome", async (req, res) => {
     if (req.session.isLoggedIn && req.session.userType == "Trainee") {
+
+        var price1 = 5;
+        var price2 = 20;
+        var price3 = 40;
+        var price4 = 60;
+        var price5 = 100;
+
         if (req.session.Country == "Egypt") {
             req.session.currency = "£"
 
             const courses = await Courses.find({}).exec();
+            price1 = 5 * 23.8;
+            price2 = 20 * 23.8;
+            price3 = 40 * 23.8;
+            price4 = 60 * 23.8;
+            price5 = 100 * 23.8;
 
-            res.render("traineeHome", { currency: req.session.currency, courses, offset: 23.80 })
+            res.render("traineeHome", { currency: req.session.currency, courses, offset: 23.80, price1, price2, price3, price4, price5 })
         }
         else if (req.session.Country == "United Kingdom") {
             req.session.currency = "£"
 
             const courses = await Courses.find({}).exec();
+            price1 = 5 * 0.88;
+            price2 = 20 * 0.88;
+            price3 = 40 * 0.88;
+            price4 = 60 * 0.88;
+            price5 = 100 * 0.88;
 
-            res.render("traineeHome", { currency: req.session.currency, courses, offset: 0.88 })
+            res.render("traineeHome", { currency: req.session.currency, courses, offset: 0.88, price1, price2, price3, price4, price5 })
         }
         else if (req.session.Country == "Germany") {
             req.session.currency = "€"
             const courses = await Courses.find({}).exec();
-            res.render("traineeHome", { currency: req.session.currency, courses, offset: 1 })
+            res.render("traineeHome", { currency: req.session.currency, courses, offset: 1, price1, price2, price3, price4, price5 })
         }
         else {
             req.session.currency = "$"
             const courses = await Courses.find({}).exec();
-            res.render("traineeHome", { currency: req.session.currency, courses, offset: 1 })
+            res.render("traineeHome", { currency: req.session.currency, courses, offset: 1, price1, price2, price3, price4, price5 })
         }
     }
     else {
@@ -332,24 +349,42 @@ router.post("/addCourse", async (req, res) => {
 router.get("/instructor", async (req, res) => {
     if (req.session.isLoggedIn && req.session.userType == "Instructor") {
 
+        var price1 = 5;
+        var price2 = 20;
+        var price3 = 40;
+        var price4 = 60;
+        var price5 = 100;
+
         const courses = await Courses.find({}).exec();
         if (req.session.Country == "Egypt") {
             req.session.currency = "£"
 
+            price1 = 5 * 23.8;
+            price2 = 20 * 23.8;
+            price3 = 40 * 23.8;
+            price4 = 60 * 23.8;
+            price5 = 100 * 23.8;
 
-            res.render("instructorHome", { courses: courses, currency: req.session.currency, offset: 23.09 })
+            res.render("instructorHome", { courses: courses, currency: req.session.currency, offset: 23.09, price1, price2, price3, price4, price5 })
         }
 
         else if (req.session.Country == "United Kingdom") {
             req.session.currency = "£"
-            res.render("instructorHome", { courses: courses, currency: req.session.currency, offset: 0.88 })
+
+            price1 = 5 * 0.88;
+            price2 = 20 * 0.88;
+            price3 = 40 * 0.88;
+            price4 = 60 * 0.88;
+            price5 = 100 * 0.88;
+
+            res.render("instructorHome", { courses: courses, currency: req.session.currency, offset: 0.88, price1, price2, price3, price4, price5 })
         }
         else if (req.session.Country == " Germany") {
             req.session.currency = "€"
-            res.render("instructorHome", { courses: courses, currency: req.session.currency, offset: 1 })
+            res.render("instructorHome", { courses: courses, currency: req.session.currency, offset: 1, price1, price2, price3, price4, price5 })
         }
         else {
-            res.render("instructorHome", { courses: courses, currency: "$", offset: 1 })
+            res.render("instructorHome", { courses: courses, currency: "$", offset: 1, price1, price2, price3, price4, price5 })
         }
 
 
@@ -358,6 +393,7 @@ router.get("/instructor", async (req, res) => {
     else {
         res.redirect('/login')
     }
+
 })
 
 router.post("/loginAdmin", async (req, res) => {
