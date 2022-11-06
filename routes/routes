@@ -1,16 +1,20 @@
 const express = require("express");
 const router = express.Router();
 var alert = require('alert');
+const session = require("express-session");
 
 router.get("/home", function (req, res) {
-    if (req.session.country == "Egypt" || req.session.country == "United Kingdom") {
-        res.render("home", { currency: "£" })
+    if (req.session.Country == "Egypt" || req.session.Country == "United Kingdom") {
+        req.session.currency = "£"
+        res.render("home", { currency: req.session.currency })
     }
-    else if (req.session.country == "Germany") {
-        res.render("home", { currency: "€" })
+    else if (req.session.Country == "Germany") {
+        req.session.currency = "€"
+        res.render("home", { currency: req.session.currency })
     }
     else {
-        res.render("home", { currency: "$" })
+        req.session.currency = "$"
+        res.render("home", { currency: req.session.currency })
     }
 })
 router.get("/login", function (req, res) {
@@ -251,6 +255,42 @@ router.post("/signupTrainee", async (req, res) => {
         else
             alert('please choose another username')
     }
+})
+
+router.post("/loginAdmin", async (req, res) => {
+    const inputUsername = req.body.username
+    req.session.username = inputUsername
+    const inputPassword = req.body.password
+
+    var { MongoClient } = require('mongodb');
+    var url = 'mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/adminstrator?retryWrites=true&w=majority'
+    var client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true })
+    await client.connect()
+
+
+    var output = await client.db('adminstrator').collection('adminstrator').find().toArray()
+    console.log(output)
+    var bool = false
+    //var id = id_find(output, inputUsername)
+    //console.log(id)
+    //req.session.ik = id
+    output.forEach((element) => {
+        if (element.username == inputUsername && element.password == inputPassword) {
+            const s = element.Country
+            req.session.Country = s
+            bool = true
+        }
+    }
+
+    )
+    if (bool) {
+        req.session.isLoggedIn = true
+        res.redirect('/home')
+    }
+    else
+        alert('The password or the username is incorrect')
+
+
 })
 
 
