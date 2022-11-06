@@ -327,6 +327,176 @@ router.post("/addCourse", async (req, res) => {
     newCourse.save();
     res.redirect("/instructor")
 })
+router.get("guestSearchCourse", (req, res) => {
+    res.render("guestSearchCourse");
+})
+router.post("/guestSearchCourse", async (req, res) => {
+
+    var price1 = 5;
+    var price2 = 20;
+    var price3 = 40;
+    var price4 = 60;
+    var price5 = 100;
+    if (req.session.Country == "Egypt") {
+        req.session.currency = "£"
+
+
+        price1 = 5 * 23.8;
+        price2 = 20 * 23.8;
+        price3 = 40 * 23.8;
+        price4 = 60 * 23.8;
+        price5 = 100 * 23.8;
+
+
+
+
+        const courses1 = await Courses.find({}).exec();
+        const CourseName = req.body.Search;
+        const Subject = req.body.Subject;
+        const Rating = req.body.Rating;
+        const Price = req.body.Price
+        console.log(courses1)
+        const filtered = []
+
+        courses1.forEach((element) => {
+            if (((element.title.toLowerCase().includes(CourseName.toLowerCase())) && (element.price <= Price * 23.8) && (element.rating <= Rating)) || (element.title.toLowerCase().includes(CourseName.toLowerCase()) && (Price == 10000) && (element.rating <= Rating)) || (element.title.toLowerCase().includes(CourseName.toLowerCase()) && (element.price <= Price * 23.8) && (element.rating == 0)) || ((element.title.toLowerCase().includes(CourseName.toLowerCase())) && (Price == 10000) && (element.rating == 0))) {
+                filtered.push(element)
+            }
+        })
+
+        console.log(filtered)
+
+        res.render("guestSearchCourse", { currency: req.session.currency, courses: filtered, offset: 23.80, price1, price2, price3, price4, price5 })
+
+
+    }
+
+    else if (req.session.Country == "United Kingdom") {
+        req.session.currency = "£"
+
+
+        price1 = 5 * 0.88;
+        price2 = 20 * 0.88;
+        price3 = 40 * 0.88;
+        price4 = 60 * 0.88;
+        price5 = 100 * 0.88;
+
+
+
+
+        const courses1 = await Courses.find({}).exec();
+        const CourseName = req.body.Search;
+        const Subject = req.body.Subject;
+        const Rating = req.body.Rating;
+        const Price = req.body.Price
+        console.log(courses1)
+        const filtered = []
+
+        courses1.forEach((element) => {
+            if (((element.title.toLowerCase().includes(CourseName.toLowerCase())) && (element.price <= Price * 0.88) && (element.rating <= Rating)) || (element.title.toLowerCase().includes(CourseName.toLowerCase()) && (Price == 10000) && (element.rating <= Rating)) || (element.title.toLowerCase().includes(CourseName.toLowerCase()) && (element.price <= Price * 0.88) && (element.rating == 0)) || ((element.title.toLowerCase().includes(CourseName.toLowerCase())) && (Price == 10000) && (element.rating == 0))) {
+                filtered.push(element)
+            }
+        })
+
+        console.log(filtered)
+
+        res.render("guestSearchCourse", { currency: req.session.currency, courses: filtered, offset: 0.88, price1, price2, price3, price4, price5 })
+
+
+    }
+
+    else if (req.session.Country == "Germany") {
+        req.session.currency = "€"
+
+
+        price1 = 5;
+        price2 = 20;
+        price3 = 40 * 1;
+        price4 = 60 * 1;
+        price5 = 100 * 1;
+
+
+
+
+        const courses1 = await Courses.find({}).exec();
+        const CourseName = req.body.Search;
+        const Subject = req.body.Subject;
+        const Rating = req.body.Rating;
+        const Price = req.body.Price
+        console.log(courses1)
+        const filtered = []
+
+        courses1.forEach((element) => {
+            if (((element.title.toLowerCase().includes(CourseName.toLowerCase())) && (element.price <= Price * 1) && (element.rating <= Rating)) || (element.title.toLowerCase().includes(CourseName.toLowerCase()) && (Price == 10000) && (element.rating <= Rating)) || (element.title.toLowerCase().includes(CourseName.toLowerCase()) && (element.price <= Price * 1) && (element.rating == 0)) || ((element.title.toLowerCase().includes(CourseName.toLowerCase())) && (Price == 10000) && (element.rating == 0))) {
+                filtered.push(element)
+            }
+        })
+
+        console.log(filtered)
+
+        res.render("guestSearchCourse", { currency: req.session.currency, courses: filtered, offset: 1, price1, price2, price3, price4, price5 })
+
+
+    }
+
+    else {
+        req.session.currency = "$"
+
+
+        price1 = 5;
+        price2 = 20;
+        price3 = 40 * 1;
+        price4 = 60 * 1;
+        price5 = 100 * 1;
+
+
+
+
+        const courses1 = await Courses.find({}).exec();
+        const CourseName = req.body.Search;
+        const Subject = req.body.Subject;
+        const Rating = req.body.Rating;
+        const Price = req.body.Price
+        console.log(courses1)
+        const filtered = []
+
+        courses1.forEach((element) => {
+            if (((element.title.toLowerCase().includes(CourseName.toLowerCase())) && (element.price <= Price * 1) && (element.rating <= Rating)) || (element.title.toLowerCase().includes(CourseName.toLowerCase()) && (Price == 10000) && (element.rating <= Rating)) || (element.title.toLowerCase().includes(CourseName.toLowerCase()) && (element.price <= Price * 1) && (element.rating == 0)) || ((element.title.toLowerCase().includes(CourseName.toLowerCase())) && (Price == 10000) && (element.rating == 0))) {
+                filtered.push(element)
+            }
+        })
+
+        console.log(filtered)
+
+        res.render("guestSearchCourse", { courses: filtered, currency: req.session.currency, courses: filtered, offset: 1, price1, price2, price3, price4, price5 })
+
+
+    }
+
+
+
+
+
+
+})
+//
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //ssssssssssssssssssssssssssssssssssssssssssss
 router.get("/instructor", async (req, res) => {
