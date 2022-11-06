@@ -4,6 +4,99 @@ var alert = require('alert');
 const session = require("express-session");
 const Courses = require("../models/Courses");
 
+router.get("/corpHome", async (req, res) => {
+    if (req.session.isLoggedIn && req.session.userType == "Corp") {
+
+        var price1 = 5;
+        var price2 = 20;
+        var price3 = 40;
+        var price4 = 60;
+        var price5 = 100;
+
+        if (req.session.Country == "Egypt") {
+            req.session.currency = "£"
+
+            const courses = await Courses.find({}).exec();
+            price1 = 5 * 23.8;
+            price2 = 20 * 23.8;
+            price3 = 40 * 23.8;
+            price4 = 60 * 23.8;
+            price5 = 100 * 23.8;
+
+            res.render("corpHome", { currency: req.session.currency, courses, offset: 23.80, price1, price2, price3, price4, price5 })
+        }
+        else if (req.session.Country == "United Kingdom") {
+            req.session.currency = "£"
+
+            const courses = await Courses.find({}).exec();
+            price1 = 5 * 0.88;
+            price2 = 20 * 0.88;
+            price3 = 40 * 0.88;
+            price4 = 60 * 0.88;
+            price5 = 100 * 0.88;
+
+            res.render("corpHome", { currency: req.session.currency, courses, offset: 0.88, price1, price2, price3, price4, price5 })
+        }
+        else if (req.session.Country == "Germany") {
+            req.session.currency = "€"
+            const courses = await Courses.find({}).exec();
+            res.render("corpHome", { currency: req.session.currency, courses, offset: 1, price1, price2, price3, price4, price5 })
+        }
+        else {
+            req.session.currency = "$"
+            const courses = await Courses.find({}).exec();
+            res.render("corpHome", { currency: req.session.currency, courses, offset: 1, price1, price2, price3, price4, price5 })
+        }
+    }
+    else {
+        res.redirect("/login")
+    }
+})
+
+router.get("/guestHome", async (req, res) => {
+    var price1 = 5;
+    var price2 = 20;
+    var price3 = 40;
+    var price4 = 60;
+    var price5 = 100;
+
+    if (req.session.Country == "Egypt") {
+        req.session.currency = "£"
+
+        const courses = await Courses.find({}).exec();
+        price1 = 5 * 23.8;
+        price2 = 20 * 23.8;
+        price3 = 40 * 23.8;
+        price4 = 60 * 23.8;
+        price5 = 100 * 23.8;
+        res.render("guestHome", {
+            currency: req.session.currency, courses, offset: 23.80, price1, price2, price3, price4, price5
+        })
+    }
+    else if (req.session.Country == "United Kingdom") {
+        req.session.currency = "£"
+        price1 = 5 * 0.88;
+        price2 = 20 * 0.88;
+        price3 = 40 * 0.88;
+        price4 = 60 * 0.88;
+        price5 = 100 * 0.88;
+
+        const courses = await Courses.find({}).exec();
+
+        res.render("guestHome", { currency: req.session.currency, courses, offset: 0.88, price1, price2, price3, price4, price5 })
+    }
+    else if (req.session.Country == "Germany") {
+        req.session.currency = "€"
+
+        const courses = await Courses.find({}).exec();
+        res.render("guestHome", { currency: req.session.currency, courses, offset: 1, price1, price2, price3, price4, price5 })
+    }
+    else {
+        req.session.currency = "$"
+        const courses = await Courses.find({}).exec();
+        res.render("guestHome", { currency: req.session.currency, courses, offset: 1, price1, price2, price3, price4, price5 })
+    }
+})
 router.get("/traineeHome", async (req, res) => {
     if (req.session.isLoggedIn && req.session.userType == "Trainee") {
 
@@ -1401,6 +1494,44 @@ router.get("/instructor", async (req, res) => {
     }
 
 })
+
+router.post("/loginCorp", async (req, res) => {
+    const inputUsername = req.body.username
+    req.session.username = inputUsername
+    const inputPassword = req.body.password
+
+    var { MongoClient } = require('mongodb');
+    var url = 'mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/corporate?retryWrites=true&w=majority'
+    var client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true })
+    await client.connect()
+
+
+    var output = await client.db('corporate').collection('corporate').find().toArray()
+    console.log(output)
+    var bool = false
+    //var id = id_find(output, inputUsername)
+    //console.log(id)
+    //req.session.ik = id
+    output.forEach((element) => {
+        if (element.username == inputUsername && element.password == inputPassword) {
+            const s = element.Country
+            req.session.Country = s
+            bool = true
+        }
+    }
+
+    )
+    if (bool) {
+        req.session.isLoggedIn = true
+        req.session.userType = "Corp"
+        res.redirect("/corpHome");
+    }
+    else
+        alert('The password or the username is incorrect')
+
+
+})
+
 
 router.post("/loginAdmin", async (req, res) => {
     const inputUsername = req.body.username
