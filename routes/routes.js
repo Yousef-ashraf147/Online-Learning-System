@@ -4,7 +4,7 @@ var alert = require('alert');
 const session = require("express-session");
 const Courses = require("../models/Courses");
 
-router.get("corpHome", async (req, res) => {
+router.get("/corpHome", async (req, res) => {
     if (req.session.isLoggedIn && req.session.userType == "Corp") {
 
         var price1 = 5;
@@ -1285,7 +1285,7 @@ router.post("/TraineeSearch", async (req, res) => {
 
             console.log(filtered)
 
-            res.render("TraineeSearch", { currency: req.session.currency, courses: filteredCourses, offset: 0.88, price1, price2, price3, price4, price5 })
+            res.render("traineeHome", { currency: req.session.currency, courses: filteredCourses, offset: 0.88, price1, price2, price3, price4, price5 })
 
 
         }
@@ -1323,7 +1323,7 @@ router.post("/TraineeSearch", async (req, res) => {
 
             console.log(filtered)
 
-            res.render("TraineeSearch", { currency: req.session.currency, courses: filteredCourses, offset: 1, price1, price2, price3, price4, price5 })
+            res.render("traineeHome", { currency: req.session.currency, courses: filteredCourses, offset: 1, price1, price2, price3, price4, price5 })
 
 
         }
@@ -1361,7 +1361,7 @@ router.post("/TraineeSearch", async (req, res) => {
             console.log(Price)
             console.log(filteredCourses)
 
-            res.render("TraineeSearch", { courses: filteredCourses, currency: req.session.currency, offset: 1, price1, price2, price3, price4, price5 })
+            res.render("traineeHome", { courses: filteredCourses, currency: req.session.currency, offset: 1, price1, price2, price3, price4, price5 })
 
         }
     }
