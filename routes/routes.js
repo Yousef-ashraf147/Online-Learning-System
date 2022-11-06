@@ -446,6 +446,74 @@ router.post("/addCourse", async (req, res) => {
     }
 })
 
+router.post("/addingCorpTrainee", async (req, res) => {
+    if (req.session.isLoggedIn && req.session.userType == "admin") {
+        var { MongoClient } = require('mongodb');
+        var url = 'mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/corporate?retryWrites=true&w=majority'
+        var client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true })
+        await client.connect()
+        const inputUsername = req.body.username3
+        const inputPassword = req.body.password3
+        var output = await client.db('Trainee').collection('Trainee').find().toArray()
+        const Country = req.body.country
+
+        var output2 = await client.db('adminstrator').collection('adminstrator').find().toArray()
+
+        var output3 = await client.db('Instructor').collection('Instructor').find().toArray()
+
+        var output4 = await client.db('corporate').collection('corporate').find().toArray()
+        var bool = false
+
+        output4.forEach((item) => {
+            if (item.username == inputUsername)
+                bool = true
+        })
+
+        output2.forEach((item) => {
+            if (item.username == inputUsername)
+                bool = true
+        })
+
+        output3.forEach((item) => {
+            if (item.username == inputUsername)
+                bool = true
+        })
+
+
+
+        output.forEach((item) => {
+            if (item.username == inputUsername)
+                bool = true
+        })
+        if (Country == "Select Country") {
+            alert('Please select a country')
+        }
+        else if (inputPassword.length == 0 || inputUsername.length == 0) {
+            alert('the password or the username is empty')
+        }
+        else {
+            if (bool == false) {
+                var user = { username: inputUsername, password: inputPassword, Country: Country }
+                await client.db('corporate').collection('corporate').insertOne(user)
+                alert('registration successful')
+                MongoClient.connect(url, function (err, db) {
+                    if (err) throw err;
+
+                });
+                alert('corporate trainee ceated!!')
+            }
+
+
+            else
+                alert('please choose another username')
+        }
+    }
+    else {
+        res.redirect('/login')
+    }
+
+})
+
 router.post("/addingInstructor", async (req, res) => {
     if (req.session.isLoggedIn && req.session.userType == "admin") {
         var { MongoClient } = require('mongodb');
@@ -1192,7 +1260,7 @@ router.post("/TraineeSearch", async (req, res) => {
 
             console.log(filtered)
 
-            res.render("TraineeSearch", { currency: req.session.currency, courses: filteredCourses, offset: 0.88, price1, price2, price3, price4, price5 })
+            res.render("traineeHome", { currency: req.session.currency, courses: filteredCourses, offset: 0.88, price1, price2, price3, price4, price5 })
 
 
         }
@@ -1230,7 +1298,7 @@ router.post("/TraineeSearch", async (req, res) => {
 
             console.log(filtered)
 
-            res.render("TraineeSearch", { currency: req.session.currency, courses: filteredCourses, offset: 1, price1, price2, price3, price4, price5 })
+            res.render("traineeHome", { currency: req.session.currency, courses: filteredCourses, offset: 1, price1, price2, price3, price4, price5 })
 
 
         }
@@ -1268,7 +1336,7 @@ router.post("/TraineeSearch", async (req, res) => {
             console.log(Price)
             console.log(filteredCourses)
 
-            res.render("TraineeSearch", { courses: filteredCourses, currency: req.session.currency, offset: 1, price1, price2, price3, price4, price5 })
+            res.render("traineeHome", { courses: filteredCourses, currency: req.session.currency, offset: 1, price1, price2, price3, price4, price5 })
 
         }
     }
