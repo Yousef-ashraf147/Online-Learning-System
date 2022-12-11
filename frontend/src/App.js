@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
 import Login from "./Login";
 import Signup from "./Signup";
+import SignupAdmin from "./SignupAdmin";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/signupadmin" element={<SignupAdmin />} />
       </Routes>
     </Router>
   );

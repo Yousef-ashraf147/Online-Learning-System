@@ -17,13 +17,23 @@ import Stack from "@mui/material/Stack";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
-const navigate = useNavigate();
-function oNavigate() {
-  navigate("./SignupAdmin");
-}
-function Copyright(props) {
+import { useNavigate } from "react-router-dom";
+const Signup = () => {
+  const navigate = useNavigate();
+
+  function oNavigate() {
+    navigate("./SignupAdmin");
+  }
+
   return (
-   
+    <div>
+      <a href="/signupadmin">Signup as an admin</a>
+      <br></br>
+      <a href="/SignupInstruc">Signup as an Instructort</a>
+      <br />
+      <a href="/SignupTrainee">Signup as a Trainee</a>
+      <br />
+    </div>
   );
 };
 
