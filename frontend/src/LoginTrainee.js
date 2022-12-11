@@ -18,9 +18,84 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
-function LoginTrainee() {
-  return <div>Login as a trainee page</div>;
+function Copyright(props) {
+  return (
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
+      <Link color="inherit" href="https://mui.com/">
+        Your Website
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
 }
+
+const theme = createTheme();
+
+const LoginTrainee = () => {
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
+
+  function Submit() {
+    axios.post(
+      "http://localhost:3000/loginTrainee",
+      {
+        username: username,
+        password: password,
+      },
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    );
+    if (username.length > 0 && password.length > 0 ) {
+      oNavigate();
+    }
+  }
+
+  const navigate = useNavigate();
+  function oNavigate() {
+    navigate("/TraineeHome");
+  }
+
+  return (
+    <Box
+      component="form"
+      sx={{
+        "& > :not(style)": { m: 1, width: "25ch" },
+      }}
+      noValidate
+      autoComplete="off"
+    >
+      <Stack spacing={2} direction={"column"}>
+        <TextField
+          onChange={(e) => setUsername(e.target.value)}
+          id="outlined-basic"
+          label="Username"
+          variant="outlined"
+        />
+        <TextField
+          onChange={(e) => setPassword(e.target.value)}
+          id="filled-basic"
+          label="Password"
+          variant="outlined"
+        />
+
+        <InputLabel id="demo-simple-select-filled-label">Country</InputLabel>
+
+        <Button onClick={Submit} variant="contained">
+          Login
+        </Button>
+      </Stack>
+    </Box>
+  );
+};
 
 export default LoginTrainee;
