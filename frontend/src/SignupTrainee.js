@@ -38,7 +38,7 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-const Signup = () => {
+const SignupTrainee = () => {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [country, setCountry] = React.useState("");
@@ -403,4 +403,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default SignupTrainee;

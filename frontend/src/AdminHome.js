@@ -19,23 +19,12 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const Signup = () => {
-  const navigate = useNavigate();
-
-  function oNavigate() {
-    navigate("./SignupAdmin");
-  }
-
+function AdminHome() {
   return (
     <div>
-      <a href="/signupadmin">Signup as an admin</a>
-      <br></br>
-      <a href="/SignupInstruc">Signup as an Instructort</a>
       <br />
-      <a href="/SignupTrainee">Signup as a Trainee</a>
-      <br />
+      Admin Home Page
     </div>
   );
-};
-
-export default Signup;
+}
+export default AdminHome;
