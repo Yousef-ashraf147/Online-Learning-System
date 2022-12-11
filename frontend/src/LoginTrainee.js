@@ -55,7 +55,7 @@ const LoginTrainee = () => {
         },
       }
     );
-    if (username.length > 0 && password.length > 0 ) {
+    if (username.length > 0 && password.length > 0) {
       oNavigate();
     }
   }
@@ -87,8 +87,6 @@ const LoginTrainee = () => {
           label="Password"
           variant="outlined"
         />
-
-        <InputLabel id="demo-simple-select-filled-label">Country</InputLabel>
 
         <Button onClick={Submit} variant="contained">
           Login
