@@ -42,11 +42,17 @@ const Signup = () => {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [country, setCountry] = React.useState("");
+  const [email, setEmail] = React.useState("");
 
   function Submit() {
     axios.post(
-      "http://localhost:3000/signupAdmin",
-      { username: username, password: password, country: country },
+      "http://localhost:3000/signupTrainee",
+      {
+        username: username,
+        password: password,
+        country: country,
+        email: email,
+      },
       {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -60,7 +66,7 @@ const Signup = () => {
 
   const navigate = useNavigate();
   function oNavigate() {
-    navigate("/LoginAdmin");
+    navigate("/LoginTrainee");
   }
 
   return (
@@ -73,6 +79,13 @@ const Signup = () => {
       autoComplete="off"
     >
       <Stack spacing={2} direction={"column"}>
+        <TextField
+          onChange={(e) => setEmail(e.target.value)}
+          id="filled-basic"
+          label="Email"
+          variant="outlined"
+        />
+
         <TextField
           onChange={(e) => setUsername(e.target.value)}
           id="outlined-basic"

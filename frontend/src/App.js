@@ -13,6 +13,7 @@ import { Button } from "@mui/material";
 import Login from "./Login";
 import Signup from "./Signup";
 import SignupAdmin from "./SignupAdmin";
+import SignupTrainee from "./SignupTrainee";
 import HomePage from "./HomePage";
 import LoginAdmin from "./LoginAdmin";
 import LoginInstrucor from "./LoginIntsructor";
@@ -25,6 +26,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/signupadmin" element={<SignupAdmin />} />
+        <Route path="/signuptrainee" element={<SignupTrainee />} />
         <Route path="/LoginAdmin" element={<LoginAdmin />} />
         <Route path="/LoginInstructor" element={<LoginInstrucor />} />
         <Route path="/LoginTrainee" element={<LoginTrainee />} />
