@@ -1,122 +1,37 @@
-import Blah from "./CardComponent";
+import * as React from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+//import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from "@mui/material/Typography";
+import Stack from "@mui/material/Stack";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-import React, { useEffect } from "react";
-
-import axios from "axios";
-import { Typography } from "@mui/material";
-
-import { CssVarsProvider, useColorScheme } from "@mui/joy/styles";
-import Sheet from "@mui/joy/Sheet";
-
-import TextField from "@mui/joy/TextField";
-import Button from "@mui/joy/Button";
-import Link from "@mui/joy/Link";
-
-function ModeToggle() {
-  const { mode, setMode } = useColorScheme();
-  const [mounted, setMounted] = React.useState(false);
-
-  // necessary for server-side rendering
-  // because mode is undefined on the server
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-  if (!mounted) {
-    return null;
-  }
-
-  return (
-    <Button
-      variant="outlined"
-      onClick={() => {
-        setMode(mode === "light" ? "dark" : "light");
-      }}
-    >
-      {mode === "light" ? "Turn dark" : "Turn light"}
-    </Button>
-  );
-}
-
-const Login = () => {
-  const [text, setText] = React.useState("Blah");
-
-  const navigate = useNavigate();
-
-  function callBackend() {
-    axios
-      .post(
-        "http://localhost:3000/doSomething",
-        { data: "Yousef" },
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-        }
-      )
-      .then((response) => {
-        setText(response.data);
-      });
-
-    // axios.get('http://localhost:3000/doSomething').then((response) => {
-    //     setText(response.data);
-    // })
-  }
-
-  function oNavigate() {
-    navigate("./signup");
-  }
-
+function Login() {
   return (
     <div>
-      <Blah />
-      <Button onClick={callBackend}>Call Backend</Button>
-      <Typography>{text}</Typography>
-      <CssVarsProvider>
-        <main>
-          <ModeToggle />
-          <Sheet
-            sx={{
-              width: 299,
-              mx: "auto", // margin left & right
-              my: 4, // margin top & botom
-              py: 3, // padding top & bottom
-              px: 2, // padding left & right
-              display: "flex",
-              flexDirection: "column",
-              gap: 2,
-              borderRadius: "sm",
-              boxShadow: "md",
-            }}
-            variant="outlined"
-          >
-            <div>
-              <Typography level="h4" component="h1">
-                <b>Welcome!</b>
-              </Typography>
-              <Typography level="body2">Sign in to continue.</Typography>
-            </div>
-            <TextField
-              // html input attribute
-              name="email"
-              type="email"
-              placeholder="johndoe@email.com"
-              // pass down to FormLabel as children
-              label="Email"
-            />
-            <TextField
-              name="password"
-              type="password"
-              placeholder="password"
-              label="Password"
-            />
-            <Button sx={{ mt: 1 /* margin top */ }}>Log in</Button>
-            <a href="/Signup">Dont have an account</a>
-          </Sheet>
-        </main>
-      </CssVarsProvider>
+      <br />
+      <a href="LoginAdmin">Login as an admin</a>
+      <br />
+      <a href="LoginInstructor">Login as an instructor</a>
+      <br />
+      <a href="LoginTrainee">Login as a trainee</a>
+      <br />
+      <a href="Guest">Continue as a guest</a>
+      <br />
     </div>
   );
-};
-
+}
 export default Login;

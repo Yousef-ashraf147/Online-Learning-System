@@ -58,7 +58,7 @@ const Signup = () => {
 
   const navigate = useNavigate();
   function oNavigate() {
-    navigate("./LoginAdmin");
+    navigate("/LoginAdmin");
   }
 
   return (

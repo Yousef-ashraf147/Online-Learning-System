@@ -13,14 +13,22 @@ import { Button } from "@mui/material";
 import Login from "./Login";
 import Signup from "./Signup";
 import SignupAdmin from "./SignupAdmin";
+import HomePage from "./HomePage";
+import LoginAdmin from "./LoginAdmin";
+import LoginInstrucor from "./LoginIntsructor";
+import LoginTrainee from "./LoginTrainee";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/signupadmin" element={<SignupAdmin />} />
+        <Route path="/LoginAdmin" element={<LoginAdmin />} />
+        <Route path="/LoginInstructor" element={<LoginInstrucor />} />
+        <Route path="/LoginTrainee" element={<LoginTrainee />} />
+        <Route path="/Login" element={<Login />} />
       </Routes>
     </Router>
   );
