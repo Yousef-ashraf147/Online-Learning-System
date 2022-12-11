@@ -400,6 +400,7 @@ router.post("/signupAdmin", async (req, res) => {
   await client.connect();
   const inputUsername = req.body.username;
   const inputPassword = req.body.password;
+  const inputEmail = req.body.email;
   var output = await client
     .db("adminstrator")
     .collection("adminstrator")
@@ -432,14 +433,15 @@ router.post("/signupAdmin", async (req, res) => {
   });
   if (Country == "Select Country" || Country == "") {
     alert("Please select a country");
-  } else if (inputPassword.length == 0 || inputUsername.length == 0) {
-    alert("the password or the username is empty");
+  } else if (inputPassword.length == 0 || inputUsername.length == 0 || inputEmail.length == 0) {
+    alert("Please fill in all the required fields");
   } else {
     if (bool == false) {
       var user = {
         username: inputUsername,
         password: inputPassword,
         Country: Country,
+        email: inputEmail
       };
       await client
         .db("adminstrator")
