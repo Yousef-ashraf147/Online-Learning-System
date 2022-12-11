@@ -42,18 +42,19 @@ const Signup = () => {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [country, setCountry] = React.useState("");
+  const [email, setEmail] = React.useState("");
 
   function Submit() {
     axios.post(
       "http://localhost:3000/signupAdmin",
-      { username: username, password: password, country: country },
+      { username: username, password: password, country: country, email: email },
       {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       }
     );
-    if (username.length > 0 && password.length > 0 && country.length > 0) {
+    if (username.length > 0 && password.length > 0 && country.length > 0 && email.length > 0) {
       oNavigate();
     }
   }
@@ -73,6 +74,12 @@ const Signup = () => {
       autoComplete="off"
     >
       <Stack spacing={2} direction={"column"}>
+        <TextField
+          onChange={(e) => setEmail(e.target.value)}
+          id="outlined-basic"
+          label="Email"
+          variant="outlined"
+        />
         <TextField
           onChange={(e) => setUsername(e.target.value)}
           id="outlined-basic"
