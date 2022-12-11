@@ -59,7 +59,12 @@ const Signup = () => {
         },
       }
     );
-    if (username.length > 0 && password.length > 0 && country.length > 0) {
+    if (
+      username.length > 0 &&
+      password.length > 0 &&
+      country.length > 0 &&
+      email.length > 0
+    ) {
       oNavigate();
     }
   }

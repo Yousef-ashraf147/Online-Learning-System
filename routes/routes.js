@@ -539,6 +539,7 @@ router.post("/signupInstruc", async (req, res) => {
         username: inputUsername,
         password: inputPassword,
         Country: Country,
+        email: inputEmail,
       };
       await client.db("Instructor").collection("Instructor").insertOne(user);
       alert("registration successful");
@@ -694,6 +695,7 @@ router.post("/signupCorp", async (req, res) => {
         username: inputUsername,
         password: inputPassword,
         Country: Country,
+        email: inputEmail,
       };
       await client.db("corporate").collection("corporate").insertOne(user);
       alert("registration successful");
