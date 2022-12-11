@@ -52,6 +52,8 @@ router.get("/corpHome", async (req, res) => {
         price4,
         price5,
       });
+
+      res;
     } else if (req.session.Country == "Germany") {
       req.session.currency = "€";
       const courses = await Courses.find({}).exec();
@@ -68,16 +70,7 @@ router.get("/corpHome", async (req, res) => {
     } else {
       req.session.currency = "$";
       const courses = await Courses.find({}).exec();
-      res.render("corpHome", {
-        currency: req.session.currency,
-        courses,
-        offset: 1,
-        price1,
-        price2,
-        price3,
-        price4,
-        price5,
-      });
+      res.send(courses);
     }
   } else {
     res.redirect("/login");
@@ -177,16 +170,7 @@ router.get("/traineeHome", async (req, res) => {
       price4 = 60 * 23.8;
       price5 = 100 * 23.8;
 
-      res.render("traineeHome", {
-        currency: req.session.currency,
-        courses,
-        offset: 23.8,
-        price1,
-        price2,
-        price3,
-        price4,
-        price5,
-      });
+      res.send(courses);
     } else if (req.session.Country == "United Kingdom") {
       req.session.currency = "£";
 
@@ -223,16 +207,7 @@ router.get("/traineeHome", async (req, res) => {
     } else {
       req.session.currency = "$";
       const courses = await Courses.find({}).exec();
-      res.render("traineeHome", {
-        currency: req.session.currency,
-        courses,
-        offset: 1,
-        price1,
-        price2,
-        price3,
-        price4,
-        price5,
-      });
+      res.send(courses);
     }
   } else {
     res.redirect("/login");

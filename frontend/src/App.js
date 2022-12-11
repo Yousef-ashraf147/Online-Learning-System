@@ -20,8 +20,7 @@ import LoginInstructor from "./LoginInstructor";
 import LoginTrainee from "./LoginTrainee";
 import SignupInstruc from "./SignupInstruc";
 import AdminHome from "./AdminHome";
-
-
+import TraineeHome from "./TraineeHome";
 
 function App() {
   return (
@@ -30,7 +29,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/signupadmin" element={<SignupAdmin />} />
-        <Route path="/signupInstruc" element={<SignupInstruc/>} />
+        <Route path="/signupInstruc" element={<SignupInstruc />} />
 
         <Route path="/signuptrainee" element={<SignupTrainee />} />
         <Route path="/LoginAdmin" element={<LoginAdmin />} />
@@ -38,6 +37,7 @@ function App() {
 
         <Route path="/LoginTrainee" element={<LoginTrainee />} />
         <Route path="/Login" element={<Login />} />
+        <Route path="/TraineeHome" element={<TraineeHome />} />
 
         <Route path="/AdminHome" element={<AdminHome />} />
       </Routes>
