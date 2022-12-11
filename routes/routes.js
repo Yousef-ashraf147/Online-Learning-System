@@ -469,6 +469,7 @@ router.post("/signupInstruc", async (req, res) => {
   await client.connect();
   const inputUsername = req.body.username;
   const inputPassword = req.body.password;
+  const inputEmail = req.body.email;
   var output = await client
     .db("Instructor")
     .collection("Instructor")
@@ -490,19 +491,19 @@ router.post("/signupInstruc", async (req, res) => {
 
   var bool = false;
   output3.forEach((item) => {
-    if (item.username == inputUsername) bool = true;
+    if (item.username == inputUsername || item.email == inputEmail) bool = true;
   });
 
   output2.forEach((item) => {
-    if (item.username == inputUsername) bool = true;
+    if (item.username == inputUsername || item.email == inputEmail) bool = true;
   });
 
   output.forEach((item) => {
-    if (item.username == inputUsername) bool = true;
+    if (item.username == inputUsername || item.email == inputEmail) bool = true;
   });
-  if (Country == "Select Country") {
+  if (Country == "Select Country" || Country.length == 0) {
     alert("Please select a country");
-  } else if (inputPassword.length == 0 || inputUsername.length == 0) {
+  } else if (inputPassword.length == 0 || inputUsername.length == 0 || inputEmail.length==0) {
     alert("the password or the username is empty");
   } else {
     if (bool == false) {
@@ -570,8 +571,8 @@ router.post("/signupTrainee", async (req, res) => {
   });
   if (Country == "Select Country" || Country.length == 0) {
     alert("Please select a country");
-  } else if (inputPassword.length == 0 || inputUsername.length == 0) {
-    alert("the password or the username is empty");
+  } else if (inputPassword.length == 0 || inputUsername.length == 0 || inputEmail.length==0) {
+    alert("please fill all the required fields");
   } else {
     if (bool == false) {
       var user = {

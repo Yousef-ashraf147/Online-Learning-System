@@ -19,6 +19,7 @@
   "homepage": "https://github.com/Yousef-ashraf147/Milestone1#readme",
   "dependencies": {
     "alert": "^5.1.1",
+    "axios": "^1.2.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "ejs": "^3.1.8",
@@ -26,6 +27,8 @@
     "express-ejs": "^2.0.0",
     "express-session": "^1.17.3",
     "mongoose": "^6.7.1",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "react": "^18.2.0",
+    "react-router-dom": "^6.4.5"
   }
 }
