@@ -419,21 +419,34 @@ router.post("/signupAdmin", async (req, res) => {
     .toArray();
 
   var bool = false;
+  var output4 = await client
+    .db("corporate")
+    .collection("corporate")
+    .find()
+    .toArray();
+
+  output4.forEach((item) => {
+    if (item.username == inputUsername) bool = true;
+  });
 
   output3.forEach((item) => {
-    if (item.username == inputUsername) bool = true;
+    if (item.username == inputUsername || item.email == inputEmail) bool = true;
   });
 
   output2.forEach((item) => {
-    if (item.username == inputUsername) bool = true;
+    if (item.username == inputUsername || item.email == inputEmail) bool = true;
   });
 
   output.forEach((item) => {
-    if (item.username == inputUsername) bool = true;
+    if (item.username == inputUsername || item.email == inputEmail) bool = true;
   });
   if (Country == "Select Country" || Country == "") {
     alert("Please select a country");
-  } else if (inputPassword.length == 0 || inputUsername.length == 0 || inputEmail.length == 0) {
+  } else if (
+    inputPassword.length == 0 ||
+    inputUsername.length == 0 ||
+    inputEmail.length == 0
+  ) {
     alert("Please fill in all the required fields");
   } else {
     if (bool == false) {
@@ -441,7 +454,7 @@ router.post("/signupAdmin", async (req, res) => {
         username: inputUsername,
         password: inputPassword,
         Country: Country,
-        email: inputEmail
+        email: inputEmail,
       };
       await client
         .db("adminstrator")
@@ -452,7 +465,7 @@ router.post("/signupAdmin", async (req, res) => {
         if (err) throw err;
       });
       res.redirect("/login"); //
-    } else alert("please choose another username");
+    } else alert("the username or email you chose is already taken");
   }
 
   //  var user = { username: inputUsername, password: inputPassword }
@@ -492,6 +505,15 @@ router.post("/signupInstruc", async (req, res) => {
     .toArray();
 
   var bool = false;
+  var output4 = await client
+    .db("corporate")
+    .collection("corporate")
+    .find()
+    .toArray();
+
+  output4.forEach((item) => {
+    if (item.username == inputUsername) bool = true;
+  });
   output3.forEach((item) => {
     if (item.username == inputUsername || item.email == inputEmail) bool = true;
   });
@@ -505,8 +527,12 @@ router.post("/signupInstruc", async (req, res) => {
   });
   if (Country == "Select Country" || Country.length == 0) {
     alert("Please select a country");
-  } else if (inputPassword.length == 0 || inputUsername.length == 0 || inputEmail.length==0) {
-    alert("the password or the username is empty");
+  } else if (
+    inputPassword.length == 0 ||
+    inputUsername.length == 0 ||
+    inputEmail.length == 0
+  ) {
+    alert("please fill all required fields");
   } else {
     if (bool == false) {
       var user = {
@@ -520,7 +546,7 @@ router.post("/signupInstruc", async (req, res) => {
         if (err) throw err;
       });
       res.redirect("/login");
-    } else alert("please choose another username");
+    } else alert("the username or email you chose is already taken");
   }
 });
 
@@ -558,8 +584,17 @@ router.post("/signupTrainee", async (req, res) => {
     .collection("Instructor")
     .find()
     .toArray();
-
   var bool = false;
+  var output4 = await client
+    .db("corporate")
+    .collection("corporate")
+    .find()
+    .toArray();
+
+  output4.forEach((item) => {
+    if (item.username == inputUsername) bool = true;
+  });
+
   output2.forEach((item) => {
     if (item.username == inputUsername || item.email == inputEmail) bool = true;
   });
@@ -573,7 +608,11 @@ router.post("/signupTrainee", async (req, res) => {
   });
   if (Country == "Select Country" || Country.length == 0) {
     alert("Please select a country");
-  } else if (inputPassword.length == 0 || inputUsername.length == 0 || inputEmail.length==0) {
+  } else if (
+    inputPassword.length == 0 ||
+    inputUsername.length == 0 ||
+    inputEmail.length == 0
+  ) {
     alert("please fill all the required fields");
   } else {
     if (bool == false) {
@@ -589,7 +628,7 @@ router.post("/signupTrainee", async (req, res) => {
         if (err) throw err;
       });
       res.redirect("/login");
-    } else alert("please choose another username");
+    } else alert("the username or email you chose is already taken");
   }
 });
 
@@ -662,7 +701,7 @@ router.post("/signupCorp", async (req, res) => {
         if (err) throw err;
       });
       res.redirect("/login");
-    } else alert("please choose another username");
+    } else alert("The username or email you wrote is already taken");
   }
 });
 
