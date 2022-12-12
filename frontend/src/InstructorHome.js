@@ -14,7 +14,6 @@ const InstructorHome = () => {
       <a href="/InstructorAddCourse">Add a new course</a>
 
       <br />
-      <a href="/InstructorPassword">Change my password</a>
     </div>
   );
 };

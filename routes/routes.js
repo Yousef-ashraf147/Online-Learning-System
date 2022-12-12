@@ -516,6 +516,7 @@ router.post("/signupInstruc", async (req, res) => {
         password: inputPassword,
         Country: Country,
         email: inputEmail,
+        Bio: "",
       };
       await client.db("Instructor").collection("Instructor").insertOne(user);
       alert("registration successful");
@@ -664,7 +665,7 @@ router.post("/signupCorp", async (req, res) => {
   });
   if (Country == "Select Country") {
     alert("Please select a country");
-  } else if (inputPassword.length == 0 ||  inputEmail.length==0 ) {
+  } else if (inputPassword.length == 0 || inputEmail.length == 0) {
     alert("the password or the username is empty");
   } else {
     if (bool == false) {
@@ -736,6 +737,45 @@ router.post("/ChangePasswordIntsructor", async (req, res) => {
       alert("password changed");
     }
   });*/
+});
+
+router.post("/ChangeEmailIntsructor", async (req, res) => {
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/Instructor?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  await client.connect();
+  const inputUsername = req.body.username;
+  const inputEmail = req.body.email;
+  const inputOldEmail = req.body.oldemail;
+  var koko = await client
+    .db("Instructor")
+    .collection("Instructor")
+    .findOne({ username: inputUsername });
+  if (!(koko.email === inputOldEmail)) {
+    console.log(koko.email);
+    console.log(inputOldEmail);
+
+    alert("wrong old Email");
+  } else {
+    var output = await client
+      .db("Instructor")
+      .collection("Instructor")
+      .updateOne({ username: inputUsername }, { $set: { email: inputEmail } });
+
+    alert("email changed");
+  }
+  /*output.forEach((item) => {
+      if (item.username == inputUsername) {
+        console.log(inputPassword);
+  
+        item.password = inputPassword;
+        alert("password changed");
+      }
+    });*/
 });
 
 router.post("/ChangePasswordTrainee", async (req, res) => {

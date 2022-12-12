@@ -1,7 +1,15 @@
 import React from "react";
 
 const InstructorEditInfo = () => {
-  return <div>Instructor can change his email/password/mini bio here</div>;
+  return (
+    <div>
+      <a href="/InstructorChangeEmail">Change my email</a>
+      <br />
+      <a href="/InstructorChangeBio">Change my Bio</a>
+      <br />
+      <a href="/InstructorPassword">Change my Password</a>
+    </div>
+  );
 };
 
 export default InstructorEditInfo;
