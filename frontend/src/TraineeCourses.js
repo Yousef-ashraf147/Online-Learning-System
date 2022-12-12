@@ -28,7 +28,6 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useState, useEffect } from "react";
 
-
 function Copyright(props) {
   return (
     <Typography
@@ -79,6 +78,7 @@ const TraineeCourses = () => {
               <TableCell align="left">rating</TableCell>
               <TableCell align="left">instructor</TableCell>
               <TableCell align="left">summary</TableCell>
+              <TableCell align="left">link</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -95,6 +95,9 @@ const TraineeCourses = () => {
                   <TableCell align="left">{row.rating}</TableCell>
                   <TableCell align="left">{row.instructor}</TableCell>
                   <TableCell align="left">{row.summary}</TableCell>
+                  <TableCell align="left">
+                    <a href={row.link}> Click here to view Course page</a>
+                  </TableCell>
                 </TableRow>
               ))}
           </TableBody>
@@ -103,7 +106,6 @@ const TraineeCourses = () => {
       <a href={x}>click here</a>
     </>
   );
-
 };
 
 export default TraineeCourses;

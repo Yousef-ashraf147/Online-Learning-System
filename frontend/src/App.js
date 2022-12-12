@@ -22,6 +22,10 @@ import SignupInstruc from "./SignupInstruc";
 import AdminHome from "./AdminHome";
 import TraineeCourses from "./TraineeCourses";
 import TraineeHome from "./TraineeHome";
+import InstructorHome from "./InstructorHome";
+import ViewMyRatings from "./ViewMyRatings";
+import InstructorEditInfo from "./InstructorEditInfo";
+import InstructorAddCourse from "./InstructorAddCourse";
 
 function App() {
   return (
@@ -34,16 +38,20 @@ function App() {
 
         <Route path="/signuptrainee" element={<SignupTrainee />} />
         <Route path="/LoginAdmin" element={<LoginAdmin />} />
-        <Route path="/LoginInstruc" element={<LoginInstructor />} />
+        <Route path="/LoginInstructor" element={<LoginInstructor />} />
 
         <Route path="/LoginTrainee" element={<LoginTrainee />} />
         <Route path="/Login" element={<Login />} />
-        
+
         <Route path="/TraineeCourses" element={<TraineeCourses />} />
 
         <Route path="/AdminHome" element={<AdminHome />} />
         <Route path="/TraineeHome" element={<TraineeHome />} />
+        <Route path="/InstructorHome" element={<InstructorHome />} />
 
+        <Route path="/ViewMyRatings" element={<ViewMyRatings />} />
+        <Route path="/InstructorEditInfo" element={<InstructorEditInfo />} />
+        <Route path="/InstructorAddCourse" element={<InstructorAddCourse />} />
       </Routes>
     </Router>
   );

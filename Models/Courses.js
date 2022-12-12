@@ -28,6 +28,10 @@ const CoursesSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  link: {
+    type: String,
+    required: true,
+  },
 });
 
 const course = mongoose.model("Courses", CoursesSchema);

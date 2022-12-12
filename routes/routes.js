@@ -684,22 +684,19 @@ router.post("/signupCorp", async (req, res) => {
 });
 
 router.post("/addCourse", async (req, res) => {
-  if (req.session.isLoggedIn && req.session.userType == "Instructor") {
-    const newCourse = new Courses({
-      title: req.body.title,
-      subtitle: req.body.subtitle,
-      price: req.body.price,
-      summary: req.body.summary,
-      totalHours: req.body.totalHours,
-      rating: req.body.rating,
-      subject: req.body.subject,
-      instructor: req.session.username,
-    });
-    newCourse.save();
-    res.redirect("/instructor");
-  } else {
-    res.redirect("/login");
-  }
+  await Courses.create({
+    title: req.body.title,
+    subtitle: req.body.subtitle,
+    price: parseInt(req.body.price),
+    summary: req.body.summary,
+    totalHours: parseInt(req.body.totalHours),
+    rating: parseInt(req.body.rating),
+    subject: req.body.subject,
+    instructor: req.body.instructor,
+    link: req.body.title,
+  });
+
+  alert("course created");
 });
 
 router.post("/addingCorpTrainee", async (req, res) => {
