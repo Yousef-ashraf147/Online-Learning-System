@@ -20,6 +20,7 @@ import LoginInstructor from "./LoginInstructor";
 import LoginTrainee from "./LoginTrainee";
 import SignupInstruc from "./SignupInstruc";
 import AdminHome from "./AdminHome";
+import TraineeCourses from "./TraineeCourses";
 import TraineeHome from "./TraineeHome";
 
 function App() {
@@ -37,9 +38,12 @@ function App() {
 
         <Route path="/LoginTrainee" element={<LoginTrainee />} />
         <Route path="/Login" element={<Login />} />
-        <Route path="/TraineeHome" element={<TraineeHome />} />
+        
+        <Route path="/TraineeCourses" element={<TraineeCourses />} />
 
         <Route path="/AdminHome" element={<AdminHome />} />
+        <Route path="/TraineeHome" element={<TraineeHome />} />
+
       </Routes>
     </Router>
   );

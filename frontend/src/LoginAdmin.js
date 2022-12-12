@@ -43,17 +43,20 @@ const LoginAdmin = () => {
   const [password, setPassword] = React.useState("");
   const [country, setCountry] = React.useState("");
   const [email, setEmail] = React.useState("");
+  const [koko, setkoko] = React.useState("");
 
   function Submit() {
-    axios.post(
-      "http://localhost:3000/loginAdmin",
-      { username: username, password: password },
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      }
-    );
+    
+    fetch("http://localhost:3000/loginAdmin")
+    .then(res => {
+        res.json();
+    })
+    .then(data => {
+      console.log(data)
+    })
+    console.log(koko);
+
+    
     if (username.length > 0 && password.length > 0) {
       oNavigate();
     }
