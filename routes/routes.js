@@ -699,6 +699,120 @@ router.post("/addCourse", async (req, res) => {
   alert("course created");
 });
 
+router.post("/ChangePasswordIntsructor", async (req, res) => {
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/Instructor?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  await client.connect();
+  const inputUsername = req.body.username;
+  const inputPassword = req.body.password;
+  const inputOldPassword = req.body.oldPassword;
+  var koko = await client
+    .db("Instructor")
+    .collection("Instructor")
+    .findOne({ username: inputUsername });
+  if (!(koko.password === inputOldPassword)) alert("wrong old password");
+  else {
+    var output = await client
+      .db("Instructor")
+      .collection("Instructor")
+      .updateOne(
+        { username: inputUsername },
+        { $set: { password: inputPassword } }
+      );
+
+    alert("password changed");
+  }
+  /*output.forEach((item) => {
+    if (item.username == inputUsername) {
+      console.log(inputPassword);
+
+      item.password = inputPassword;
+      alert("password changed");
+    }
+  });*/
+});
+
+router.post("/ChangePasswordTrainee", async (req, res) => {
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/Trainee?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  await client.connect();
+  const inputUsername = req.body.username;
+  const inputPassword = req.body.password;
+  const inputOldPassword = req.body.oldPassword;
+  var koko = await client
+    .db("Trainee")
+    .collection("Trainee")
+    .findOne({ username: inputUsername });
+  if (!(koko.password === inputOldPassword)) alert("wrong old password");
+  else {
+    var output = await client
+      .db("Trainee")
+      .collection("Trainee")
+      .updateOne(
+        { username: inputUsername },
+        { $set: { password: inputPassword } }
+      );
+
+    alert("password changed");
+  }
+  /*output.forEach((item) => {
+      if (item.username == inputUsername) {
+        console.log(inputPassword);
+  
+        item.password = inputPassword;
+        alert("password changed");
+      }
+    });*/
+});
+
+router.post("/ChangePasswordTrainee", async (req, res) => {
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/Trainee?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  await client.connect();
+  const inputUsername = req.body.username;
+  const inputPassword = req.body.password;
+  const inputOldPassword = req.body.oldPassword;
+  var koko = await client
+    .db("Trainee")
+    .collection("Trainee")
+    .findOne({ username: inputUsername });
+  if (!(koko.password === inputOldPassword)) alert("wrong old password");
+  else {
+    var output = await client
+      .db("Trainee")
+      .collection("Trainee")
+      .updateOne(
+        { username: inputUsername },
+        { $set: { password: inputPassword } }
+      );
+
+    alert("password changed");
+  }
+  /*output.forEach((item) => {
+      if (item.username == inputUsername) {
+        console.log(inputPassword);
+  
+        item.password = inputPassword;
+        alert("password changed");
+      }
+    });*/
+});
+
 router.post("/addingCorpTrainee", async (req, res) => {
   if (req.session.isLoggedIn && req.session.userType == "admin") {
     var { MongoClient } = require("mongodb");
@@ -2042,7 +2156,7 @@ router.post("/loginAdmin", async (req, res) => {
   if (bool) {
     req.session.isLoggedIn = true;
     req.session.userType = "admin";
-    res.redirect("/adminHome");
+    res.sendStatus(200);
   } else alert("The password or the username is incorrect");
 });
 

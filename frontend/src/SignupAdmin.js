@@ -68,6 +68,11 @@ const SignupAdmin = () => {
         },
       }
     );
+    Nav();
+  }
+  const navigate = useNavigate();
+  function Nav() {
+    navigate("/LoginAdmin");
   }
 
   return (

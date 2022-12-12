@@ -26,7 +26,8 @@ import InstructorHome from "./InstructorHome";
 import ViewMyRatings from "./ViewMyRatings";
 import InstructorEditInfo from "./InstructorEditInfo";
 import InstructorAddCourse from "./InstructorAddCourse";
-
+import InstructorPassword from "./InstructorPassword";
+import TraineePassword from "./TraineePassword";
 function App() {
   return (
     <Router>
@@ -52,6 +53,8 @@ function App() {
         <Route path="/ViewMyRatings" element={<ViewMyRatings />} />
         <Route path="/InstructorEditInfo" element={<InstructorEditInfo />} />
         <Route path="/InstructorAddCourse" element={<InstructorAddCourse />} />
+        <Route path="/InstructorPassword" element={<InstructorPassword />} />
+        <Route path="/TraineePassword" element={<TraineePassword />} />
       </Routes>
     </Router>
   );

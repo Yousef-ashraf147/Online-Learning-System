@@ -1,7 +1,11 @@
 const TraineeHome = () => {
-    return (  
-        <a href='/TraineeCourses'>View my courses</a>
-    );
-}
- 
+  return (
+    <div>
+      <a href="/TraineeCourses">View all courses</a>
+      <br />
+      <a href="/TraineePassword">Change my password</a>
+    </div>
+  );
+};
+
 export default TraineeHome;

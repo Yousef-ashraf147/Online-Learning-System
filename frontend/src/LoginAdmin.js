@@ -45,22 +45,22 @@ const LoginAdmin = () => {
   const [email, setEmail] = React.useState("");
   const [koko, setkoko] = React.useState("");
 
-  function Submit() {
-    
-    fetch("http://localhost:3000/loginAdmin")
-    .then(res => {
-        res.json();
-    })
-    .then(data => {
-      console.log(data)
-    })
-    console.log(koko);
-
-    
-    if (username.length > 0 && password.length > 0) {
+  const Submit = async () => {
+    const input = { username, password };
+    const response = await fetch("http://localhost:3000/loginAdmin", {
+      method: "POST",
+      body: JSON.stringify(input),
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+    const json = await response.json();
+    if (response.ok) {
+      console.log("12312");
       oNavigate();
+      alert("ay haga");
     }
-  }
+  };
 
   const navigate = useNavigate();
   function oNavigate() {
@@ -77,7 +77,6 @@ const LoginAdmin = () => {
       autoComplete="off"
     >
       <Stack spacing={2} direction={"column"}>
-
         <TextField
           onChange={(e) => setUsername(e.target.value)}
           id="outlined-basic"

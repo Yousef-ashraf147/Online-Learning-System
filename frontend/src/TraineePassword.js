@@ -36,14 +36,14 @@ function Copyright(props) {
   );
 }
 
-const InstructorPassword = () => {
+const TraineePassword = () => {
   const [username, setUsername] = React.useState("");
   const [newpassword, setNewPassword] = React.useState("");
   const [oldpassword, setOldPassword] = React.useState("");
 
   function Submit() {
     axios.post(
-      "http://localhost:3000/ChangePasswordIntsructor",
+      "http://localhost:3000/ChangePasswordTrainee",
       {
         username: username,
         password: newpassword,
@@ -96,4 +96,4 @@ const InstructorPassword = () => {
   );
 };
 
-export default InstructorPassword;
+export default TraineePassword;
