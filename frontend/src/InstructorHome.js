@@ -12,6 +12,9 @@ const InstructorHome = () => {
       <a href="/InstructorEditInfo">Edit info</a>
       <br />
       <a href="/InstructorAddCourse">Add a new course</a>
+
+      <br />
+      <a href="/InstructorPassword">Change my password</a>
     </div>
   );
 };
