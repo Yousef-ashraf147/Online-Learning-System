@@ -13,11 +13,13 @@ import Login from "./Login";
 import Signup from "./Signup";
 import SignupAdmin from "./SignupAdmin";
 import SignupTrainee from "./SignupTrainee";
+import SignupCorporateTrainee from "./SignupCorporateTrainee";
 import SignupInstructor from "./SignupInstruc";
 import HomePage from "./HomePage";
 import LoginAdmin from "./LoginAdmin";
 import LoginInstructor from "./LoginInstructor";
 import LoginTrainee from "./LoginTrainee";
+import LoginCorporateTrainee from "./LoginCorporateTrainee";
 import SignupInstruc from "./SignupInstruc";
 import AdminHome from "./AdminHome";
 import TraineeCourses from "./TraineeCourses";
@@ -38,10 +40,18 @@ function App() {
         <Route path="/signupInstruc" element={<SignupInstruc />} />
 
         <Route path="/signuptrainee" element={<SignupTrainee />} />
+        <Route
+          path="/SignupCorporateTrainee"
+          element={<SignupCorporateTrainee />}
+        />
         <Route path="/LoginAdmin" element={<LoginAdmin />} />
         <Route path="/LoginInstructor" element={<LoginInstructor />} />
 
         <Route path="/LoginTrainee" element={<LoginTrainee />} />
+        <Route
+          path="/LoginCorporateTrainee"
+          element={<LoginCorporateTrainee />}
+        />
         <Route path="/Login" element={<Login />} />
 
         <Route path="/TraineeCourses" element={<TraineeCourses />} />

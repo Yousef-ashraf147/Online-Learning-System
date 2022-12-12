@@ -620,6 +620,7 @@ router.post("/signupCorp", async (req, res) => {
   await client.connect();
   const inputUsername = req.body.username;
   const inputPassword = req.body.password;
+  const inputEmail = req.body.email;
   var output = await client
     .db("Trainee")
     .collection("Trainee")
@@ -663,7 +664,7 @@ router.post("/signupCorp", async (req, res) => {
   });
   if (Country == "Select Country") {
     alert("Please select a country");
-  } else if (inputPassword.length == 0 || inputUsername.length == 0) {
+  } else if (inputPassword.length == 0 ||  inputEmail.length==0 ) {
     alert("the password or the username is empty");
   } else {
     if (bool == false) {

@@ -29,6 +29,8 @@ function Login() {
       <br />
       <a href="LoginTrainee">Login as a trainee</a>
       <br />
+      <a href="LoginCorporateTrainee">Login as a Corporate trainee</a>
+      <br />
       <a href="Guest">Continue as a guest</a>
       <br />
     </div>
