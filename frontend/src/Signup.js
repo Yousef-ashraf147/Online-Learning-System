@@ -34,6 +34,8 @@ const Signup = () => {
       <br />
       <a href="/SignupTrainee">Signup as a Trainee</a>
       <br />
+      <a href="/SignupCorporateTrainee">Signup as a Corporate Trainee</a>
+      <br />
     </div>
   );
 };
