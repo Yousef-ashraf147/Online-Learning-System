@@ -18,6 +18,17 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import Rating from "@mui/material/Rating";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import { useState, useEffect } from "react";
+
+
 function Copyright(props) {
   return (
     <Typography
@@ -38,12 +49,66 @@ function Copyright(props) {
 
 const TraineeHome = () => {
   const navigate = useNavigate();
+  const [rows, setRows] = React.useState([]);
+  const [value, setValue] = React.useState();
+
+  useEffect(() => {
+    axios.get("http://localhost:3000/traineeHome").then((response) => {
+      setRows(response.data);
+    });
+  }, []);
+  const x = "/SignupTrainee";
+
+  return (
+    <>
+      <Rating
+        name="simple-controlled"
+        value={value}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+        }}
+      />
+      <TableContainer>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell align="left">title</TableCell>
+              <TableCell align="left">subject</TableCell>
+              <TableCell align="left">price</TableCell>
+              <TableCell align="left">totalHours</TableCell>
+              <TableCell align="left">rating</TableCell>
+              <TableCell align="left">instructor</TableCell>
+              <TableCell align="left">summary</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows &&
+              rows.map((row) => (
+                <TableRow
+                  key={row.title}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell align="left">{row.title}</TableCell>
+                  <TableCell align="left">{row.subject}</TableCell>
+                  <TableCell align="left">{row.price}</TableCell>
+                  <TableCell align="left">{row.totalHours}</TableCell>
+                  <TableCell align="left">{row.rating}</TableCell>
+                  <TableCell align="left">{row.instructor}</TableCell>
+                  <TableCell align="left">{row.summary}</TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <a href={x}>click here</a>
+    </>
+  );
 
   /*function oNavigate() {
     navigate("./SignupAdmin");
-  }*/
+  }
   var sample = new Array();
-  var l = {};
+  var l = [];
   axios
     .get(
       "http://localhost:3000/traineeHome",
@@ -58,8 +123,11 @@ const TraineeHome = () => {
       sample = res.data;
       l = res.data;
       console.log(res.data);
+      console.log(res.data.price);
+
       console.log(sample);
-    });
+      var data = res.data;
+    });*/
 
   return (
     <div>
@@ -67,7 +135,6 @@ const TraineeHome = () => {
         <h1>HomePage</h1>
         <hr />
       </div>
-      <p>{l}</p>
     </div>
   );
 };

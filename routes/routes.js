@@ -153,65 +153,66 @@ router.get("/guestHome", async (req, res) => {
   }
 });
 router.get("/traineeHome", async (req, res) => {
-  if (req.session.isLoggedIn && req.session.userType == "Trainee") {
-    var price1 = 5;
-    var price2 = 20;
-    var price3 = 40;
-    var price4 = 60;
-    var price5 = 100;
+  //   var myArray = [];
 
-    if (req.session.Country == "Egypt") {
-      req.session.currency = "£";
+  //   if (req.session.isLoggedIn && req.session.userType == "Trainee") {
+  //     var price1 = 5;
+  //     var price2 = 20;
+  //     var price3 = 40;
+  //     var price4 = 60;
+  //     var price5 = 100;
 
-      const courses = await Courses.find({}).exec();
-      price1 = 5 * 23.8;
-      price2 = 20 * 23.8;
-      price3 = 40 * 23.8;
-      price4 = 60 * 23.8;
-      price5 = 100 * 23.8;
+  //     if (req.session.Country == "Egypt") {
+  //       req.session.currency = "£";
 
-      res.send(courses);
-    } else if (req.session.Country == "United Kingdom") {
-      req.session.currency = "£";
+  //       myArray = await Courses.find({}).exec();
+  //       price1 = 5 * 23.8;
+  //       price2 = 20 * 23.8;
+  //       price3 = 40 * 23.8;
+  //       price4 = 60 * 23.8;
+  //       price5 = 100 * 23.8;
+  //     } else if (req.session.Country == "United Kingdom") {
+  //       req.session.currency = "£";
 
-      const courses = await Courses.find({}).exec();
-      price1 = 5 * 0.88;
-      price2 = 20 * 0.88;
-      price3 = 40 * 0.88;
-      price4 = 60 * 0.88;
-      price5 = 100 * 0.88;
+  //       myArray = await Courses.find({}).exec();
+  //       price1 = 5 * 0.88;
+  //       price2 = 20 * 0.88;
+  //       price3 = 40 * 0.88;
+  //       price4 = 60 * 0.88;
+  //       price5 = 100 * 0.88;
 
-      res.render("traineeHome", {
-        currency: req.session.currency,
-        courses,
-        offset: 0.88,
-        price1,
-        price2,
-        price3,
-        price4,
-        price5,
-      });
-    } else if (req.session.Country == "Germany") {
-      req.session.currency = "€";
-      const courses = await Courses.find({}).exec();
-      res.render("traineeHome", {
-        currency: req.session.currency,
-        courses,
-        offset: 1,
-        price1,
-        price2,
-        price3,
-        price4,
-        price5,
-      });
-    } else {
-      req.session.currency = "$";
-      const courses = await Courses.find({}).exec();
-      res.send(courses);
-    }
-  } else {
-    res.redirect("/login");
-  }
+  //       res.render("traineeHome", {
+  //         currency: req.session.currency,
+  //         courses,
+  //         offset: 0.88,
+  //         price1,
+  //         price2,
+  //         price3,
+  //         price4,
+  //         price5,
+  //       });
+  //     } else if (req.session.Country == "Germany") {
+  //       req.session.currency = "€";
+  //       myArray = await Courses.find({}).exec();
+  //       res.render("traineeHome", {
+  //         currency: req.session.currency,
+  //         courses,
+  //         offset: 1,
+  //         price1,
+  //         price2,
+  //         price3,
+  //         price4,
+  //         price5,
+  //       });
+  //     } else {
+  //       req.session.currency = "$";
+  //       myArray = await Courses.find({}).exec();
+  //     }
+  //   }
+  //   res.json(myArray);
+
+  const courses = await Courses.find({}).exec();
+  res.send(courses);
 });
 
 router.get("/guestHome", async (req, res) => {
