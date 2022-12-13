@@ -739,6 +739,39 @@ router.post("/ChangePasswordIntsructor", async (req, res) => {
   });*/
 });
 
+router.post("/GetBio", async (req, res) => {
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/Instructor?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  await client.connect();
+  const inputUsername = req.body.username;
+
+  /*  username: username,
+          Bio: newBio,
+          oldBio: oldBio,*/
+  var koko = await client
+    .db("Instructor")
+    .collection("Instructor")
+    .findOne({ username: inputUsername });
+  if (koko.username == inputUsername);
+  {
+    var output = koko.Bio;
+    res.send(output);
+  }
+  /*output.forEach((item) => {
+        if (item.username == inputUsername) {
+          console.log(inputPassword);
+    
+          item.password = inputPassword;
+          alert("password changed");
+        }
+      });*/
+});
+
 router.post("/ChangeBioIntsructor", async (req, res) => {
   var { MongoClient } = require("mongodb");
   var url =

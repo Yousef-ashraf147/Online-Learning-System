@@ -34,6 +34,7 @@ import InstructorChangeEmail from "./InstructorChangeEmail";
 import InstructorChangeBio from "./InstructorChangeBio";
 import { Switch } from "react-router-dom";
 import { ReactSession } from "react-client-session";
+import UserProfile from "./UserProfile";
 
 function App() {
   return (

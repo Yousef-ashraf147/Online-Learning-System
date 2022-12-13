@@ -18,6 +18,10 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Switch } from "react-router-dom";
+import { ReactSession } from "react-client-session";
+import UserProfile from "./UserProfile";
+import cookie from "react-cookies";
 function Copyright(props) {
   return (
     <Typography
@@ -45,10 +49,22 @@ const InstructorChangeBio = () => {
         setRows(response.data);
       });
     }, []);*/
+  const [bio, setBio] = React.useState("");
 
-  const [username, setUsername] = React.useState("");
+  axios
+    .post("http://localhost:3000/GetBio", {
+      username: cookie.load("username"),
+    })
+    .then((response) => {
+      setBio(response.data);
+      console.log(bio);
+    });
+
+  const username = cookie.load("username");
   const [newBio, setNewBio] = React.useState("");
   const [oldBio, setOldBio] = React.useState("");
+
+  // console.log(username);
 
   function Submit() {
     axios.post(
@@ -65,7 +81,6 @@ const InstructorChangeBio = () => {
         },
       }
     );
-    console.log(newBio);
   }
 
   //need a session to get the old bio to show it to be able to change it
@@ -84,21 +99,14 @@ const InstructorChangeBio = () => {
         autoComplete="off"
       >
         <Stack spacing={2} direction={"column"}>
-          <TextField
-            onChange={(e) => setUsername(e.target.value)}
-            id="outlined-basic"
-            label="UserName"
-            variant="outlined"
-          />
-          <br />
-
           <input
             onChange={(e) => setNewBio(e.target.value)}
             style={{ width: "500px", height: "150px" }}
             name="mucho texto"
             type="text"
             label="Your Bio"
-          />
+            defaultValue={bio}
+          ></input>
 
           <Button onClick={Submit} variant="contained">
             Change Bio
