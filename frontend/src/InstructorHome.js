@@ -3,7 +3,7 @@ import * as React from "react";
 const InstructorHome = () => {
   return (
     <div>
-      <h1>Instructor Home Page</h1>
+      <h1 style={{ fontSize: "2rem" }}>Instructor Home Page</h1>
 
       <br />
       <a href="/ViewMyRatings">View my ratings</a>

@@ -18,6 +18,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "bulma/css/bulma.min.css";
 import cookie from "react-cookies";
 import { ReactSession } from "react-client-session";
 
