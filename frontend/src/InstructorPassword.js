@@ -18,6 +18,8 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import cookie from "react-cookies";
+
 function Copyright(props) {
   return (
     <Typography
@@ -37,7 +39,6 @@ function Copyright(props) {
 }
 
 const InstructorPassword = () => {
-  const [username, setUsername] = React.useState("");
   const [newpassword, setNewPassword] = React.useState("");
   const [oldpassword, setOldPassword] = React.useState("");
 
@@ -45,7 +46,7 @@ const InstructorPassword = () => {
     axios.post(
       "http://localhost:3000/ChangePasswordIntsructor",
       {
-        username: username,
+        username: cookie.load("username"),
         password: newpassword,
         oldPassword: oldpassword,
       },
@@ -69,12 +70,6 @@ const InstructorPassword = () => {
       autoComplete="off"
     >
       <Stack spacing={2} direction={"column"}>
-        <TextField
-          onChange={(e) => setUsername(e.target.value)}
-          id="outlined-basic"
-          label="UserName"
-          variant="outlined"
-        />
         <TextField
           onChange={(e) => setOldPassword(e.target.value)}
           id="outlined-basic"

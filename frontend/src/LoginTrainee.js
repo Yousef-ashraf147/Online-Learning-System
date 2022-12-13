@@ -18,6 +18,9 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import cookie from "react-cookies";
+import { ReactSession } from "react-client-session";
+
 function Copyright(props) {
   return (
     <Typography
@@ -41,6 +44,7 @@ const theme = createTheme();
 const LoginTrainee = () => {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
+  ReactSession.setStoreType("cookie");
 
   function Submit() {
     axios.post(
@@ -58,6 +62,8 @@ const LoginTrainee = () => {
     if (username.length > 0 && password.length > 0) {
       oNavigate();
     }
+    cookie.save("username", username, { path: "/" });
+    console.log(cookie.load("username"));
   }
 
   const navigate = useNavigate();
