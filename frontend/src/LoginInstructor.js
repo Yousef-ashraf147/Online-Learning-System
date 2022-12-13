@@ -1,3 +1,5 @@
+import { Switch, Route } from "react-router-dom";
+import { ReactSession } from "react-client-session";
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -59,6 +61,9 @@ const LoginInstructor = () => {
     if (username.length > 0 && password.length > 0) {
       oNavigate();
     }
+    ReactSession.setStoreType("localStorage");
+    ReactSession.set("username", username);
+    console.log(ReactSession.get("username"));
   }
 
   const navigate = useNavigate();
