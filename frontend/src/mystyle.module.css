@@ -1,0 +1,48 @@
+
+  
+body {
+    background-color: #1e5bd4;
+    color: rgb(226, 119, 119);
+    padding: 3000px;
+    font-family: Arial;
+    text-align: center;
+    width: 1500px;
+    height: 3000px;
+}
+h1 {
+    background-color: #4797a0;
+  }
+  
+
+
+
+  .clickme {
+    background-color: #f3eaea;
+    padding: 8px 30px;
+    text-decoration:none;
+    font-weight:bold;
+    border-radius:4px;
+    cursor:pointer;
+
+    text-align: center;
+    word-spacing:50px;
+   
+    }
+
+    .x {
+        background-color: #f3eaea;
+        padding: 8px 30px;
+        text-decoration:none;
+        font-weight:bold;
+        border-radius:4px;
+        cursor:pointer;
+        text-align: justify;
+        position: 'absolute';
+    top: 200px;
+    left: 40px;
+
+        
+        
+    
+    }
+
