@@ -31,6 +31,7 @@ import InstructorAddCourse from "./InstructorAddCourse";
 import InstructorPassword from "./InstructorPassword";
 import TraineePassword from "./TraineePassword";
 import InstructorChangeEmail from "./InstructorChangeEmail";
+import InstructorChangeBio from "./InstructorChangeBio";
 
 function App() {
   return (
@@ -67,7 +68,11 @@ function App() {
         <Route path="/InstructorAddCourse" element={<InstructorAddCourse />} />
         <Route path="/InstructorPassword" element={<InstructorPassword />} />
         <Route path="/TraineePassword" element={<TraineePassword />} />
-        <Route path="/InstructorChangeEmail" element={<InstructorChangeEmail />} />
+        <Route
+          path="/InstructorChangeEmail"
+          element={<InstructorChangeEmail />}
+        />
+        <Route path="/InstructorChangeBio" element={<InstructorChangeBio />} />
       </Routes>
     </Router>
   );
