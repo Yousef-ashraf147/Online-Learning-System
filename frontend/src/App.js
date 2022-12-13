@@ -32,6 +32,8 @@ import InstructorPassword from "./InstructorPassword";
 import TraineePassword from "./TraineePassword";
 import InstructorChangeEmail from "./InstructorChangeEmail";
 import InstructorChangeBio from "./InstructorChangeBio";
+import { Switch, Route } from 'react-router-dom';
+import { ReactSession } from 'react-client-session';
 
 function App() {
   return (
