@@ -32,10 +32,14 @@ import InstructorPassword from "./InstructorPassword";
 import TraineePassword from "./TraineePassword";
 import InstructorChangeEmail from "./InstructorChangeEmail";
 import InstructorChangeBio from "./InstructorChangeBio";
+import CreateInstructor from "./CreateInstructor";
+import CreateAdmin from "./CreateAdmin";
+import CreateCorporateTrainee from "./CreateCorporateTrainee";
+
 import { Switch } from "react-router-dom";
 import { ReactSession } from "react-client-session";
 import UserProfile from "./UserProfile";
-import styles from './mystyle.module.css';
+import styles from "./mystyle.module.css";
 function App() {
   return (
     <Router>
@@ -76,6 +80,12 @@ function App() {
           element={<InstructorChangeEmail />}
         />
         <Route path="/InstructorChangeBio" element={<InstructorChangeBio />} />
+        <Route path="/CreateInstructor" element={<CreateInstructor />} />
+        <Route path="/CreateAdmin" element={<CreateAdmin />} />
+        <Route
+          path="/CreateCorporateTrainee"
+          element={<CreateCorporateTrainee />}
+        />
       </Routes>
     </Router>
   );

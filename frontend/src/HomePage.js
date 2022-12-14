@@ -18,36 +18,22 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import styles from './mystyle.module.css';
+import styles from "./mystyle.module.css";
 
 function HomePage() {
   return (
-    <div>
-
+    <div className="a">
       <br />
-      <a  className={styles.clickme}  href="/Signup"  >SignUp</a>  
+      <p>
+        <a className={styles.clickme} href="/Signup">
+          SignUp
+        </a>
+        <br />
+        <a class={styles.x} href="/Login">
+          Login
+        </a>
+      </p>
       <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-
-
-
-      
-      <a  class={styles.x} href="/Login">Login</a>  
-      <br />
-
-
-
-
-
-
-
-
-
-
     </div>
   );
 }

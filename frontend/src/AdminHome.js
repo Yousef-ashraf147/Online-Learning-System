@@ -23,7 +23,13 @@ function AdminHome() {
   return (
     <div>
       <br />
-      Admin Home Page
+      <a href="/CreateAdmin">Create an admin</a>
+      <br />
+      <br />
+      <a href="CreateInstructor">Create an Instructor</a>
+      <br />
+      <br />
+      <a href="CreateCorporateTrainee">Create a Corporate Trainee</a>
     </div>
   );
 }

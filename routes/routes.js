@@ -698,6 +698,8 @@ router.post("/addCourse", async (req, res) => {
     link: req.body.title,
   });
 
+  router.post("/", async (req, res) => {});
+
   alert("course created");
 });
 
@@ -926,215 +928,209 @@ router.post("/ChangePasswordTrainee", async (req, res) => {
 });
 
 router.post("/addingCorpTrainee", async (req, res) => {
-  if (req.session.isLoggedIn && req.session.userType == "admin") {
-    var { MongoClient } = require("mongodb");
-    var url =
-      "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/corporate?retryWrites=true&w=majority";
-    var client = new MongoClient(url, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    await client.connect();
-    const inputUsername = req.body.username3;
-    const inputPassword = req.body.password3;
-    var output = await client
-      .db("Trainee")
-      .collection("Trainee")
-      .find()
-      .toArray();
-    const Country = req.body.country;
+  //if (req.session.isLoggedIn && req.session.userType == "admin") {
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/corporate?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  await client.connect();
+  const inputUsername = req.body.username;
+  const inputPassword = req.body.password;
+  var output = await client
+    .db("Trainee")
+    .collection("Trainee")
+    .find()
+    .toArray();
+  const Country = req.body.country;
 
-    var output2 = await client
-      .db("adminstrator")
-      .collection("adminstrator")
-      .find()
-      .toArray();
+  var output2 = await client
+    .db("adminstrator")
+    .collection("adminstrator")
+    .find()
+    .toArray();
 
-    var output3 = await client
-      .db("Instructor")
-      .collection("Instructor")
-      .find()
-      .toArray();
+  var output3 = await client
+    .db("Instructor")
+    .collection("Instructor")
+    .find()
+    .toArray();
 
-    var output4 = await client
-      .db("corporate")
-      .collection("corporate")
-      .find()
-      .toArray();
-    var bool = false;
+  var output4 = await client
+    .db("corporate")
+    .collection("corporate")
+    .find()
+    .toArray();
+  var bool = false;
 
-    output4.forEach((item) => {
-      if (item.username == inputUsername) bool = true;
-    });
+  output4.forEach((item) => {
+    if (item.username == inputUsername) bool = true;
+  });
 
-    output2.forEach((item) => {
-      if (item.username == inputUsername) bool = true;
-    });
+  output2.forEach((item) => {
+    if (item.username == inputUsername) bool = true;
+  });
 
-    output3.forEach((item) => {
-      if (item.username == inputUsername) bool = true;
-    });
+  output3.forEach((item) => {
+    if (item.username == inputUsername) bool = true;
+  });
 
-    output.forEach((item) => {
-      if (item.username == inputUsername) bool = true;
-    });
-    if (Country == "Select Country") {
-      alert("Please select a country");
-    } else if (inputPassword.length == 0 || inputUsername.length == 0) {
-      alert("the password or the username is empty");
-    } else {
-      if (bool == false) {
-        var user = {
-          username: inputUsername,
-          password: inputPassword,
-          Country: Country,
-        };
-        await client.db("corporate").collection("corporate").insertOne(user);
-        alert("registration successful");
-        MongoClient.connect(url, function (err, db) {
-          if (err) throw err;
-        });
-        alert("corporate trainee ceated!!");
-      } else alert("please choose another username");
-    }
+  output.forEach((item) => {
+    if (item.username == inputUsername) bool = true;
+  });
+  if (Country == "Select Country") {
+    alert("Please select a country");
+  } else if (inputPassword.length == 0 || inputUsername.length == 0) {
+    alert("the password or the username is empty");
   } else {
-    res.redirect("/login");
+    if (bool == false) {
+      var user = {
+        username: inputUsername,
+        password: inputPassword,
+        Country: Country,
+      };
+      await client.db("corporate").collection("corporate").insertOne(user);
+      // alert("registration successful");
+      MongoClient.connect(url, function (err, db) {
+        if (err) throw err;
+      });
+      alert("corporate trainee ceated!!");
+    } else alert("please choose another username");
   }
 });
 
 router.post("/addingInstructor", async (req, res) => {
-  if (req.session.isLoggedIn && req.session.userType == "admin") {
-    var { MongoClient } = require("mongodb");
-    var url =
-      "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/Instructor?retryWrites=true&w=majority";
-    var client = new MongoClient(url, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    await client.connect();
-    const inputUsername = req.body.username2;
-    const inputPassword = req.body.password2;
-    var output = await client
-      .db("Instructor")
-      .collection("Instructor")
-      .find()
-      .toArray();
-    const Country = req.body.country;
+  // if (req.session.isLoggedIn && req.session.userType == "admin")
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/Instructor?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  await client.connect();
+  const inputUsername = req.body.username;
+  const inputPassword = req.body.password;
+  var output = await client
+    .db("Instructor")
+    .collection("Instructor")
+    .find()
+    .toArray();
+  const Country = req.body.country;
 
-    var output2 = await client
-      .db("adminstrator")
-      .collection("adminstrator")
-      .find()
-      .toArray();
+  var output2 = await client
+    .db("adminstrator")
+    .collection("adminstrator")
+    .find()
+    .toArray();
 
-    var output3 = await client
-      .db("Trainee")
-      .collection("Trainee")
-      .find()
-      .toArray();
+  var output3 = await client
+    .db("Trainee")
+    .collection("Trainee")
+    .find()
+    .toArray();
 
-    var bool = false;
-    output3.forEach((item) => {
-      if (item.username == inputUsername) bool = true;
-    });
+  var bool = false;
+  output3.forEach((item) => {
+    if (item.username == inputUsername) bool = true;
+  });
 
-    output2.forEach((item) => {
-      if (item.username == inputUsername) bool = true;
-    });
+  output2.forEach((item) => {
+    if (item.username == inputUsername) bool = true;
+  });
 
-    output.forEach((item) => {
-      if (item.username == inputUsername) bool = true;
-    });
-    if (Country == "Select Country") {
-      alert("Please select a country");
-    } else if (inputPassword.length == 0 || inputUsername.length == 0) {
-      alert("the password or the username is empty");
-    } else {
-      if (bool == false) {
-        var user = {
-          username: inputUsername,
-          password: inputPassword,
-          Country: Country,
-        };
-        await client.db("Instructor").collection("Instructor").insertOne(user);
-        alert("registration successful");
-        MongoClient.connect(url, function (err, db) {
-          if (err) throw err;
-        });
-        alert("Instructor created!!");
-      } else alert("please choose another username");
-    }
+  output.forEach((item) => {
+    if (item.username == inputUsername) bool = true;
+  });
+  if (Country == "Select Country" || Country == "") {
+    alert("Please select a country");
+  } else if (inputPassword.length == 0 || inputUsername.length == 0) {
+    alert("the password or the username is empty");
   } else {
-    res.redirect("/login");
+    if (bool == false) {
+      var user = {
+        username: inputUsername,
+        password: inputPassword,
+        Country: Country,
+      };
+      await client.db("Instructor").collection("Instructor").insertOne(user);
+      // alert("registration successful");
+      MongoClient.connect(url, function (err, db) {
+        if (err) throw err;
+      });
+      alert("Instructor created!!");
+    } else alert("please choose another username");
   }
+  /*else {
+    res.redirect("/login");
+  }*/
 });
 
 router.post("/addingAdmins", async (req, res) => {
-  if (req.session.isLoggedIn && req.session.userType == "admin") {
-    var { MongoClient } = require("mongodb");
-    var url =
-      "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/adminstrator?retryWrites=true&w=majority";
-    var client = new MongoClient(url, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    await client.connect();
-    const inputUsername = req.body.username;
-    const inputPassword = req.body.password;
-    var output = await client
-      .db("adminstrator")
-      .collection("adminstrator")
-      .find()
-      .toArray();
-    const Country = req.body.country;
-    var output2 = await client
-      .db("Instructor")
-      .collection("Instructor")
-      .find()
-      .toArray();
-    var output3 = await client
-      .db("Trainee")
-      .collection("Trainee")
-      .find()
-      .toArray();
+  //if (req.session.isLoggedIn && req.session.userType == "admin") {
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/adminstrator?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  await client.connect();
+  const inputUsername = req.body.username;
+  const inputPassword = req.body.password;
+  var output = await client
+    .db("adminstrator")
+    .collection("adminstrator")
+    .find()
+    .toArray();
+  const Country = req.body.country;
+  var output2 = await client
+    .db("Instructor")
+    .collection("Instructor")
+    .find()
+    .toArray();
+  var output3 = await client
+    .db("Trainee")
+    .collection("Trainee")
+    .find()
+    .toArray();
 
-    var bool = false;
+  var bool = false;
 
-    output3.forEach((item) => {
-      if (item.username == inputUsername) bool = true;
-    });
+  output3.forEach((item) => {
+    if (item.username == inputUsername) bool = true;
+  });
 
-    output2.forEach((item) => {
-      if (item.username == inputUsername) bool = true;
-    });
+  output2.forEach((item) => {
+    if (item.username == inputUsername) bool = true;
+  });
 
-    output.forEach((item) => {
-      if (item.username == inputUsername) bool = true;
-    });
-    if (Country == "Select Country") {
-      alert("Please select a country");
-    } else if (inputPassword.length == 0 || inputUsername.length == 0) {
-      alert("the password or the username is empty");
-    } else {
-      if (bool == false) {
-        var user = {
-          username: inputUsername,
-          password: inputPassword,
-          Country: Country,
-        };
-        await client
-          .db("adminstrator")
-          .collection("adminstrator")
-          .insertOne(user);
-        alert("registration successful");
-        MongoClient.connect(url, function (err, db) {
-          if (err) throw err;
-        });
-        alert("admin created!!");
-      } else alert("please choose another username");
-    }
+  output.forEach((item) => {
+    if (item.username == inputUsername) bool = true;
+  });
+  if (Country == "Select Country" || Country == "") {
+    alert("Please select a country");
+  } else if (inputPassword.length == 0 || inputUsername.length == 0) {
+    alert("the password or the username is empty");
   } else {
-    res.redirect("/login");
+    if (bool == false) {
+      var user = {
+        username: inputUsername,
+        password: inputPassword,
+        Country: Country,
+      };
+      await client
+        .db("adminstrator")
+        .collection("adminstrator")
+        .insertOne(user);
+      // alert("registration successful");
+      MongoClient.connect(url, function (err, db) {
+        if (err) throw err;
+      });
+      alert("admin created!!");
+    } else alert("please choose another username");
   }
 });
 
