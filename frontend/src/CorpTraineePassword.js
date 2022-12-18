@@ -1,5 +1,3 @@
-import { Switch, Route } from "react-router-dom";
-import { ReactSession } from "react-client-session";
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -20,7 +18,6 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import UserProfile from "./UserProfile";
 import cookie from "react-cookies";
 
 function Copyright(props) {
@@ -41,37 +38,26 @@ function Copyright(props) {
   );
 }
 
-const theme = createTheme();
-
-const LoginInstructor = () => {
-  const [username, setUsername] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  ReactSession.setStoreType("cookie");
+const CorpTraineePassword = () => {
+  const [newpassword, setNewPassword] = React.useState("");
+  const [oldpassword, setOldPassword] = React.useState("");
 
   function Submit() {
     axios.post(
-      "http://localhost:3000/loginInstructor",
+      "http://localhost:3000/ChangePasswordCorp",
       {
-        username: username,
-        password: password,
+        username: cookie.load("username"),
+        password: newpassword,
+        oldPassword: oldpassword,
       },
+
       {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       }
     );
-    if (username.length > 0 && password.length > 0) {
-      oNavigate();
-    }
-    cookie.save("username", username, { path: "/" });
-
-    console.log(cookie.load("username"));
-  }
-
-  const navigate = useNavigate();
-  function oNavigate() {
-    navigate("/InstructorHome");
+    console.log(newpassword);
   }
 
   return (
@@ -85,24 +71,24 @@ const LoginInstructor = () => {
     >
       <Stack spacing={2} direction={"column"}>
         <TextField
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e) => setOldPassword(e.target.value)}
           id="outlined-basic"
-          label="Username"
+          label="Old password"
           variant="outlined"
         />
         <TextField
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => setNewPassword(e.target.value)}
           id="filled-basic"
-          label="Password"
+          label="New Password"
           variant="outlined"
         />
 
         <Button onClick={Submit} variant="contained">
-          Login
+          Change Password
         </Button>
       </Stack>
     </Box>
   );
 };
 
-export default LoginInstructor;
+export default CorpTraineePassword;

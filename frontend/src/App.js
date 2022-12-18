@@ -35,6 +35,12 @@ import InstructorChangeBio from "./InstructorChangeBio";
 import CreateInstructor from "./CreateInstructor";
 import CreateAdmin from "./CreateAdmin";
 import CreateCorporateTrainee from "./CreateCorporateTrainee";
+import InstructorCourses from "./InstructorCourses";
+import InstructorViewMyCourse from "./InstructorViewMyCourse";
+import CorpTraineeHome from "./CorpTraineeHome";
+import CorpTraineeCourses from "./CorpTraineeCourses";
+import CorpTraineePassword from "./CorpTraineePassword";
+
 
 import { Switch } from "react-router-dom";
 import { ReactSession } from "react-client-session";
@@ -62,9 +68,13 @@ function App() {
           path="/LoginCorporateTrainee"
           element={<LoginCorporateTrainee />}
         />
+
+        <Route path="/CorpTraineeHome" element={<CorpTraineeHome />} />
+
         <Route path="/Login" element={<Login />} />
 
         <Route path="/TraineeCourses" element={<TraineeCourses />} />
+        <Route path="/InstructorCourses" element={<InstructorCourses />} />
 
         <Route path="/AdminHome" element={<AdminHome />} />
         <Route path="/TraineeHome" element={<TraineeHome />} />
@@ -80,12 +90,21 @@ function App() {
           element={<InstructorChangeEmail />}
         />
         <Route path="/InstructorChangeBio" element={<InstructorChangeBio />} />
+        <Route
+          path="/InstructorViewMyCourse"
+          element={<InstructorViewMyCourse />}
+        />
         <Route path="/CreateInstructor" element={<CreateInstructor />} />
         <Route path="/CreateAdmin" element={<CreateAdmin />} />
         <Route
           path="/CreateCorporateTrainee"
           element={<CreateCorporateTrainee />}
         />
+        <Route path="/CorpTraineeCourses" element={<CorpTraineeCourses />} />
+        <Route path="/CorpTraineePassword" element={<CorpTraineePassword />} />
+
+        
+
       </Routes>
     </Router>
   );

@@ -686,7 +686,10 @@ router.post("/signupCorp", async (req, res) => {
 });
 
 router.post("/addCourse", async (req, res) => {
+  const courses1 = await Courses.find({}).exec();
+  var z = courses1.length + 1;
   await Courses.create({
+    id: z,
     title: req.body.title,
     subtitle: req.body.subtitle,
     price: parseInt(req.body.price),
@@ -724,6 +727,45 @@ router.post("/ChangePasswordIntsructor", async (req, res) => {
     var output = await client
       .db("Instructor")
       .collection("Instructor")
+      .updateOne(
+        { username: inputUsername },
+        { $set: { password: inputPassword } }
+      );
+
+    alert("password changed");
+  }
+  /*output.forEach((item) => {
+    if (item.username == inputUsername) {
+      console.log(inputPassword);
+
+      item.password = inputPassword;
+      alert("password changed");
+    }
+  });*/
+});
+
+router.post("/ChangePasswordCorp", async (req, res) => {
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/Instructor?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  await client.connect();
+  const inputUsername = req.body.username;
+  const inputPassword = req.body.password;
+  const inputOldPassword = req.body.oldPassword;
+  console.log(inputUsername + " " + inputPassword + " " + inputOldPassword);
+  var koko = await client
+    .db("corporate")
+    .collection("corporate")
+    .findOne({ username: inputUsername });
+  if (!(koko.password === inputOldPassword)) alert("wrong old password");
+  else {
+    var output = await client
+      .db("corporate")
+      .collection("corporate")
       .updateOne(
         { username: inputUsername },
         { $set: { password: inputPassword } }
@@ -1309,7 +1351,7 @@ router.post("/guestSearchCourse", async (req, res) => {
 });
 //
 
-router.post("/instructorSearch", async (req, res) => {
+router.post("/instructorSearch1", async (req, res) => {
   if (req.session.isLoggedIn && req.session.userType == "Instructor") {
     var price1 = 5;
     var price2 = 20;
@@ -1485,6 +1527,86 @@ router.post("/instructorSearch", async (req, res) => {
   } else {
     res.redirect("/login");
   }
+});
+router.post("/InstructorMySearch", async (req, res) => {
+  var price1 = 5;
+  var price2 = 20;
+  var price3 = 40;
+  var price4 = 60;
+  var price5 = 100;
+  var offset = 23.8;
+  //if (req.session.Country == "Egypt") {
+  req.session.currency = "£";
+
+  price1 = 5 * 23.8;
+  price2 = 20 * 23.8;
+  price3 = 40 * 23.8;
+  price4 = 60 * 23.8;
+  price5 = 100 * 23.8;
+
+  const courses = await Courses.find({}).exec();
+  const Instructor = req.body.Instructor;
+  const CourseName = req.body.Search;
+  const Subject = req.body.Subject;
+  const Rating = req.body.Rating;
+  const Price = req.body.Price;
+  console.log(Price + " " + Subject + "" + Rating + " " + CourseName + "yala");
+
+  var filteredCourses = courses.filter(
+    (item) =>
+      (item.title.toLowerCase().includes(CourseName.toLowerCase()) ||
+        item.subject.toLowerCase().includes(CourseName) ||
+        item.instructor.toLowerCase().includes(CourseName) ||
+        CourseName == "") &&
+      (item.subject == Subject || Subject == "null" || Subject == "") &&
+      (item.rating <= Rating || Rating == "null" || Rating == "") &&
+      (item.price <= Price || Price == "null" || Price == "") &&
+      item.instructor == Instructor
+  );
+
+  console.log(filteredCourses);
+
+  res.send(filteredCourses);
+});
+
+router.post("/InstructorSearch", async (req, res) => {
+  var price1 = 5;
+  var price2 = 20;
+  var price3 = 40;
+  var price4 = 60;
+  var price5 = 100;
+  var offset = 23.8;
+  //if (req.session.Country == "Egypt") {
+  req.session.currency = "£";
+
+  price1 = 5 * 23.8;
+  price2 = 20 * 23.8;
+  price3 = 40 * 23.8;
+  price4 = 60 * 23.8;
+  price5 = 100 * 23.8;
+
+  const courses = await Courses.find({}).exec();
+
+  const CourseName = req.body.Search;
+  const Subject = req.body.Subject;
+  const Rating = req.body.Rating;
+  const Price = req.body.Price;
+  console.log(Price + " " + Subject + "" + Rating + " " + CourseName + "yala");
+
+  var filteredCourses = courses.filter(
+    (item) =>
+      (item.title.toLowerCase().includes(CourseName.toLowerCase()) ||
+        item.subject.toLowerCase().includes(CourseName) ||
+        item.instructor.toLowerCase().includes(CourseName) ||
+        CourseName == "") &&
+      (item.subject == Subject || Subject == "null" || Subject == "") &&
+      (item.rating <= Rating || Rating == "null" || Rating == "") &&
+      (item.price <= Price || Price == "null" || Price == "")
+  );
+
+  console.log(filteredCourses);
+
+  res.send(filteredCourses);
 });
 
 router.post("/SearchMyCourse", async (req, res) => {
@@ -2264,7 +2386,7 @@ router.post("/loginAdmin", async (req, res) => {
   if (bool) {
     req.session.isLoggedIn = true;
     req.session.userType = "admin";
-    res.sendStatus(200);
+    res.status(200);
   } else alert("The password or the username is incorrect");
 });
 
@@ -2303,9 +2425,10 @@ router.post("/loginInstructor", async (req, res) => {
     }
   });
   if (bool) {
+    var z = 200;
     req.session.isLoggedIn = true;
     req.session.userType = "Instructor";
-    res.redirect("/instructor");
+    res.send(z);
   } else alert("The password or the username is incorrect");
 });
 

@@ -18,6 +18,8 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import UserProfile from "./UserProfile";
+import cookie from "react-cookies";
 function Copyright(props) {
   return (
     <Typography
@@ -57,7 +59,7 @@ const InstructorAddCourse = () => {
         totalHours: totalHours,
         rating: rating,
         subject: subject,
-        instructor: instructor
+        instructor: cookie.load("username"),
       },
       {
         headers: {
@@ -125,12 +127,6 @@ const InstructorAddCourse = () => {
             onChange={(e) => setSubject(e.target.value)}
             id="filled-basic"
             label="subject"
-            variant="outlined"
-          />
-          <TextField
-            onChange={(e) => setInstructor(e.target.value)}
-            id="filled-basic"
-            label="Your name"
             variant="outlined"
           />
         </Stack>

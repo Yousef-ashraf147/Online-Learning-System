@@ -55,7 +55,10 @@ const LoginAdmin = () => {
       },
     });
     const json = await response.json();
-    if (response.ok) {
+    console.log(response.status);
+    console.log("fgdf");
+
+    if (response.data == 200) {
       console.log("12312");
       oNavigate();
       alert("ay haga");
