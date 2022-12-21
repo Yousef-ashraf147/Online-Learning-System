@@ -116,7 +116,7 @@ const InstructorViewMyCourse = () => {
         <b>Your courses</b>
       </h1>
       <nav>
-        <input
+        <TextField
           name="Search"
           type="search"
           placeholder="Search by course title"

@@ -18,9 +18,19 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import cookie from "react-cookies";
+import {useEffect} from 'react'
 
 function AdminHome() {
+  const navigate = useNavigate()
+  const type = cookie.load("type")
+  useEffect(() => {
+    if(type != 'admin')
+      navigate('../UnauthorizedAccess')
+  },[])
+    
   return (
+    
     <div>
       <br />
       <a href="/CreateAdmin">Create an admin</a>

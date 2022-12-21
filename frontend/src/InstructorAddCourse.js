@@ -20,6 +20,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import UserProfile from "./UserProfile";
 import cookie from "react-cookies";
+import FormControl from '@mui/material/FormControl';
+import SuccessfullyCreated from "./SuccessfullyCreated.js";
 function Copyright(props) {
   return (
     <Typography
@@ -47,26 +49,31 @@ const InstructorAddCourse = () => {
   const [rating, setRating] = React.useState(0);
   const [subject, setSubject] = React.useState("");
   const [instructor, setInstructor] = React.useState("");
+  const [open, setOpen] = React.useState(false);
 
   function Submit() {
-    axios.post(
-      "http://localhost:3000/addCourse",
-      {
-        title: title,
-        subtitle: subtitle,
-        price: price,
-        summary: summary,
-        totalHours: totalHours,
-        rating: rating,
-        subject: subject,
-        instructor: cookie.load("username"),
-      },
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+    axios
+      .post(
+        "http://localhost:3000/addCourse",
+        {
+          title: title,
+          subtitle: subtitle,
+          price: price,
+          summary: summary,
+          totalHours: totalHours,
+          rating: rating,
+          subject: subject,
+          instructor: cookie.load("username"),
         },
-      }
-    );
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      )
+      .then(() => {
+        setOpen(true);
+      });
   }
 
   const navigate = useNavigate();
@@ -101,6 +108,7 @@ const InstructorAddCourse = () => {
           id="filled-basic"
           label="price"
           variant="outlined"
+          type="number"
         />
 
         <TextField
@@ -115,6 +123,7 @@ const InstructorAddCourse = () => {
             id="outlined-basic"
             label="totalHours"
             variant="outlined"
+            type='number'
           />
           <TextField
             onChange={(e) => setRating(e.target.value)}
@@ -123,14 +132,24 @@ const InstructorAddCourse = () => {
             variant="outlined"
           />
 
-          <TextField
-            onChange={(e) => setSubject(e.target.value)}
-            id="filled-basic"
-            label="subject"
-            variant="outlined"
-          />
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Subject</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={subject}
+              label="Subject"
+              onChange={(e) => setSubject(e.target.value)}
+            >
+              <MenuItem value={'Math'}>Math</MenuItem>
+              <MenuItem value={'Chemistry'}>Chemistry</MenuItem>
+              <MenuItem value={'Biology'}>Biology</MenuItem>
+              <MenuItem value={'Physics'}>Physics</MenuItem>
+              <MenuItem value={'English'}>English</MenuItem>
+            </Select>
+          </FormControl>
         </Stack>
-
+        <SuccessfullyCreated open={open} setOpen={setOpen} />
         <Button onClick={Submit} variant="contained">
           Create course
         </Button>

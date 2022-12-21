@@ -19,6 +19,20 @@ body {
 h1 {
     background-color: #4797a0;
   }
+
+  h2{
+    top:0px;
+    background-color: #4797a0,
+
+    
+
+  }
+  .div h2 {
+    margin-left: 16px;
+    text-decoration: none;
+    padding: 6px;
+    font-family: "Quicksand";
+  }
   
 
 
@@ -26,15 +40,10 @@ h1 {
   .clickme {
     background-color: #f3eaea;
     padding: 8px 30px;
-    margin-bottom: 3rem;
     text-decoration:none;
     font-weight:bold;
     border-radius:4px;
     cursor:pointer;
-
-    text-align: center;
-    word-spacing:50px;
-   
     }
 
     .x {

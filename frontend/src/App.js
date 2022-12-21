@@ -40,7 +40,8 @@ import InstructorViewMyCourse from "./InstructorViewMyCourse";
 import CorpTraineeHome from "./CorpTraineeHome";
 import CorpTraineeCourses from "./CorpTraineeCourses";
 import CorpTraineePassword from "./CorpTraineePassword";
-
+import CourseDetails from "./CourseDetails";
+import UnauthorizedAccess from "./UnauthorizedAccess";
 
 import { Switch } from "react-router-dom";
 import { ReactSession } from "react-client-session";
@@ -64,6 +65,7 @@ function App() {
         <Route path="/LoginInstructor" element={<LoginInstructor />} />
 
         <Route path="/LoginTrainee" element={<LoginTrainee />} />
+        <Route path="/UnauthorizedAccess" element={<UnauthorizedAccess />} />
         <Route
           path="/LoginCorporateTrainee"
           element={<LoginCorporateTrainee />}
@@ -103,8 +105,7 @@ function App() {
         <Route path="/CorpTraineeCourses" element={<CorpTraineeCourses />} />
         <Route path="/CorpTraineePassword" element={<CorpTraineePassword />} />
 
-        
-
+        <Route path="/Courses/:id" element={<CourseDetails />} />
       </Routes>
     </Router>
   );

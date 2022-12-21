@@ -48,29 +48,37 @@ const LoginTrainee = () => {
   ReactSession.setStoreType("cookie");
 
   function Submit() {
-    axios.post(
-      "http://localhost:3000/loginTrainee",
-      {
-        username: username,
-        password: password,
-      },
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+    const input = { username, password };
+    axios
+      .post(
+        "http://localhost:3000/loginTrainee",
+        {
+          username: username,
+          password: password,
         },
-      }
-    );
-    if (username.length > 0 && password.length > 0) {
-      oNavigate();
-    }
-    cookie.save("username", username, { path: "/" });
-    console.log(cookie.load("username"));
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data);
+        if (response.data == "200") {
+          cookie.save("username", username, { path: "/" });
+          cookie.save("type", "Trainee", { path: "/" });
+
+          navigate("/TraineeHome");
+          alert("Successful Login!");
+        } else if (username.length == 0 || password.length == 0) {
+          alert("The password or the username is empty");
+        } else {
+          alert("The password or the username is Wrong");
+        }
+      });
   }
 
   const navigate = useNavigate();
-  function oNavigate() {
-    navigate("/TraineeHome");
-  }
 
   return (
     <Box

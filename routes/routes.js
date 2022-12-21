@@ -701,9 +701,7 @@ router.post("/addCourse", async (req, res) => {
     link: req.body.title,
   });
 
-  router.post("/", async (req, res) => {});
-
-  alert("course created");
+  res.send("course created");
 });
 
 router.post("/ChangePasswordIntsructor", async (req, res) => {
@@ -1569,6 +1567,15 @@ router.post("/InstructorMySearch", async (req, res) => {
   res.send(filteredCourses);
 });
 
+router.post("/GetCourse", async (req, res) => {
+  const courses = await Courses.find({}).exec();
+  const id = req.body.id;
+
+  var myCourse = courses.filter((item) => item.id == id);
+  console.log(myCourse);
+  res.send(myCourse);
+});
+
 router.post("/InstructorSearch", async (req, res) => {
   var price1 = 5;
   var price2 = 20;
@@ -2386,7 +2393,7 @@ router.post("/loginAdmin", async (req, res) => {
   if (bool) {
     req.session.isLoggedIn = true;
     req.session.userType = "admin";
-    res.status(200);
+    res.send(200 + "");
   } else alert("The password or the username is incorrect");
 });
 
@@ -2428,7 +2435,7 @@ router.post("/loginInstructor", async (req, res) => {
     var z = 200;
     req.session.isLoggedIn = true;
     req.session.userType = "Instructor";
-    res.send(z);
+    res.send(z + "");
   } else alert("The password or the username is incorrect");
 });
 
@@ -2467,9 +2474,10 @@ router.post("/loginTrainee", async (req, res) => {
     }
   });
   if (bool) {
+    var z = 200;
     req.session.isLoggedIn = true;
-    req.session.userType = "Trainee";
-    res.redirect("/traineeHome");
+    req.session.userType = "Instructor";
+    res.send(z + "");
   } else alert("The password or the username is incorrect");
 });
 

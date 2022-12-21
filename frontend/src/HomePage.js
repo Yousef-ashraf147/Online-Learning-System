@@ -22,19 +22,23 @@ import styles from "./mystyle.module.css";
 
 function HomePage() {
   return (
-    <div className="a">
-      <br />
-      <p>
+    <>
+      <Stack
+        maxWidth={"150px"}
+        paddingTop={"50px"}
+        marginLeft={"auto"}
+        marginRight={"auto"}
+        direction="column"
+        spacing={5}
+      >
         <a className={styles.clickme} href="/Signup">
-          SignUp
+          Sign Up
         </a>
-        <br />
-        <a class={styles.x} href="/Login">
+        <a className={styles.clickme} href="/Login">
           Login
         </a>
-      </p>
-      <br />
-    </div>
+      </Stack>
+    </>
   );
 }
 
