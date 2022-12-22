@@ -167,6 +167,7 @@ const InstructorAddCourse = () => {
             onChange={handleChange}
             label="Accept the user's agreement"
           />
+          <a href="/TermsOfUse">View User's Agreement</a>
         </Stack>
         <SuccessfullyCreated open={open} setOpen={setOpen} />
         <Exercise

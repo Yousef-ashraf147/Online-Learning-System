@@ -103,6 +103,7 @@ const LoginInstructor = () => {
           label="Password"
           variant="outlined"
         />
+        <a href="InstructorForgotPassword">Forgot your password?</a>
 
         <Button onClick={Submit} variant="contained">
           Login

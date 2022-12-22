@@ -27,18 +27,49 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useState, useEffect } from "react";
-import Slider from "@mui/material/Slider";
-import FormControl from "@mui/material/FormControl";
 
 const TraineeRateInstructor = () => {
-  const [rows, setRows] = React.useState([]);
+  var [rows, setRows] = React.useState([]);
+
   useEffect(() => {
     axios.get("http://localhost:3000/getInstructors").then((response) => {
-      setRows(response.data);
+      rows = response.data;
+      setRows(rows);
     });
   }, []);
 
-  return <></>;
+  return (
+    <>
+      <TableContainer>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell align="left">name</TableCell>
+              <TableCell align="left">rating</TableCell>
+              <TableCell align="left">Link to instructor's profile</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows &&
+              rows.map((row) => (
+                <TableRow
+                  key={row.username}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell align="left">{row.username}</TableCell>
+                  <TableCell align="left">{row.rating}</TableCell>
+                  <TableCell align="left">
+                    <a href={`/instructors/${row.id}`}>
+                      Click here to view instructor's profile
+                    </a>
+                  </TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
+  );
 };
 
 export default TraineeRateInstructor;

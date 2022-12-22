@@ -422,6 +422,7 @@ const SignupInstruc = () => {
           onChange={handleChange}
           label="Accept the user's agreement"
         />
+        <a href="/TermsOfUse">View User's Agreement</a>
 
         <Button onClick={Submit} variant="contained">
           Sign Up
