@@ -752,6 +752,7 @@ router.post("/addCourse", async (req, res) => {
       subject: req.body.subject,
       instructor: req.body.instructor,
       link: req.body.title,
+      video: req.body.video,
     });
     res.send("course created");
   } else {

@@ -90,8 +90,26 @@ const CourseDetails = () => {
               rating : {row.rating} out of 5 <br></br>
               Summary : {row.summary}.
             </p>
+
+            <h2 style={{ fontSize: "2rem" }}>Course preview video:</h2>
+            <div>
+              <iframe
+                style={{ border: "10px solid black" }}
+                allowFullScreen="true"
+                width="800"
+                height="400"
+                src={row.video}
+                title="TWISTED - Worth Nothing (slowed & reverb)"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write;
+ encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+            </div>
           </div>
         ))}
+      <br></br>
+      <br></br>
       <Rating
         name="simple-controlled"
         value={rating}
