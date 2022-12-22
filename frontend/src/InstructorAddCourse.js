@@ -14,6 +14,8 @@ import { useNavigate } from "react-router-dom";
 import Exercise from "./Exercise";
 import cookie from "react-cookies";
 import FormControl from "@mui/material/FormControl";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 import SuccessfullyCreated from "./SuccessfullyCreated.js";
 
 function Copyright(props) {
@@ -45,9 +47,21 @@ const InstructorAddCourse = () => {
   const [instructor, setInstructor] = React.useState("");
   const [open, setOpen] = React.useState(false);
   const [questions, setQuestions] = React.useState(["", "", "", "", ""]);
-  const [choices, setChoices] = React.useState([['', '', '' , '', ''], ['', '', '' , '', ''], ['', '', '' , '', ''], ['', '', '' , '', ''], ['', '', '' , '', '']]);
-  const [correctChoices, setCorrectChoices] = React.useState(["", "", "", "", ""]);
-  
+  const [choices, setChoices] = React.useState([
+    ["", "", "", "", ""],
+    ["", "", "", "", ""],
+    ["", "", "", "", ""],
+    ["", "", "", "", ""],
+    ["", "", "", "", ""],
+  ]);
+  const [correctChoices, setCorrectChoices] = React.useState([
+    "",
+    "",
+    "",
+    "",
+    "",
+  ]);
+
   const [checked, setChecked] = React.useState(false);
 
   const handleChange = (event) => {
@@ -155,7 +169,14 @@ const InstructorAddCourse = () => {
           />
         </Stack>
         <SuccessfullyCreated open={open} setOpen={setOpen} />
-        <Exercise questions={questions} setQuestions={setQuestions} choices={choices} setChoices={setChoices} correctChoices={correctChoices} setCorrectChoices={setCorrectChoices}/>
+        <Exercise
+          questions={questions}
+          setQuestions={setQuestions}
+          choices={choices}
+          setChoices={setChoices}
+          correctChoices={correctChoices}
+          setCorrectChoices={setCorrectChoices}
+        />
         <Button onClick={Submit} variant="contained">
           Create course
         </Button>

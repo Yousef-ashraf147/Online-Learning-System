@@ -692,9 +692,9 @@ router.post("/signupCorp", async (req, res) => {
 });
 router.post("/rateCourse", async (req, res) => {
   const courses = await Courses.find({}).exec();
-  const id = req.body.id;
+  const id = parseInt(req.body.id);
   var rating = req.body.rating;
-  console.log(rating);
+  console.log("rating: " + rating);
 
   var myCourse = courses.filter((item) => item.id == id);
   myCourse.forEach((item) => {
@@ -712,7 +712,7 @@ router.post("/rateCourse", async (req, res) => {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
-  console.log(id);
+  console.log("id: " + id);
 
   await client.connect();
   var output = await client
