@@ -18,27 +18,27 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import cookie from "react-cookies";
-import { useEffect } from "react";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import Rating from "@mui/material/Rating";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import { useState, useEffect } from "react";
+import Slider from "@mui/material/Slider";
+import FormControl from "@mui/material/FormControl";
 
-const TraineeHome = () => {
-  const navigate = useNavigate();
-  const type = cookie.load("type");
+const TraineeRateInstructor = () => {
+  const [rows, setRows] = React.useState([]);
   useEffect(() => {
-    if (type != "Trainee") navigate("../UnauthorizedAccess");
+    axios.get("http://localhost:3000/getInstructors").then((response) => {
+      setRows(response.data);
+    });
   }, []);
-  return (
-    <>
-      <h1>Trainee Home</h1>
-      <div className="div">
-        <a href="/TraineeCourses">View all courses</a>
-        <br />
-        <a href="/TraineePassword">Change my password</a>
-        <br />
-        <a href="/TraineeRateInstructor">Rate an instructor</a>
-      </div>
-    </>
-  );
+
+  return <></>;
 };
 
-export default TraineeHome;
+export default TraineeRateInstructor;

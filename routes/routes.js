@@ -152,6 +152,7 @@ router.get("/guestHome", async (req, res) => {
     });
   }
 });
+
 router.get("/traineeHome", async (req, res) => {
   //   var myArray = [];
 
@@ -699,7 +700,7 @@ router.post("/rateCourse", async (req, res) => {
   var myCourse = courses.filter((item) => item.id == id);
   myCourse.forEach((item) => {
     console.log(item.rating);
-    item.rating = (parseInt(item.rating) + parseInt(rating)) / 2;
+    item.rating = (parseFloat(item.rating) + parseFloat(rating)) / 2;
 
     rating = item.rating;
     console.log(item.rating);

@@ -67,7 +67,7 @@ const CourseDetails = () => {
       .then((response) => {
         setRows(response.data);
       });
-  }, []);
+  }, [rating]);
 
   return (
     <div className="div">
