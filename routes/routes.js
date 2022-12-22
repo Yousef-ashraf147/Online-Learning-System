@@ -3,6 +3,7 @@ const router = express.Router();
 var alert = require("alert");
 const session = require("express-session");
 const Courses = require("../models/Courses");
+var nodemailer = require("nodemailer");
 
 router.get("/corpHome", async (req, res) => {
   if (req.session.isLoggedIn && req.session.userType == "Corp") {
@@ -152,65 +153,26 @@ router.get("/guestHome", async (req, res) => {
     });
   }
 });
+router.get("/getInstructors", async (req, res) => {
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/Instructor?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  await client.connect();
+
+  var output = await client
+    .db("Instructor")
+    .collection("Instructor")
+    .find()
+    .toArray();
+  const instructors = output;
+  res.send(instructors);
+});
+
 router.get("/traineeHome", async (req, res) => {
-  //   var myArray = [];
-
-  //   if (req.session.isLoggedIn && req.session.userType == "Trainee") {
-  //     var price1 = 5;
-  //     var price2 = 20;
-  //     var price3 = 40;
-  //     var price4 = 60;
-  //     var price5 = 100;
-
-  //     if (req.session.Country == "Egypt") {
-  //       req.session.currency = "£";
-
-  //       myArray = await Courses.find({}).exec();
-  //       price1 = 5 * 23.8;
-  //       price2 = 20 * 23.8;
-  //       price3 = 40 * 23.8;
-  //       price4 = 60 * 23.8;
-  //       price5 = 100 * 23.8;
-  //     } else if (req.session.Country == "United Kingdom") {
-  //       req.session.currency = "£";
-
-  //       myArray = await Courses.find({}).exec();
-  //       price1 = 5 * 0.88;
-  //       price2 = 20 * 0.88;
-  //       price3 = 40 * 0.88;
-  //       price4 = 60 * 0.88;
-  //       price5 = 100 * 0.88;
-
-  //       res.render("traineeHome", {
-  //         currency: req.session.currency,
-  //         courses,
-  //         offset: 0.88,
-  //         price1,
-  //         price2,
-  //         price3,
-  //         price4,
-  //         price5,
-  //       });
-  //     } else if (req.session.Country == "Germany") {
-  //       req.session.currency = "€";
-  //       myArray = await Courses.find({}).exec();
-  //       res.render("traineeHome", {
-  //         currency: req.session.currency,
-  //         courses,
-  //         offset: 1,
-  //         price1,
-  //         price2,
-  //         price3,
-  //         price4,
-  //         price5,
-  //       });
-  //     } else {
-  //       req.session.currency = "$";
-  //       myArray = await Courses.find({}).exec();
-  //     }
-  //   }
-  //   res.json(myArray);
-
   const courses = await Courses.find({}).exec();
   res.send(courses);
 });
@@ -469,6 +431,7 @@ router.post("/signupInstruc", async (req, res) => {
     .collection("Instructor")
     .find()
     .toArray();
+  var z = output.length + 1;
   const Country = req.body.country;
 
   var output2 = await client
@@ -516,6 +479,7 @@ router.post("/signupInstruc", async (req, res) => {
   } else {
     if (bool == false) {
       var user = {
+        id: z,
         username: inputUsername,
         password: inputPassword,
         Country: Country,
@@ -690,6 +654,55 @@ router.post("/signupCorp", async (req, res) => {
     } else alert("The username or email you wrote is already taken");
   }
 });
+
+router.post("/rateInstructor", async (req, res) => {
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/Instructor?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  await client.connect();
+
+  var output = await client
+    .db("Instructor")
+    .collection("Instructor")
+    .find()
+    .toArray();
+
+  const id = parseInt(req.body.id);
+  var rating = req.body.rating;
+  console.log("rating: " + rating);
+
+  var myCourse = output.filter((item) => item.id == id);
+  myCourse.forEach((item) => {
+    console.log(item.rating);
+    item.rating = (parseFloat(item.rating) + parseFloat(rating)) / 2;
+
+    rating = item.rating;
+    console.log(item.rating);
+  });
+  console.log(rating);
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/Instructor?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  console.log("id: " + id);
+
+  await client.connect();
+  var output = await client
+    .db("Instructor")
+    .collection("Instructor")
+    .findOneAndUpdate({ id: { $eq: id } }, { $set: { rating: rating } });
+  console.log(output);
+  var z = "200";
+  res.send(z + "");
+});
+
 router.post("/rateCourse", async (req, res) => {
   const courses = await Courses.find({}).exec();
   const id = parseInt(req.body.id);
@@ -699,7 +712,7 @@ router.post("/rateCourse", async (req, res) => {
   var myCourse = courses.filter((item) => item.id == id);
   myCourse.forEach((item) => {
     console.log(item.rating);
-    item.rating = (parseInt(item.rating) + parseInt(rating)) / 2;
+    item.rating = (parseFloat(item.rating) + parseFloat(rating)) / 2;
 
     rating = item.rating;
     console.log(item.rating);
@@ -747,6 +760,7 @@ router.post("/addCourse", async (req, res) => {
       subject: req.body.subject,
       instructor: req.body.instructor,
       link: req.body.title,
+      video: req.body.video,
     });
     res.send("course created");
   } else {
@@ -862,6 +876,67 @@ router.post("/GetBio", async (req, res) => {
           alert("password changed");
         }
       });*/
+});
+router.post("/SendEmail", async (req, res) => {
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/Instructor?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  await client.connect();
+
+  var output = await client
+    .db("Instructor")
+    .collection("Instructor")
+    .find()
+    .toArray();
+
+  const email = req.body.email;
+  var bool = false;
+  var myCourse = output.filter((item) => item.email == email);
+  if (myCourse.length > 0) {
+    bool = true;
+  }
+  myCourse.forEach((item) => {
+    if (item.email != "" || item.email != null || item.email != "null") {
+      var recipient = item.email;
+
+      var password = item.password;
+    }
+    console.log(recipient);
+    console.log(password);
+    if (bool == true) {
+      var transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: "yousefashraf147@gmail.com",
+          pass: "nxlggbwcslgrtluc",
+        },
+      });
+
+      var mailOptions = {
+        from: "yousefashraf147@gmail.com",
+        to: recipient,
+        subject: "Hey, u seem to have forgotten your password",
+        text:
+          "your password to be able to log in and change it if you need is " +
+          password,
+      };
+
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Email sent: " + info.response);
+        }
+      });
+      res.send("200");
+    } else {
+      res.send("400");
+    }
+  });
 });
 
 router.post("/ChangeBioIntsructor", async (req, res) => {
@@ -1630,6 +1705,28 @@ router.post("/GetExercise", async (req, res) => {
   const exercise = await Courses.findOne({id: req.body.id},{ exercise: 1, _id:0 }).exec();
 
   res.send(exercise);
+});
+
+router.post("/GetInstructor", async (req, res) => {
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/Instructor?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  await client.connect();
+
+  var output = await client
+    .db("Instructor")
+    .collection("Instructor")
+    .find()
+    .toArray();
+  const id = req.body.id;
+
+  var myCourse = output.filter((item) => item.id == id);
+  console.log(myCourse);
+  res.send(myCourse);
 });
 
 router.post("/InstructorSearch", async (req, res) => {

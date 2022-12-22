@@ -53,6 +53,7 @@ const InstructorAddCourse = () => {
   const [correctChoices, setCorrectChoices] = React.useState(["", "", ""]);
 
   const [checked, setChecked] = React.useState(false);
+  const [video, setVideo] = React.useState("");
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
@@ -76,6 +77,7 @@ const InstructorAddCourse = () => {
           subject: subject,
           instructor: cookie.load("username"),
           checked: checked,
+          video:video
         },
         {
           headers: {
@@ -153,6 +155,13 @@ const InstructorAddCourse = () => {
               <MenuItem value={"Physics"}>Physics</MenuItem>
               <MenuItem value={"English"}>English</MenuItem>
             </Select>
+            <br></br>
+            <TextField
+              onChange={(e) => setVideo(e.target.value)}
+              id="outlined-basic"
+              label="Preview Video embed link"
+              variant="outlined"
+            />
           </FormControl>
 
           <FormControlLabel
@@ -161,6 +170,7 @@ const InstructorAddCourse = () => {
             onChange={handleChange}
             label="Accept the user's agreement"
           />
+          <a href="/TermsOfUse">View User's Agreement</a>
         </Stack>
         <SuccessfullyCreated open={open} setOpen={setOpen} />
         <Exercise

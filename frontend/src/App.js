@@ -42,6 +42,10 @@ import CorpTraineeCourses from "./CorpTraineeCourses";
 import CorpTraineePassword from "./CorpTraineePassword";
 import CourseDetails from "./CourseDetails";
 import UnauthorizedAccess from "./UnauthorizedAccess";
+import TraineeRateInstructor from "./TraineeRateInstructor";
+import InstructorDetails from "./InstructorDetails";
+import InstructorForgotPassword from "./InstructorForgotPassword";
+import TermsOfUse from "./TermsOfUse";
 
 import { Switch } from "react-router-dom";
 import { ReactSession } from "react-client-session";
@@ -87,7 +91,18 @@ function App() {
         <Route path="/InstructorEditInfo" element={<InstructorEditInfo />} />
         <Route path="/InstructorAddCourse" element={<InstructorAddCourse />} />
         <Route path="/InstructorPassword" element={<InstructorPassword />} />
+        <Route
+          path="/InstructorForgotPassword"
+          element={<InstructorForgotPassword />}
+        />
+
         <Route path="/TraineePassword" element={<TraineePassword />} />
+
+        <Route
+          path="/TraineeRateInstructor"
+          element={<TraineeRateInstructor />}
+        />
+
         <Route
           path="/InstructorChangeEmail"
           element={<InstructorChangeEmail />}
@@ -105,9 +120,11 @@ function App() {
         />
         <Route path="/CorpTraineeCourses" element={<CorpTraineeCourses />} />
         <Route path="/CorpTraineePassword" element={<CorpTraineePassword />} />
+        <Route path="/TermsOfUse" element={<TermsOfUse />} />
 
         <Route path="/Courses/:id" element={<CourseDetails />} />
         <Route path="/exercise/:id" element={<SolveExercise />} />
+        <Route path="/instructors/:id" element={<InstructorDetails />} />
       </Routes>
     </Router>
   );
