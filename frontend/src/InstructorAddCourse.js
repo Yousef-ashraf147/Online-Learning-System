@@ -1,27 +1,21 @@
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 //import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import UserProfile from "./UserProfile";
+import Exercise from "./Exercise";
 import cookie from "react-cookies";
 import FormControl from '@mui/material/FormControl';
 import SuccessfullyCreated from "./SuccessfullyCreated.js";
+
 function Copyright(props) {
   return (
     <Typography
@@ -50,6 +44,10 @@ const InstructorAddCourse = () => {
   const [subject, setSubject] = React.useState("");
   const [instructor, setInstructor] = React.useState("");
   const [open, setOpen] = React.useState(false);
+  const [questions, setQuestions] = React.useState(["", "", "", "", ""]);
+  const [choices, setChoices] = React.useState([['', '', '' , '', ''], ['', '', '' , '', ''], ['', '', '' , '', ''], ['', '', '' , '', ''], ['', '', '' , '', '']]);
+  const [correctChoices, setCorrectChoices] = React.useState(["", "", "", "", ""]);
+  
 
   function Submit() {
     axios
@@ -150,6 +148,7 @@ const InstructorAddCourse = () => {
           </FormControl>
         </Stack>
         <SuccessfullyCreated open={open} setOpen={setOpen} />
+        <Exercise questions={questions} setQuestions={setQuestions} choices={choices} setChoices={setChoices} correctChoices={correctChoices} setCorrectChoices={setCorrectChoices}/>
         <Button onClick={Submit} variant="contained">
           Create course
         </Button>
