@@ -51,7 +51,7 @@ import { Switch } from "react-router-dom";
 import { ReactSession } from "react-client-session";
 import UserProfile from "./UserProfile";
 import styles from "./mystyle.module.css";
-
+import SolveExercise from "./SolveExercise";
 function App() {
   return (
     <Router>
@@ -123,6 +123,7 @@ function App() {
         <Route path="/TermsOfUse" element={<TermsOfUse />} />
 
         <Route path="/Courses/:id" element={<CourseDetails />} />
+        <Route path="/exercise/:id" element={<SolveExercise />} />
         <Route path="/instructors/:id" element={<InstructorDetails />} />
       </Routes>
     </Router>

@@ -46,21 +46,11 @@ const InstructorAddCourse = () => {
   const [subject, setSubject] = React.useState("");
   const [instructor, setInstructor] = React.useState("");
   const [open, setOpen] = React.useState(false);
-  const [questions, setQuestions] = React.useState(["", "", "", "", ""]);
-  const [choices, setChoices] = React.useState([
-    ["", "", "", "", ""],
-    ["", "", "", "", ""],
-    ["", "", "", "", ""],
-    ["", "", "", "", ""],
-    ["", "", "", "", ""],
-  ]);
-  const [correctChoices, setCorrectChoices] = React.useState([
-    "",
-    "",
-    "",
-    "",
-    "",
-  ]);
+  const [questions, setQuestions] = React.useState(["", "", ""]);
+  const [choices1, setChoices1] = React.useState(["", "", "", "", ""]);
+  const [choices2, setChoices2] = React.useState(["", "", "", "", ""]);
+  const [choices3, setChoices3] = React.useState(["", "", "", "", ""]);
+  const [correctChoices, setCorrectChoices] = React.useState(["", "", ""]);
 
   const [checked, setChecked] = React.useState(false);
   const [video, setVideo] = React.useState("");
@@ -79,7 +69,11 @@ const InstructorAddCourse = () => {
           price: price,
           summary: summary,
           totalHours: totalHours,
-
+          questions: questions,
+          choices1: choices1,
+          choices2: choices2,
+          choices3: choices3,
+          correctChoices: correctChoices,
           subject: subject,
           instructor: cookie.load("username"),
           checked: checked,
@@ -182,8 +176,12 @@ const InstructorAddCourse = () => {
         <Exercise
           questions={questions}
           setQuestions={setQuestions}
-          choices={choices}
-          setChoices={setChoices}
+          choices1={choices1}
+          setChoices1={setChoices1}
+          choices2={choices2}
+          setChoices2={setChoices2}
+          choices3={choices3}
+          setChoices3={setChoices3}
           correctChoices={correctChoices}
           setCorrectChoices={setCorrectChoices}
         />
