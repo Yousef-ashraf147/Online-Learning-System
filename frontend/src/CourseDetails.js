@@ -36,9 +36,29 @@ import Rating from "@mui/material/Rating";
 const CourseDetails = () => {
   const [open, setOpen] = React.useState(false);
   const { id } = useParams();
-  console.log(id);
   const [rows, setRows] = React.useState([]);
+  const [rating, setRating] = React.useState(0);
 
+  function Submit() {
+    axios
+      .post(
+        "http://localhost:3000/rateCourse",
+        {
+          rating: rating,
+          id: id,
+        },
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      )
+      .then((response) => {
+        if (response.data == "200") {
+          alert("Course rated!");
+        }
+      });
+  }
   useEffect(() => {
     axios
       .post("http://localhost:3000/GetCourse", {
@@ -72,6 +92,16 @@ const CourseDetails = () => {
             </p>
           </div>
         ))}
+      <Rating
+        name="simple-controlled"
+        value={rating}
+        onChange={(event, newValue) => {
+          setRating(newValue);
+        }}
+      />
+      <Button onClick={Submit} variant="contained">
+        Rate Course
+      </Button>
     </div>
   );
 };

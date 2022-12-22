@@ -461,6 +461,9 @@ router.post("/signupInstruc", async (req, res) => {
   const inputUsername = req.body.username;
   const inputPassword = req.body.password;
   const inputEmail = req.body.email;
+  const agreement = req.body.agreement;
+  console.log(agreement);
+
   var output = await client
     .db("Instructor")
     .collection("Instructor")
@@ -488,7 +491,7 @@ router.post("/signupInstruc", async (req, res) => {
     .toArray();
 
   output4.forEach((item) => {
-    if (item.username == inputUsername) bool = true;
+    if (item.username == inputUsername || item.email == inputEmail) bool = true;
   });
   output3.forEach((item) => {
     if (item.username == inputUsername || item.email == inputEmail) bool = true;
@@ -506,7 +509,8 @@ router.post("/signupInstruc", async (req, res) => {
   } else if (
     inputPassword.length == 0 ||
     inputUsername.length == 0 ||
-    inputEmail.length == 0
+    inputEmail.length == 0 ||
+    agreement == "false"
   ) {
     alert("please fill all required fields");
   } else {
@@ -517,13 +521,15 @@ router.post("/signupInstruc", async (req, res) => {
         Country: Country,
         email: inputEmail,
         Bio: "",
+        rating: 5,
       };
       await client.db("Instructor").collection("Instructor").insertOne(user);
-      alert("registration successful");
+
       MongoClient.connect(url, function (err, db) {
         if (err) throw err;
       });
-      res.redirect("/login");
+      var z = 200;
+      res.send(z + "");
     } else alert("the username or email you chose is already taken");
   }
 });
@@ -684,24 +690,60 @@ router.post("/signupCorp", async (req, res) => {
     } else alert("The username or email you wrote is already taken");
   }
 });
+router.post("/rateCourse", async (req, res) => {
+  const courses = await Courses.find({}).exec();
+  const id = req.body.id;
+  var rating = req.body.rating;
+  console.log(rating);
+
+  var myCourse = courses.filter((item) => item.id == id);
+  myCourse.forEach((item) => {
+    console.log(item.rating);
+    item.rating = (parseInt(item.rating) + parseInt(rating)) / 2;
+
+    rating = item.rating;
+    console.log(item.rating);
+  });
+  console.log(rating);
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/test?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  console.log(id);
+
+  await client.connect();
+  var output = await client
+    .db("test")
+    .collection("courses")
+    .findOneAndUpdate({ id: { $eq: id } }, { $set: { rating: rating } });
+  console.log(output);
+  var z = "200";
+  res.send(z + "");
+});
 
 router.post("/addCourse", async (req, res) => {
   const courses1 = await Courses.find({}).exec();
   var z = courses1.length + 1;
-  await Courses.create({
-    id: z,
-    title: req.body.title,
-    subtitle: req.body.subtitle,
-    price: parseInt(req.body.price),
-    summary: req.body.summary,
-    totalHours: parseInt(req.body.totalHours),
-    rating: parseInt(req.body.rating),
-    subject: req.body.subject,
-    instructor: req.body.instructor,
-    link: req.body.title,
-  });
-
-  res.send("course created");
+  if (req.body.checked == "true") {
+    await Courses.create({
+      id: z,
+      title: req.body.title,
+      subtitle: req.body.subtitle,
+      price: parseInt(req.body.price),
+      summary: req.body.summary,
+      totalHours: parseInt(req.body.totalHours),
+      rating: 5,
+      subject: req.body.subject,
+      instructor: req.body.instructor,
+      link: req.body.title,
+    });
+    res.send("course created");
+  } else {
+    alert("please fill all required fields");
+  }
 });
 
 router.post("/ChangePasswordIntsructor", async (req, res) => {

@@ -13,7 +13,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Exercise from "./Exercise";
 import cookie from "react-cookies";
-import FormControl from '@mui/material/FormControl';
+import FormControl from "@mui/material/FormControl";
 import SuccessfullyCreated from "./SuccessfullyCreated.js";
 
 function Copyright(props) {
@@ -48,6 +48,11 @@ const InstructorAddCourse = () => {
   const [choices, setChoices] = React.useState([['', '', '' , '', ''], ['', '', '' , '', ''], ['', '', '' , '', ''], ['', '', '' , '', ''], ['', '', '' , '', '']]);
   const [correctChoices, setCorrectChoices] = React.useState(["", "", "", "", ""]);
   
+  const [checked, setChecked] = React.useState(false);
+
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
+  };
 
   function Submit() {
     axios
@@ -59,9 +64,10 @@ const InstructorAddCourse = () => {
           price: price,
           summary: summary,
           totalHours: totalHours,
-          rating: rating,
+
           subject: subject,
           instructor: cookie.load("username"),
+          checked: checked,
         },
         {
           headers: {
@@ -121,13 +127,7 @@ const InstructorAddCourse = () => {
             id="outlined-basic"
             label="totalHours"
             variant="outlined"
-            type='number'
-          />
-          <TextField
-            onChange={(e) => setRating(e.target.value)}
-            id="filled-basic"
-            label="rating"
-            variant="outlined"
+            type="number"
           />
 
           <FormControl fullWidth>
@@ -139,13 +139,20 @@ const InstructorAddCourse = () => {
               label="Subject"
               onChange={(e) => setSubject(e.target.value)}
             >
-              <MenuItem value={'Math'}>Math</MenuItem>
-              <MenuItem value={'Chemistry'}>Chemistry</MenuItem>
-              <MenuItem value={'Biology'}>Biology</MenuItem>
-              <MenuItem value={'Physics'}>Physics</MenuItem>
-              <MenuItem value={'English'}>English</MenuItem>
+              <MenuItem value={"Math"}>Math</MenuItem>
+              <MenuItem value={"Chemistry"}>Chemistry</MenuItem>
+              <MenuItem value={"Biology"}>Biology</MenuItem>
+              <MenuItem value={"Physics"}>Physics</MenuItem>
+              <MenuItem value={"English"}>English</MenuItem>
             </Select>
           </FormControl>
+
+          <FormControlLabel
+            control={<Checkbox defaultunchecked />}
+            checked={checked}
+            onChange={handleChange}
+            label="Accept the user's agreement"
+          />
         </Stack>
         <SuccessfullyCreated open={open} setOpen={setOpen} />
         <Exercise questions={questions} setQuestions={setQuestions} choices={choices} setChoices={setChoices} correctChoices={correctChoices} setCorrectChoices={setCorrectChoices}/>
