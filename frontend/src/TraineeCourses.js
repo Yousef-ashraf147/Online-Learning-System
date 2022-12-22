@@ -29,6 +29,7 @@ import Paper from "@mui/material/Paper";
 import { useState, useEffect } from "react";
 import Slider from '@mui/material/Slider';
 import FormControl from "@mui/material/FormControl";
+import cookie from "react-cookies";
 
 function Copyright(props) {
   return (
@@ -57,6 +58,8 @@ const InstructorCourses = () => {
   const [price, setPrice] = React.useState("");
   const [rating, setRating] = React.useState("");
   const [z, setZ] = React.useState([]);
+  const convertCurrency = cookie.load("convertCurrency");
+  const currencySymbol = cookie.load('currencySymbol')
 
   useEffect(() => {
     axios.get("http://localhost:3000/traineeHome").then((response) => {
@@ -148,7 +151,7 @@ const InstructorCourses = () => {
                 >
                   <TableCell align="left">{row.title}</TableCell>
                   <TableCell align="left">{row.subject}</TableCell>
-                  <TableCell align="left">{row.price}</TableCell>
+                  <TableCell align="left">{currencySymbol + ' '}{Math.round((row.price*convertCurrency + Number.EPSILON) * 100) / 100}</TableCell>
                   <TableCell align="left">{row.totalHours}</TableCell>
                   <TableCell align="left">{row.rating}</TableCell>
                   <TableCell align="left">{row.instructor}</TableCell>
