@@ -45,6 +45,7 @@ const theme = createTheme();
 const LoginTrainee = () => {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [country, setCountry] = React.useState("");
   ReactSession.setStoreType("cookie");
 
   function Submit() {
@@ -75,6 +76,17 @@ const LoginTrainee = () => {
         } else {
           alert("The password or the username is Wrong");
         }
+      });
+    console.log(cookie.load("username"));
+    axios
+      .post("http://localhost:3000/TraineeGetCountry", {
+        username: cookie.load("username"),
+      })
+      .then((response) => {
+        setCountry(response.data);
+        console.log(country);
+        cookie.save("country", country, { path: "/" });
+        console.log(cookie.load("country"));
       });
   }
 
