@@ -727,11 +727,19 @@ router.post("/rateCourse", async (req, res) => {
 router.post("/addCourse", async (req, res) => {
   const courses1 = await Courses.find({}).exec();
   var z = courses1.length + 1;
+  const questions = req.body.questions;
+  const choices1 = req.body.choices1;
+  const choices2 = req.body.choices2;
+  const choices3 = req.body.choices3;
+  const choices4 = req.body.choices4;
+  const correctChoices = req.body.correctChoices;
+  const exercise = {questions, choices1, choices2, choices3, choices4, correctChoices}
   if (req.body.checked == "true") {
     await Courses.create({
       id: z,
       title: req.body.title,
       subtitle: req.body.subtitle,
+      exercise: exercise,
       price: parseInt(req.body.price),
       summary: req.body.summary,
       totalHours: parseInt(req.body.totalHours),
@@ -1616,6 +1624,12 @@ router.post("/GetCourse", async (req, res) => {
   var myCourse = courses.filter((item) => item.id == id);
   console.log(myCourse);
   res.send(myCourse);
+});
+
+router.post("/GetExercise", async (req, res) => {
+  const exercise = await Courses.findOne({id: req.body.id},{ exercise: 1, _id:0 }).exec();
+
+  res.send(exercise);
 });
 
 router.post("/InstructorSearch", async (req, res) => {

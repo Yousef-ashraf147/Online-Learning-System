@@ -8,6 +8,9 @@ const CoursesSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  exercise: {
+    type: Object,
+  },
   subject: {
     type: String,
     required: true,
