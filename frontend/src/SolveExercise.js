@@ -23,7 +23,20 @@ const SolveExercise = () => {
         score++;
       }
     }
-    alert("Your score is " + score + "/3");
+    alert(
+      "Your score is " +
+        score +
+        "/3 " +
+        "\n" +
+        "answer of question one is choice no. " +
+        exercise.correctChoices[0] +
+        "\n" +
+        "answer of question two is choice no." +
+        exercise.correctChoices[1] +
+        "\n" +
+        "answer of question three is choice no. " +
+        exercise.correctChoices[2]
+    );
   };
 
   useEffect(() => {
@@ -33,12 +46,17 @@ const SolveExercise = () => {
       })
       .then((response) => {
         setExercise(response.data.exercise);
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response.data); // => the response payload
+        }
       });
   }, []);
 
   return (
     <div>
-      {exercise ? 
+      {exercise ? (
         <Stack marginTop={1} spacing={2}>
           <Typography variant="h6">{exercise.questions[0]}</Typography>
           <FormControl>
@@ -165,7 +183,9 @@ const SolveExercise = () => {
 
           <Button onClick={submitAnswers}>Submit Answers</Button>
         </Stack>
-        : <></>}
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

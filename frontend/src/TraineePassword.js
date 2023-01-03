@@ -20,6 +20,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import cookie from "react-cookies";
 
+import { useEffect } from "react";
+
 function Copyright(props) {
   return (
     <Typography
@@ -41,22 +43,33 @@ function Copyright(props) {
 const TraineePassword = () => {
   const [newpassword, setNewPassword] = React.useState("");
   const [oldpassword, setOldPassword] = React.useState("");
+  const navigate = useNavigate();
+  const type = cookie.load("type");
 
+  useEffect(() => {
+    if (type != "Trainee") navigate("../UnauthorizedAccess");
+  }, []);
   function Submit() {
-    axios.post(
-      "http://localhost:3000/ChangePasswordTrainee",
-      {
-        username: cookie.load("username"),
-        password: newpassword,
-        oldPassword: oldpassword,
-      },
-
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+    axios
+      .post(
+        "http://localhost:3000/ChangePasswordTrainee",
+        {
+          username: cookie.load("username"),
+          password: newpassword,
+          oldPassword: oldpassword,
         },
-      }
-    );
+
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      )
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response.data); // => the response payload
+        }
+      });
     console.log(newpassword);
   }
 

@@ -424,6 +424,7 @@ router.post("/signupInstruc", async (req, res) => {
   const inputPassword = req.body.password;
   const inputEmail = req.body.email;
   const agreement = req.body.agreement;
+  const img = req.body.img;
   console.log(agreement);
 
   var output = await client
@@ -486,6 +487,7 @@ router.post("/signupInstruc", async (req, res) => {
         email: inputEmail,
         Bio: "",
         rating: 5,
+        img: img,
       };
       await client.db("Instructor").collection("Instructor").insertOne(user);
 
@@ -514,6 +516,7 @@ router.post("/signupTrainee", async (req, res) => {
   const inputUsername = req.body.username;
   const inputPassword = req.body.password;
   const inputEmail = req.body.email;
+  const agreement = req.body.agreement;
   var output = await client
     .db("Trainee")
     .collection("Trainee")
@@ -540,7 +543,7 @@ router.post("/signupTrainee", async (req, res) => {
     .toArray();
 
   output4.forEach((item) => {
-    if (item.username == inputUsername) bool = true;
+    if (item.username == inputUsername || item.email == inputEmail) bool = true;
   });
 
   output2.forEach((item) => {
@@ -561,21 +564,24 @@ router.post("/signupTrainee", async (req, res) => {
     inputUsername.length == 0 ||
     inputEmail.length == 0
   ) {
-    alert("please fill all the required fields");
+    alert("please fill all required fields");
   } else {
+    var firstArr = [];
     if (bool == false) {
       var user = {
         username: inputUsername,
         password: inputPassword,
         Country: Country,
         email: inputEmail,
+        courses: firstArr,
       };
       await client.db("Trainee").collection("Trainee").insertOne(user);
-      alert("registration successful");
+
       MongoClient.connect(url, function (err, db) {
         if (err) throw err;
       });
-      res.redirect("/login");
+      var z = 200;
+      res.send(z + "");
     } else alert("the username or email you chose is already taken");
   }
 });
@@ -703,6 +709,131 @@ router.post("/rateInstructor", async (req, res) => {
   res.send(z + "");
 });
 
+router.post("/CheckCourse", async (req, res) => {
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/Trainee?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  await client.connect();
+
+  var output = await client
+    .db("Trainee")
+    .collection("Trainee")
+    .find()
+    .toArray();
+
+  const id = parseInt(req.body.id);
+  var username = req.body.username;
+  var bool = false;
+  console.log(" id:" + id + " usname" + username);
+  var myCourse = output.filter((item) => item.username == username);
+  console.log(myCourse);
+  myCourse.forEach((item) => {
+    if (item.courses.includes(id)) {
+      bool = true;
+    }
+  });
+  if (bool) {
+    res.send("250");
+  } else {
+    res.send("500");
+  }
+});
+
+router.post("/BuyCourse", async (req, res) => {
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/Trainee?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  await client.connect();
+
+  var output = await client
+    .db("Trainee")
+    .collection("Trainee")
+    .find()
+    .toArray();
+
+  const id = parseInt(req.body.id);
+  var instructor = req.body.instructor;
+  var username = req.body.username;
+  var price = req.body.price;
+  var firstArr = [];
+  var myCourse = output.filter((item) => item.username == username);
+  myCourse.forEach((item) => {
+    console.log("id to be added to array " + id);
+    item.courses.push(id);
+    firstArr = firstArr.concat(item.courses);
+    console.log(firstArr);
+
+    console.log(
+      "this is the array!!!!!!!!!!!!!" + item.courses + "!!!!!!!!!!!!!!!!!"
+    );
+  });
+
+  await client.connect();
+  var output2 = await client
+    .db("Trainee")
+    .collection("Trainee")
+    .findOneAndUpdate(
+      { username: { $eq: username } },
+      { $push: { courses: id } }
+    );
+  console.log(output2);
+
+  //////////
+  ////////////
+  ///////////Instructor gets money
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/Instructor?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  await client.connect();
+
+  var output = await client
+    .db("Instructor")
+    .collection("Instructor")
+    .find()
+    .toArray();
+  total = 0;
+
+  var myCourse = output.filter((item) => item.username == instructor);
+  myCourse.forEach((item) => {
+    console.log(item.money);
+    item.money = parseFloat(item.money) + parseFloat(price);
+    console.log(item.money);
+    total = item.money;
+  });
+
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/Instructor?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+
+  await client.connect();
+  var output = await client
+    .db("Instructor")
+    .collection("Instructor")
+    .findOneAndUpdate(
+      { username: { $eq: instructor } },
+      { $set: { money: total } }
+    );
+  console.log(output);
+  var z = "200";
+  res.send(z + "");
+});
+
 router.post("/rateCourse", async (req, res) => {
   const courses = await Courses.find({}).exec();
   const id = parseInt(req.body.id);
@@ -746,12 +877,36 @@ router.post("/addCourse", async (req, res) => {
   const choices3 = req.body.choices3;
   const choices4 = req.body.choices4;
   const correctChoices = req.body.correctChoices;
-  const exercise = {questions, choices1, choices2, choices3, choices4, correctChoices}
+  const video = req.body.video;
+  const subtitle1 = req.body.subtitle1;
+  const subtitle2 = req.body.subtitle2;
+  const video1 = req.body.video1;
+  const video2 = req.body.video2;
+  const exercise = {
+    questions,
+    choices1,
+    choices2,
+    choices3,
+    choices4,
+    correctChoices,
+  };
+  let subtitles = [];
+  let videos = [];
+  subtitles.push(subtitle1);
+  subtitles.push(subtitle2);
+  videos.push(video1);
+  videos.push(video2);
+
+  for (let i = 0; i <= videos.length; i++) {
+    console.log(videos[i]);
+    console.log(subtitles[i]);
+  }
+
   if (req.body.checked == "true") {
     await Courses.create({
       id: z,
       title: req.body.title,
-      subtitle: req.body.subtitle,
+
       exercise: exercise,
       price: parseInt(req.body.price),
       summary: req.body.summary,
@@ -760,7 +915,9 @@ router.post("/addCourse", async (req, res) => {
       subject: req.body.subject,
       instructor: req.body.instructor,
       link: req.body.title,
-      video: req.body.video,
+      video: video,
+      videos: videos,
+      subtitles: subtitles,
     });
     res.send("course created");
   } else {
@@ -879,6 +1036,39 @@ router.post("/TraineeGetCountry", async (req, res) => {
       });*/
 });
 
+router.post("/GetSalary", async (req, res) => {
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/Instructor?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  await client.connect();
+  const inputUsername = req.body.username;
+
+  /*  username: username,
+          Bio: newBio,
+          oldBio: oldBio,*/
+  var koko = await client
+    .db("Instructor")
+    .collection("Instructor")
+    .findOne({ username: inputUsername });
+  if (koko.username == inputUsername);
+  {
+    var output = koko.money;
+    res.send("" + output);
+  }
+  /*output.forEach((item) => {
+        if (item.username == inputUsername) {
+          console.log(inputPassword);
+    
+          item.password = inputPassword;
+          alert("password changed");
+        }
+      });*/
+});
+
 router.post("/GetBio", async (req, res) => {
   var { MongoClient } = require("mongodb");
   var url =
@@ -911,6 +1101,131 @@ router.post("/GetBio", async (req, res) => {
         }
       });*/
 });
+
+router.post("/SendEmailAdmin", async (req, res) => {
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/adminstrator?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  await client.connect();
+
+  var output = await client
+    .db("adminstrator")
+    .collection("adminstrator")
+    .find()
+    .toArray();
+
+  const email = req.body.email;
+  var bool = false;
+  var myCourse = output.filter((item) => item.email == email);
+  if (myCourse.length > 0) {
+    bool = true;
+  }
+  myCourse.forEach((item) => {
+    if (item.email != "" || item.email != null || item.email != "null") {
+      var recipient = item.email;
+
+      var password = item.password;
+    }
+    console.log(recipient);
+    console.log(password);
+    if (bool == true) {
+      var transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: "yousefashraf147@gmail.com",
+          pass: "nxlggbwcslgrtluc",
+        },
+      });
+
+      var mailOptions = {
+        from: "yousefashraf147@gmail.com",
+        to: recipient,
+        subject: "Hey, u seem to have forgotten your password",
+        text:
+          "your password to be able to log in and change it if you need is " +
+          password,
+      };
+
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Email sent: " + info.response);
+        }
+      });
+      res.send("200");
+    } else {
+      res.send("400");
+    }
+  });
+});
+
+router.post("/SendEmailTrainee", async (req, res) => {
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/Trainee?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  await client.connect();
+
+  var output = await client
+    .db("Trainee")
+    .collection("Trainee")
+    .find()
+    .toArray();
+
+  const email = req.body.email;
+  var bool = false;
+  var myCourse = output.filter((item) => item.email == email);
+  if (myCourse.length > 0) {
+    bool = true;
+  }
+  myCourse.forEach((item) => {
+    if (item.email != "" || item.email != null || item.email != "null") {
+      var recipient = item.email;
+
+      var password = item.password;
+    }
+    console.log(recipient);
+    console.log(password);
+    if (bool == true) {
+      var transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: "yousefashraf147@gmail.com",
+          pass: "nxlggbwcslgrtluc",
+        },
+      });
+
+      var mailOptions = {
+        from: "yousefashraf147@gmail.com",
+        to: recipient,
+        subject: "Hey, u seem to have forgotten your password",
+        text:
+          "your password to be able to log in and change it if you need is " +
+          password,
+      };
+
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Email sent: " + info.response);
+        }
+      });
+      res.send("200");
+    } else {
+      res.send("400");
+    }
+  });
+});
+
 router.post("/SendEmail", async (req, res) => {
   var { MongoClient } = require("mongodb");
   var url =
@@ -1731,12 +2046,48 @@ router.post("/GetCourse", async (req, res) => {
   const id = req.body.id;
 
   var myCourse = courses.filter((item) => item.id == id);
-  console.log(myCourse);
+
   res.send(myCourse);
 });
 
+router.post("/AddCount", async (req, res) => {
+  const courses = await Courses.find({}).exec();
+  const id = parseInt(req.body.id);
+  var Count = 0;
+
+  console.log("id :" + id);
+
+  var myCourse = courses.filter((item) => item.id == id);
+  myCourse.forEach((item) => {
+    item.count++;
+    Count = item.count;
+    console.log("item count is now" + item.count);
+  });
+
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/test?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  console.log("id: " + id);
+
+  await client.connect();
+  var output = await client
+    .db("test")
+    .collection("courses")
+    .findOneAndUpdate({ id: { $eq: id } }, { $set: { count: Count } });
+  console.log(output);
+  var z = "200";
+  res.send(z + "");
+});
+
 router.post("/GetExercise", async (req, res) => {
-  const exercise = await Courses.findOne({id: req.body.id},{ exercise: 1, _id:0 }).exec();
+  const exercise = await Courses.findOne(
+    { id: req.body.id },
+    { exercise: 1, _id: 0 }
+  ).exec();
 
   res.send(exercise);
 });

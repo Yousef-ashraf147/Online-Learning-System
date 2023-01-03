@@ -75,7 +75,7 @@ const LoginAdmin = () => {
         } else {
           alert("The password or the username is Wrong");
         }
-      });
+      })
   };
 
   const navigate = useNavigate();
@@ -103,6 +103,7 @@ const LoginAdmin = () => {
           variant="outlined"
           type="password"
         />
+        <a href="AdminForgotPassword">Forgot your password?</a>
 
         <Button onClick={Submit} variant="contained">
           Login

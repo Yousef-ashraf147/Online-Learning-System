@@ -27,15 +27,27 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useState, useEffect } from "react";
+import cookie from "react-cookies";
 
 const TraineeRateInstructor = () => {
   var [rows, setRows] = React.useState([]);
+  const navigate = useNavigate();
+  const type = cookie.load("type");
 
   useEffect(() => {
-    axios.get("http://localhost:3000/getInstructors").then((response) => {
-      rows = response.data;
-      setRows(rows);
-    });
+    if (type != "Trainee") navigate("../UnauthorizedAccess");
+
+    axios
+      .get("http://localhost:3000/getInstructors")
+      .then((response) => {
+        rows = response.data;
+        setRows(rows);
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response.data); // => the response payload
+        }
+      });
   }, []);
 
   return (

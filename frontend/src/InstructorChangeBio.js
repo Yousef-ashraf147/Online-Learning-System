@@ -17,10 +17,6 @@ import Stack from "@mui/material/Stack";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { Switch } from "react-router-dom";
-import { ReactSession } from "react-client-session";
-import UserProfile from "./UserProfile";
 import cookie from "react-cookies";
 function Copyright(props) {
   return (
@@ -67,20 +63,26 @@ const InstructorChangeBio = () => {
   // console.log(username);
 
   function Submit() {
-    axios.post(
-      "http://localhost:3000/ChangeBioIntsructor",
-      {
-        username: username,
-        Bio: newBio,
-        oldBio: oldBio,
-      },
-
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+    axios
+      .post(
+        "http://localhost:3000/ChangeBioIntsructor",
+        {
+          username: username,
+          Bio: newBio,
+          oldBio: oldBio,
         },
-      }
-    );
+
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      )
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response.data); // => the response payload
+        }
+      });
   }
 
   //need a session to get the old bio to show it to be able to change it

@@ -43,20 +43,26 @@ const CorpTraineePassword = () => {
   const [oldpassword, setOldPassword] = React.useState("");
 
   function Submit() {
-    axios.post(
-      "http://localhost:3000/ChangePasswordCorp",
-      {
-        username: cookie.load("username"),
-        password: newpassword,
-        oldPassword: oldpassword,
-      },
-
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+    axios
+      .post(
+        "http://localhost:3000/ChangePasswordCorp",
+        {
+          username: cookie.load("username"),
+          password: newpassword,
+          oldPassword: oldpassword,
         },
-      }
-    );
+
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      )
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response.data); // => the response payload
+        }
+      });
     console.log(newpassword);
   }
 

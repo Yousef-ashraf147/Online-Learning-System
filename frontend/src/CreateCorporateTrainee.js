@@ -42,19 +42,25 @@ const CreateCorporateTrainee = () => {
   const [country, setCountry] = React.useState("");
 
   function Submit() {
-    axios.post(
-      "http://localhost:3000/addingCorpTrainee",
-      {
-        username: username,
-        password: password,
-        country: country,
-      },
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+    axios
+      .post(
+        "http://localhost:3000/addingCorpTrainee",
+        {
+          username: username,
+          password: password,
+          country: country,
         },
-      }
-    );
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      )
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response.data); // => the response payload
+        }
+      });
     console.log(country);
   }
 

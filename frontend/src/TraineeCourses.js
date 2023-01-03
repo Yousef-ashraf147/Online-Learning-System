@@ -1,21 +1,13 @@
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 //import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Table from "@mui/material/Table";
@@ -25,9 +17,8 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { useState, useEffect } from "react";
-import Slider from '@mui/material/Slider';
+import { useEffect } from "react";
+import Slider from "@mui/material/Slider";
 import FormControl from "@mui/material/FormControl";
 import cookie from "react-cookies";
 
@@ -59,12 +50,20 @@ const InstructorCourses = () => {
   const [rating, setRating] = React.useState("");
   const [z, setZ] = React.useState([]);
   const convertCurrency = cookie.load("convertCurrency");
-  const currencySymbol = cookie.load('currencySymbol')
-
+  const currencySymbol = cookie.load("currencySymbol");
+  const type = cookie.load("type");
   useEffect(() => {
-    axios.get("http://localhost:3000/traineeHome").then((response) => {
-      setRows(response.data);
-    });
+    if (type != "Trainee") navigate("../UnauthorizedAccess");
+    axios
+      .get("http://localhost:3000/traineeHome")
+      .then((response) => {
+        setRows(response.data);
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response.data); // => the response payload
+        }
+      });
   }, []);
 
   function Search() {
@@ -83,7 +82,17 @@ const InstructorCourses = () => {
       .then((response) => {
         setRows(response.data);
         console.log(rows);
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response.data); // => the response payload
+        }
       });
+  }
+  function zabatny(x) {
+    console.log(cookie.load("username"));
+    const username = cookie.load("username");
+    cookie.save("username", username, { path: `/courses/${x}` });
   }
 
   const x = "/SignupTrainee";
@@ -123,7 +132,15 @@ const InstructorCourses = () => {
             setRating(newValue);
           }}
         />
-        <Slider min={0} max={200} defaultValue={100} aria-label="Default" valueLabelDisplay="auto" sx={{maxWidth:'200px'}} onChange={(e) => setPrice(e.target.value.toString())}/>
+        <Slider
+          min={0}
+          max={200}
+          defaultValue={100}
+          aria-label="Default"
+          valueLabelDisplay="auto"
+          sx={{ maxWidth: "200px" }}
+          onChange={(e) => setPrice(e.target.value.toString())}
+        />
         <Button onClick={Search} variant="light">
           Search
         </Button>
@@ -151,13 +168,18 @@ const InstructorCourses = () => {
                 >
                   <TableCell align="left">{row.title}</TableCell>
                   <TableCell align="left">{row.subject}</TableCell>
-                  <TableCell align="left">{currencySymbol + ' '}{Math.round((row.price*convertCurrency + Number.EPSILON) * 100) / 100}</TableCell>
+                  <TableCell align="left">
+                    {currencySymbol + " "}
+                    {Math.round(
+                      (row.price * convertCurrency + Number.EPSILON) * 100
+                    ) / 100}
+                  </TableCell>
                   <TableCell align="left">{row.totalHours}</TableCell>
                   <TableCell align="left">{row.rating}</TableCell>
                   <TableCell align="left">{row.instructor}</TableCell>
                   <TableCell align="left">{row.summary}</TableCell>
                   <TableCell align="left">
-                    <a href={`/courses/${row.id}`}>
+                    <a href={`/courses/${row.id}`} onClick={zabatny(row.id)}>
                       Click here to view Course page
                     </a>
                   </TableCell>

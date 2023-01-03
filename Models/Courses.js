@@ -43,6 +43,22 @@ const CoursesSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  video: {
+    type: String,
+    required: false,
+  },
+  videoLinks: {
+    type: Array,
+  },
+  subtitles: {
+    type: Array,
+  },
+  videos: {
+    type: Array,
+  },
+  count: {
+    type: Number,
+  },
 });
 
 const course = mongoose.model("Courses", CoursesSchema);

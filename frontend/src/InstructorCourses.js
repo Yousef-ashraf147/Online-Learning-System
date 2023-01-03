@@ -27,7 +27,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useState, useEffect } from "react";
-import Slider from '@mui/material/Slider';
+import Slider from "@mui/material/Slider";
 import FormControl from "@mui/material/FormControl";
 
 function Copyright(props) {
@@ -59,9 +59,16 @@ const InstructorCourses = () => {
   const [z, setZ] = React.useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/traineeHome").then((response) => {
-      setRows(response.data);
-    });
+    axios
+      .get("http://localhost:3000/traineeHome")
+      .then((response) => {
+        setRows(response.data);
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response.data); // => the response payload
+        }
+      });
   }, []);
 
   function Search() {
@@ -80,6 +87,11 @@ const InstructorCourses = () => {
       .then((response) => {
         setRows(response.data);
         console.log(rows);
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response.data); // => the response payload
+        }
       });
   }
 
@@ -120,7 +132,15 @@ const InstructorCourses = () => {
             setRating(newValue);
           }}
         />
-        <Slider min={0} max={200} defaultValue={100} aria-label="Default" valueLabelDisplay="auto" sx={{maxWidth:'200px'}} onChange={(e) => setPrice(e.target.value.toString())}/>
+        <Slider
+          min={0}
+          max={200}
+          defaultValue={100}
+          aria-label="Default"
+          valueLabelDisplay="auto"
+          sx={{ maxWidth: "200px" }}
+          onChange={(e) => setPrice(e.target.value.toString())}
+        />
         <Button onClick={Search} variant="light">
           Search
         </Button>

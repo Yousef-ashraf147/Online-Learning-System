@@ -57,9 +57,16 @@ const CorpTraineeCourses = () => {
   const [z, setZ] = React.useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/traineeHome").then((response) => {
-      setRows(response.data);
-    });
+    axios
+      .get("http://localhost:3000/traineeHome")
+      .then((response) => {
+        setRows(response.data);
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response.data); // => the response payload
+        }
+      });
   }, []);
 
   function Search() {

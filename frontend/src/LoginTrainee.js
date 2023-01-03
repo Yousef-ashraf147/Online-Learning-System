@@ -6,13 +6,12 @@ import Box from "@mui/material/Box";
 //import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
-import {useEffect} from 'react'
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "bulma/css/bulma.min.css";
 import cookie from "react-cookies";
-import { ReactSession } from "react-client-session";
+//import { ReactSession } from "react-client-session";
 
 function Copyright(props) {
   return (
@@ -37,7 +36,7 @@ const theme = createTheme();
 const LoginTrainee = () => {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
-  ReactSession.setStoreType("cookie");
+  //ReactSession.setStoreType("cookie");
 
   function Submit() {
     const input = { username, password };
@@ -58,6 +57,7 @@ const LoginTrainee = () => {
         console.log(response.data);
         if (response.data == "200") {
           cookie.save("username", username, { path: "/" });
+          cookie.save("username", username, { path: `/courses/` });
           cookie.save("type", "Trainee", { path: "/" });
 
           alert("Successful Login!");
@@ -72,19 +72,17 @@ const LoginTrainee = () => {
             username: cookie.load("username"),
           })
           .then((response) => {
-            let convertCurrency
-            let currencySymbol
-            if(response.data == 'Egypt') {
+            let convertCurrency;
+            let currencySymbol;
+            if (response.data == "Egypt") {
               convertCurrency = 30;
-              currencySymbol = 'ج.م'
-            }
-            else if ('Germany'){
+              currencySymbol = "ج.م";
+            } else if ("Germany") {
               convertCurrency = 1.06;
-              currencySymbol = '€'
-            }
-            else {
+              currencySymbol = "€";
+            } else {
               convertCurrency = 1;
-              currencySymbol = '$'
+              currencySymbol = "$";
             }
             cookie.save("country", response.data, { path: "/" });
             cookie.save("convertCurrency", convertCurrency, { path: "/" });
@@ -119,7 +117,7 @@ const LoginTrainee = () => {
           label="Password"
           variant="outlined"
         />
-
+        <a href="TraineeForgottenPasword">Forgot your password?</a>
         <Button onClick={Submit} variant="contained">
           Login
         </Button>

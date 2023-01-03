@@ -23,6 +23,8 @@ const InstructorHome = () => {
       <a href="/InstructorEditInfo">Edit info</a>
       <br />
       <a href="/InstructorAddCourse">Add a new course</a>
+      <br />
+      <a href="/InstructorSalary">Check money owed (salary) </a>
 
       <br />
     </div>

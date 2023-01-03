@@ -12,15 +12,23 @@ import TableRow from "@mui/material/TableRow";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import Rating from "@mui/material/Rating";
+import cookie from "react-cookies";
+import { Box } from "@mui/system";
+import { Stack } from "@mui/material";
+import ReactPlayer from "react-player";
+import TextField from "@mui/material/TextField";
 
 const CourseDetails = () => {
+  console.log(cookie.load("username"));
   const navigate = useNavigate();
 
   const [open, setOpen] = React.useState(false);
+  const [show, setShow] = React.useState(false);
   const { id } = useParams();
   const [rows, setRows] = React.useState([]);
   const [rating, setRating] = React.useState(0);
   const [exercise, setExercise] = React.useState();
+  var i = 0;
 
   const handleExerciseClick = () => {
     navigate(`/exercise/${id}`);
@@ -44,16 +52,34 @@ const CourseDetails = () => {
         if (response.data == "200") {
           alert("Course rated!");
         }
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response.data); // => the response payload
+        }
       });
   }
   useEffect(() => {
     axios
-      .post("http://localhost:3000/GetCourse", {
-        id: id,
-      })
-      .then((response) => {
-        setRows(response.data);
-      });
+      .post(
+        "http://localhost:3000/AddCount",
+        { id: id },
+
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      )
+      .then(
+        axios
+          .post("http://localhost:3000/GetCourse", {
+            id: id,
+          })
+          .then((response) => {
+            setRows(response.data);
+          })
+      );
   }, [rating]);
 
   return (
@@ -93,6 +119,89 @@ const CourseDetails = () => {
                 allowfullscreen
               ></iframe>
             </div>
+            <Stack
+              direction={"row"}
+              spacing={3}
+              style={{ minWidth: "3000px", maxWidth: "3000px" }}
+              alignContent={"center"}
+              alignSelf={"center"}
+              alignItems={"center"}
+            >
+              <Box
+                color={"blue"}
+                borderColor={"black"}
+                border={"2px solid black"}
+                style={{ minWidth: "1940px", maxWidth: "1940px" }}
+                alignContent={"center"}
+                alignSelf={"center"}
+                alignItems={"center"}
+              >
+                <h2 style={{ fontSize: "1.3rem", backgroundColor: "beige" }}>
+                  subtitle 1: {row.subtitles[i++]}
+                </h2>
+                <Button
+                  onClick={() => setShow(!show)}
+                  variant="contained"
+                  color="inherit"
+                >
+                  view video &dArr;
+                </Button>
+                {show ? (
+                  <div>
+                    <Stack
+                      direction={"column"}
+                      spacing={3}
+                      style={{
+                        minWidth: "3000px",
+                        maxWidth: "3000px",
+                      }}
+                      alignContent={"center"}
+                      alignSelf={"center"}
+                      alignItems={"center"}
+                    >
+                      <ReactPlayer
+                        url={row.videos[i]}
+                        style={{ marginRight: "1000px" }}
+                      />{" "}
+                    </Stack>
+                    <Stack
+                      direction={"row"}
+                      spacing={3}
+                      style={{ minWidth: "3000px", maxWidth: "3000px" }}
+                      alignContent={"center"}
+                      alignSelf={"center"}
+                      alignItems={"center"}
+                    >
+                      {" "}
+                      <TextField
+                        id="outlined-multiline-static"
+                        multiline
+                        rows={10}
+                        name="Search"
+                        type="text"
+                        placeholder="Notes"
+                        sx={{ m: 1, width: "100ch" }}
+                        size={{ minWidth: "3000px", maxWidth: "3000px" }}
+                        style={{ marginLeft: "500px" }}
+                      />
+                      <Button variant="contained" color="inherit">
+                        Save notes as a pdf
+                      </Button>
+                    </Stack>
+                  </div>
+                ) : null}
+              </Box>
+            </Stack>
+            <br />
+            <h2
+              style={{
+                fontSize: "1.2rem",
+                backgroundColor: "beige",
+                border: "2px solid black",
+              }}
+            >
+              subtitle 2: {row.subtitles[i++]}
+            </h2>
           </div>
         ))}
       <br></br>

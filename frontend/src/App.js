@@ -1,20 +1,11 @@
 import "./App.css";
-import React, { useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Link,
-  useNavigate,
-} from "react-router-dom";
-import Typography from "@mui/material/Typography";
-import { Button } from "@mui/material";
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from "./Login";
 import Signup from "./Signup";
 import SignupAdmin from "./SignupAdmin";
 import SignupTrainee from "./SignupTrainee";
 import SignupCorporateTrainee from "./SignupCorporateTrainee";
-import SignupInstructor from "./SignupInstruc";
 import HomePage from "./HomePage";
 import LoginAdmin from "./LoginAdmin";
 import LoginInstructor from "./LoginInstructor";
@@ -41,20 +32,25 @@ import CorpTraineeHome from "./CorpTraineeHome";
 import CorpTraineeCourses from "./CorpTraineeCourses";
 import CorpTraineePassword from "./CorpTraineePassword";
 import CourseDetails from "./CourseDetails";
+import CourseWithoutDetails from "./CourseWithoutDetails";
 import UnauthorizedAccess from "./UnauthorizedAccess";
 import TraineeRateInstructor from "./TraineeRateInstructor";
 import InstructorDetails from "./InstructorDetails";
 import InstructorForgotPassword from "./InstructorForgotPassword";
 import TermsOfUse from "./TermsOfUse";
+import TraineeForgottenPasword from "./TraineeForgottenPasword";
+import BuyCourse from "./BuyCourse";
+import InstructorSalary from "./InstructorSalary";
 
-import { Switch } from "react-router-dom";
-import { ReactSession } from "react-client-session";
-import UserProfile from "./UserProfile";
-import styles from "./mystyle.module.css";
+import AdminForgotPassword from "./AdminForgotPassword";
+import RefundPolicy from "./RefundPolicy";
+import ResponsiveAppBar from "./ResponsiveAppBar";
+
 import SolveExercise from "./SolveExercise";
 function App() {
   return (
     <Router>
+      <ResponsiveAppBar />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<Signup />} />
@@ -86,6 +82,7 @@ function App() {
         <Route path="/AdminHome" element={<AdminHome />} />
         <Route path="/TraineeHome" element={<TraineeHome />} />
         <Route path="/InstructorHome" element={<InstructorHome />} />
+        <Route path="/InstructorSalary" element={<InstructorSalary />} />
 
         <Route path="/ViewMyRatings" element={<ViewMyRatings />} />
         <Route path="/InstructorEditInfo" element={<InstructorEditInfo />} />
@@ -95,6 +92,11 @@ function App() {
           path="/InstructorForgotPassword"
           element={<InstructorForgotPassword />}
         />
+        <Route
+          path="/TraineeForgottenPasword"
+          element={<TraineeForgottenPasword />}
+        />
+        <Route path="/AdminForgotPassword" element={<AdminForgotPassword />} />
 
         <Route path="/TraineePassword" element={<TraineePassword />} />
 
@@ -121,8 +123,12 @@ function App() {
         <Route path="/CorpTraineeCourses" element={<CorpTraineeCourses />} />
         <Route path="/CorpTraineePassword" element={<CorpTraineePassword />} />
         <Route path="/TermsOfUse" element={<TermsOfUse />} />
+        <Route path="/RefundPolicy" element={<RefundPolicy />} />
 
-        <Route path="/Courses/:id" element={<CourseDetails />} />
+        <Route path="/BuyCourse" element={<BuyCourse />} />
+
+        <Route path="/courses/:id" element={<CourseWithoutDetails />} />
+        <Route path="/courses+/:id" element={<CourseDetails />} />
         <Route path="/exercise/:id" element={<SolveExercise />} />
         <Route path="/instructors/:id" element={<InstructorDetails />} />
       </Routes>

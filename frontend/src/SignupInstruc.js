@@ -44,6 +44,7 @@ const SignupInstruc = () => {
   const [password, setPassword] = React.useState("");
   const [country, setCountry] = React.useState("");
   const [email, setEmail] = React.useState("");
+  const [img, setImg] = React.useState("");
 
   const [checked, setChecked] = React.useState(false);
 
@@ -53,6 +54,18 @@ const SignupInstruc = () => {
 
   function Submit() {
     console.log(checked);
+    if (
+      username.length == 0 ||
+      password.length == 0 ||
+      country.length == 0 ||
+      email.length == 0
+    ) {
+      alert("Please fill all required fields");
+    } else if (checked == false) {
+      alert(
+        "You have to agree to the user's agreement and the website's refund/payment policy "
+      );
+    }
     axios
       .post(
         "http://localhost:3000/signupInstruc",
@@ -62,6 +75,7 @@ const SignupInstruc = () => {
           country: country,
           email: email,
           agreement: checked,
+          img: img,
         },
         {
           headers: {
@@ -73,7 +87,7 @@ const SignupInstruc = () => {
         console.log(response.data);
         if (response.data == "200") {
           navigate("/LoginInstructor");
-          alert("Successful Login!");
+          alert("Successful Registration!");
         } else if (username.length == 0 || password.length == 0) {
           alert("The password or the username is empty");
         } else {
@@ -91,7 +105,7 @@ const SignupInstruc = () => {
     <Box
       component="form"
       sx={{
-        "& > :not(style)": { m: 1, width: "25ch" },
+        "& > :not(style)": { m: 1, width: "30ch" },
       }}
       noValidate
       autoComplete="off"
@@ -114,6 +128,12 @@ const SignupInstruc = () => {
           onChange={(e) => setPassword(e.target.value)}
           id="filled-basic"
           label="Password "
+          variant="outlined"
+        />
+        <TextField
+          onChange={(e) => setImg(e.target.value)}
+          id="filled-basic"
+          label="embed link of your Image "
           variant="outlined"
         />
         <FormControl>
@@ -416,13 +436,17 @@ const SignupInstruc = () => {
             <MenuItem value="Zimbabwe">Zimbabwe</MenuItem>
           </Select>{" "}
         </FormControl>
-        <FormControlLabel
-          control={<Checkbox defaultunchecked />}
-          checked={checked}
-          onChange={handleChange}
-          label="Accept the user's agreement"
-        />
-        <a href="/TermsOfUse">View User's Agreement</a>
+        <div>
+          <FormControlLabel
+            control={<Checkbox defaultunchecked />}
+            checked={checked}
+            onChange={handleChange}
+          />
+          <label style={{ fontSize: "0.9rem" }}>
+            Accept the <a href="/TermsOfUse">User's Agreement</a> and the{" "}
+            <a href="/RefundPolicy">Website's refund/Payment policy</a>
+          </label>
+        </div>
 
         <Button onClick={Submit} variant="contained">
           Sign Up

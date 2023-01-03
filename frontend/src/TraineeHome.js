@@ -20,6 +20,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import cookie from "react-cookies";
 import { useEffect } from "react";
+import ResponsiveAppBar from "./ResponsiveAppBar";
+import { Drawer } from "@material-ui/core";
 
 const TraineeHome = () => {
   const navigate = useNavigate();
@@ -29,7 +31,6 @@ const TraineeHome = () => {
   }, []);
   return (
     <>
-      <h1>Trainee Home</h1>
       <div className="div">
         <a href="/TraineeCourses">View all courses</a>
         <br />

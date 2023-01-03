@@ -42,20 +42,26 @@ const InstructorChangeEmail = () => {
   const [oldemail, setOldEmail] = React.useState("");
 
   function Submit() {
-    axios.post(
-      "http://localhost:3000/ChangeEmailIntsructor",
-      {
-        username: username,
-        email: newemail,
-        oldemail: oldemail,
-      },
-
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+    axios
+      .post(
+        "http://localhost:3000/ChangeEmailIntsructor",
+        {
+          username: username,
+          email: newemail,
+          oldemail: oldemail,
         },
-      }
-    );
+
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      )
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response.data); // => the response payload
+        }
+      });
     console.log(newemail);
   }
 

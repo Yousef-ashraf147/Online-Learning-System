@@ -56,7 +56,11 @@ const InstructorPassword = () => {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       }
-    );
+    ).catch((error) => {
+      if (error.response) {
+        console.log(error.response.data); // => the response payload
+      }
+    });
     console.log(newpassword);
   }
 

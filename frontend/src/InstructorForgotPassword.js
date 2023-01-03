@@ -1,5 +1,3 @@
-import { Switch, Route, Navigate } from "react-router-dom";
-import { ReactSession } from "react-client-session";
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -40,6 +38,11 @@ const InstructorForgotPassword = () => {
           alert(
             "Email not found. please make sure of the email you are writing"
           );
+        }
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response.data); // => the response payload
         }
       });
   };
