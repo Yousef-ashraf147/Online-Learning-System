@@ -37,6 +37,8 @@ const TraineeHome = () => {
         <a href="/TraineePassword">Change my password</a>
         <br />
         <a href="/TraineeRateInstructor">Rate an instructor</a>
+        <br />
+        <a href="/TraineeViewCourses">View enrolled courses</a>
       </div>
     </>
   );

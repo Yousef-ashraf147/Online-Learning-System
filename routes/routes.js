@@ -2041,6 +2041,40 @@ router.post("/InstructorMySearch", async (req, res) => {
   res.send(filteredCourses);
 });
 
+router.post("/TraineeMySearch", async (req, res) => {
+  const courses = await Courses.find({}).exec();
+  const username = req.body.username;
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/Trainee?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  await client.connect();
+
+  var output = await client
+    .db("Trainee")
+    .collection("Trainee")
+    .find()
+    .toArray();
+  var firstArr = [];
+  var myCourse = output.filter((item) => item.username == username);
+  myCourse.forEach((item) => {
+    firstArr = firstArr.concat(item.courses);
+    console.log("this is firstarr" + firstArr);
+  });
+  var result = [];
+  for (let i = 0; i < firstArr.length; i++) {
+    const id = firstArr[i];
+    var myCourse = courses.filter((item) => item.id == id);
+    result = result.concat(myCourse);
+  }
+
+  console.log(result);
+  res.send(result);
+});
+
 router.post("/GetCourse", async (req, res) => {
   const courses = await Courses.find({}).exec();
   const id = req.body.id;

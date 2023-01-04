@@ -35,6 +35,8 @@ import CourseDetails from "./CourseDetails";
 import CourseWithoutDetails from "./CourseWithoutDetails";
 import UnauthorizedAccess from "./UnauthorizedAccess";
 import TraineeRateInstructor from "./TraineeRateInstructor";
+import TraineeViewCourses from "./TraineeViewCourses";
+
 import InstructorDetails from "./InstructorDetails";
 import InstructorForgotPassword from "./InstructorForgotPassword";
 import TermsOfUse from "./TermsOfUse";
@@ -77,6 +79,8 @@ function App() {
         <Route path="/Login" element={<Login />} />
 
         <Route path="/TraineeCourses" element={<TraineeCourses />} />
+        <Route path="/TraineeViewCourses" element={<TraineeViewCourses />} />
+
         <Route path="/InstructorCourses" element={<InstructorCourses />} />
 
         <Route path="/AdminHome" element={<AdminHome />} />
