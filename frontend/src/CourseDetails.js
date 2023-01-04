@@ -17,6 +17,7 @@ import { Box } from "@mui/system";
 import { Stack } from "@mui/material";
 import ReactPlayer from "react-player";
 import TextField from "@mui/material/TextField";
+import { jsPDF } from "jspdf";
 
 const CourseDetails = () => {
   console.log(cookie.load("username"));
@@ -27,6 +28,7 @@ const CourseDetails = () => {
   const { id } = useParams();
   const [rows, setRows] = React.useState([]);
   const [rating, setRating] = React.useState(0);
+  const [notes, setNotes] = React.useState("yousef ashraf");
   const [exercise, setExercise] = React.useState();
   var i = 0;
 
@@ -81,6 +83,12 @@ const CourseDetails = () => {
           })
       );
   }, [rating]);
+
+  const downloadPDFFile = (x) => {
+    let doc = new jsPDF("landscape", "px", "a4", false);
+    doc.text(notes, 20, 20);
+    doc.save(x + ".pdf");
+  };
 
   return (
     <div className="div">
@@ -137,7 +145,7 @@ const CourseDetails = () => {
                 alignItems={"center"}
               >
                 <h2 style={{ fontSize: "1.3rem", backgroundColor: "beige" }}>
-                  subtitle 1: {row.subtitles[i++]}
+                  subtitle 1: {row.subtitles[i]}
                 </h2>
                 <Button
                   onClick={() => setShow(!show)}
@@ -174,17 +182,24 @@ const CourseDetails = () => {
                     >
                       {" "}
                       <TextField
+                        onChange={(e) => setNotes(e.target.value)}
                         id="outlined-multiline-static"
                         multiline
                         rows={10}
                         name="Search"
                         type="text"
-                        placeholder="Notes"
+                        placeholder="Notes "
                         sx={{ m: 1, width: "100ch" }}
                         size={{ minWidth: "3000px", maxWidth: "3000px" }}
                         style={{ marginLeft: "500px" }}
                       />
-                      <Button variant="contained" color="inherit">
+                      <Button
+                        variant="contained"
+                        color="inherit"
+                        onClick={() => {
+                          downloadPDFFile(row.subtitles[i++]);
+                        }}
+                      >
                         Save notes as a pdf
                       </Button>
                     </Stack>
