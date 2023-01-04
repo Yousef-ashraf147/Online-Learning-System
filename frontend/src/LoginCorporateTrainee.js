@@ -52,6 +52,7 @@ const LoginCorporateTrainee = () => {
       oNavigate();
     }
     cookie.save("username", username, { path: "/" });
+    cookie.save("type", "corporate", { path: "/" });
 
     console.log(cookie.load("username"));
   }

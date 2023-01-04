@@ -27,6 +27,7 @@ const CourseWithoutDetails = () => {
   const [rows, setRows] = React.useState([]);
   const [rating, setRating] = React.useState(0);
   var i = 0;
+  const type = cookie.load("type");
 
   const [exercise, setExercise] = React.useState();
   const convertCurrency = cookie.load("convertCurrency");
@@ -34,6 +35,10 @@ const CourseWithoutDetails = () => {
   const handleExerciseClick = () => {
     navigate(`/exercise/${id}`);
   };
+
+  useEffect(() => {
+    console.log(type);
+  }, []);
 
   useEffect(() => {
     axios
@@ -73,6 +78,19 @@ const CourseWithoutDetails = () => {
     navigate("/BuyCourse");
   }
 
+  function requestAccess() {
+    cookie.save("Courseid", id, { path: "/" });
+
+    axios
+      .post("http://localhost:3000/requestCourse", {
+        id: id,
+        username: username,
+      })
+      .then((response) => {
+        alert("Request sent successfully");
+      });
+  }
+
   return (
     <div className="div">
       {rows &&
@@ -80,15 +98,20 @@ const CourseWithoutDetails = () => {
           <div>
             <h1 style={{ fontSize: "2rem" }}> {row.title} Course page</h1>
             <br />
-            <Button
-              variant="contained"
-              onClick={() => {
-                Register(row.price, row.instructor);
-              }}
-            >
-              Register for course
-            </Button>
-
+            {type == "corporate" ? (
+              <Button variant="contained" onClick={requestAccess}>
+                Request Access
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                onClick={() => {
+                  Register(row.price, row.instructor);
+                }}
+              >
+                Register for course
+              </Button>
+            )}
             <hr style={{ color: "black" }}></hr>
             <p style={{ fontSize: "1.2rem" }}>
               <img src={row.img} width="250" height="400"></img>
