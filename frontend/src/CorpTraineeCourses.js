@@ -27,6 +27,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useState, useEffect } from "react";
+import cookie from "react-cookies";
 
 function Copyright(props) {
   return (
@@ -44,6 +45,14 @@ function Copyright(props) {
       {"."}
     </Typography>
   );
+}
+
+function zabatny(x) {
+  console.log(cookie.load("username"));
+  const username = cookie.load("username");
+  const type = cookie.load("type");
+  cookie.save("username", username, { path: `/courses/${x}` });
+  cookie.save("type", type, { path: `/courses/${x}` });
 }
 
 const CorpTraineeCourses = () => {
@@ -156,7 +165,10 @@ const CorpTraineeCourses = () => {
                   <TableCell align="left">{row.instructor}</TableCell>
                   <TableCell align="left">{row.summary}</TableCell>
                   <TableCell align="left">
-                    <a href={row.link}> Click here to view Course page</a>
+                    <a href={`/courses/${row.id}`} onClick={zabatny(row.id)}>
+                      {" "}
+                      Click here to view Course page
+                    </a>
                   </TableCell>
                 </TableRow>
               ))}

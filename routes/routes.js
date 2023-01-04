@@ -78,6 +78,10 @@ router.get("/corpHome", async (req, res) => {
   }
 });
 
+router.get("/getType", async (req, res) => {
+  res.send(req.session.userType);
+});
+
 router.get("/guestHome", async (req, res) => {
   var price1 = 5;
   var price2 = 20;
@@ -764,17 +768,15 @@ router.post("/BuyCourse", async (req, res) => {
   var username = req.body.username;
   var price = req.body.price;
   var firstArr = [];
-  var myCourse = output.filter((item) => item.username == username);
-  myCourse.forEach((item) => {
-    console.log("id to be added to array " + id);
-    item.courses.push(id);
-    firstArr = firstArr.concat(item.courses);
-    console.log(firstArr);
+  var user = output.find((item) => item.username == username);
+  console.log("id to be added to array " + id);
+  user.courses.push(id);
+  firstArr = firstArr.concat(user.courses);
+  console.log(firstArr);
 
-    console.log(
-      "this is the array!!!!!!!!!!!!!" + item.courses + "!!!!!!!!!!!!!!!!!"
-    );
-  });
+  console.log(
+    "this is the array!!!!!!!!!!!!!" + item.courses + "!!!!!!!!!!!!!!!!!"
+  );
 
   await client.connect();
   var output2 = await client
@@ -783,8 +785,24 @@ router.post("/BuyCourse", async (req, res) => {
     .findOneAndUpdate(
       { username: { $eq: username } },
       { $push: { courses: id } }
-    );
+    )();
   console.log(output2);
+
+  const courseSubtitles = await Courses.findOne({ id: id }).select("subtitles");
+
+  const subtitles = [];
+  courseSubtitles.subtitles.forEach((subtitle) => {
+    subtitles.push({
+      subtitle: subtitle,
+      isDone: false,
+    });
+  });
+
+  await CourseProgress.create({
+    username: username,
+    courseID: id,
+    subtitles: subtitles,
+  });
 
   //////////
   ////////////
@@ -1580,6 +1598,15 @@ router.post("/addingInstructor", async (req, res) => {
   /*else {
     res.redirect("/login");
   }*/
+});
+
+router.post("/requestCourse", async (req, res) => {
+  const { id, username } = req.body;
+
+  await requestCourse.create({
+    id: id,
+    username: username,
+  });
 });
 
 router.post("/addingAdmins", async (req, res) => {
