@@ -55,7 +55,7 @@ const ViewAccessRequests = (props) => {
       })
       .then((response) => {
         axios
-          .post("http://localhost:3000/getAccessRequests", {
+          .post("http://localhost:3000/getRequestAccesses", {
             username: username,
           })
           .then((response) => {
@@ -71,7 +71,7 @@ const ViewAccessRequests = (props) => {
       })
       .then((response) => {
         axios
-          .post("http://localhost:3000/getAccessRequests", {
+          .post("http://localhost:3000/getRequestAccesses", {
             username: username,
           })
           .then((response) => {

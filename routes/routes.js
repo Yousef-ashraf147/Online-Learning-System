@@ -2226,6 +2226,87 @@ router.post("/getRequestAccesses", async (req, res) => {
   res.send(RequestAccesses);
 });
 
+router.put("/addCourseToCopTrainee", async (req, res) => {
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/Instructor?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  await client.connect();
+
+  const { username, title } = req.body;
+
+  const course = await Courses.findOne(
+    { title: title },
+    { _id: 0, id: 1 }
+  ).exec();
+
+  const id = course.id;
+
+  const done = await client
+    .db("corporate")
+    .collection("corporate")
+    .updateOne({ username: username }, { $push: { courses: id } });
+  if (done) {
+    res.send("Course Added");
+  } else {
+    res.send("Course Not Added");
+  }
+});
+
+router.post("/grantAccessRequest", async (req, res) => {
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/Instructor?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  await client.connect();
+
+  const { accessRequest } = req.body;
+  const id = accessRequest.id;
+  const username = accessRequest.username;
+
+  const user = await client
+    .db("corporate")
+    .collection("corporate")
+    .findOne({ username });
+
+  if (user) {
+    await client
+      .db("corporate")
+      .collection("corporate")
+      .updateOne({ username: username }, { $push: { courses: id } });
+
+    await RequestAccess.deleteOne({
+      username: username,
+      id: id,
+    });
+    res.send("Access Granted!");
+  } else {
+    res.send("Access Not Granted!");
+  }
+});
+
+router.post("/denyAccessRequest", async (req, res) => {
+  const { accessRequest } = req.body;
+  const id = accessRequest.id;
+  const username = accessRequest.username;
+
+  const done = await RequestAccess.deleteOne({
+    username: username,
+    id: id,
+  });
+
+  if (done) res.send("Access Denied!");
+  else {
+    res.send("Access Not Denied!");
+  }
+});
+
 router.get("/getCourses", async (req, res) => {
   const courses = await Courses.find({}).exec();
   res.send(courses);

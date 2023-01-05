@@ -18,12 +18,13 @@ const User = (props) => {
 
   function grantCourseAccess() {
     axios
-      .put("http://localhost:3001/addCourseToCopTrainee", {
+      .put("http://localhost:3000/addCourseToCopTrainee", {
         username: user.username,
         title: selectedCourse,
-        // courseSubtitles:
       })
-      .then((response) => {});
+      .then((response) => {
+        alert(response.data);
+      });
   }
 
   const [selectedCourse, setSelectedCourse] = React.useState(null);
