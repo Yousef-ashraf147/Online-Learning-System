@@ -84,7 +84,7 @@ const BuyCourse = () => {
           }
         });
       alert("course succesfully purchased");
-      navigate(`/courses+/${id}`);
+      navigate(`/courses/${id}`);
     }
   }
   const navigate = useNavigate();

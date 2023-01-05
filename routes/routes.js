@@ -5,6 +5,7 @@ const session = require("express-session");
 const Courses = require("../models/Courses");
 var nodemailer = require("nodemailer");
 const RequestAccess = require("../models/RequestAccess");
+const CourseProgress = require("../models/CourseProgress");
 
 router.get("/corpHome", async (req, res) => {
   if (req.session.isLoggedIn && req.session.userType == "Corp") {
@@ -775,18 +776,11 @@ router.post("/BuyCourse", async (req, res) => {
   firstArr = firstArr.concat(user.courses);
   console.log(firstArr);
 
-  console.log(
-    "this is the array!!!!!!!!!!!!!" + item.courses + "!!!!!!!!!!!!!!!!!"
-  );
-
   await client.connect();
   var output2 = await client
     .db("Trainee")
     .collection("Trainee")
-    .findOneAndUpdate(
-      { username: { $eq: username } },
-      { $push: { courses: id } }
-    )();
+    .updateOne({ username: { $eq: username } }, { $push: { courses: id } });
   console.log(output2);
 
   const courseSubtitles = await Courses.findOne({ id: id }).select("subtitles");
@@ -2310,6 +2304,24 @@ router.post("/denyAccessRequest", async (req, res) => {
 router.get("/getCourses", async (req, res) => {
   const courses = await Courses.find({}).exec();
   res.send(courses);
+});
+
+router.post("/getCourseProgress", async (req, res) => {
+  const { username, courseID } = req.body;
+  const courseProgress = await CourseProgress.findOne(
+    {
+      username,
+      courseID,
+    },
+    { _id: 0, subtitles: 1 }
+  ).exec();
+  let doneSubtitles = 0;
+  courseProgress.subtitles.map((subtitle) => {
+    if (subtitle.isDone) {
+      doneSubtitles++;
+    }
+  });
+  res.send(doneSubtitles / courseProgress.subtitles.length + "");
 });
 
 router.get("/getCorporateTrainees", async (req, res) => {
