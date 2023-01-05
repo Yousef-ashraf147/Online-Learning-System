@@ -19,27 +19,25 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import cookie from "react-cookies";
-import {useEffect} from 'react'
+import { useEffect } from "react";
 
 function AdminHome() {
-  const navigate = useNavigate()
-  const type = cookie.load("type")
+  const navigate = useNavigate();
+  const type = cookie.load("type");
   useEffect(() => {
-    if(type != 'admin')
-      navigate('../UnauthorizedAccess')
-  },[])
-    
+    if (type != "admin") navigate("../UnauthorizedAccess");
+  }, []);
+
   return (
-    
     <div>
       <br />
-      <a href="/CreateAdmin">Create an admin</a>
+      <a href="viewadmins">View Admins</a>
       <br />
       <br />
-      <a href="CreateInstructor">Create an Instructor</a>
+      <a href="viewinstructors">View Instructors</a>
       <br />
       <br />
-      <a href="CreateCorporateTrainee">Create a Corporate Trainee</a>
+      <a href="viewcorporatetrainees">View Corporate Trainees</a>
     </div>
   );
 }

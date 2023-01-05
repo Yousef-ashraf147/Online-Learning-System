@@ -4,6 +4,7 @@ var alert = require("alert");
 const session = require("express-session");
 const Courses = require("../models/Courses");
 var nodemailer = require("nodemailer");
+const RequestAccess = require("../models/RequestAccess");
 
 router.get("/corpHome", async (req, res) => {
   if (req.session.isLoggedIn && req.session.userType == "Corp") {
@@ -1600,13 +1601,14 @@ router.post("/addingInstructor", async (req, res) => {
   }*/
 });
 
-router.post("/requestCourse", async (req, res) => {
+router.post("/requestAccess", async (req, res) => {
   const { id, username } = req.body;
 
-  await requestCourse.create({
+  await RequestAccess.create({
     id: id,
     username: username,
   });
+  res.send("Request sent successfully");
 });
 
 router.post("/addingAdmins", async (req, res) => {
@@ -2151,6 +2153,100 @@ router.post("/GetExercise", async (req, res) => {
   ).exec();
 
   res.send(exercise);
+});
+
+router.get("/getTrainees", async (req, res) => {
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/Instructor?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  await client.connect();
+
+  var output = await client
+    .db("Trainee")
+    .collection("Trainee")
+    .find()
+    .toArray();
+  res.send(output);
+});
+
+router.get("/getInstructors", async (req, res) => {
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/Instructor?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  await client.connect();
+
+  var output = await client
+    .db("Instructor")
+    .collection("Instructor")
+    .find()
+    .toArray();
+  res.send(output);
+});
+
+router.get("/getAdmins", async (req, res) => {
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/Instructor?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  await client.connect();
+
+  var output = await client
+    .db("adminstrator")
+    .collection("adminstrator")
+    .find()
+    .toArray();
+  res.send(output);
+});
+
+router.post("/getCoursesByID", async (req, res) => {
+  const coursesIDs = req.body.coursesIDs;
+  const courses = await Courses.find(
+    { id: { $in: coursesIDs } },
+    { _id: 0, title: 1 }
+  ).exec();
+
+  res.send(courses);
+});
+
+router.post("/getRequestAccesses", async (req, res) => {
+  const RequestAccesses = await RequestAccess.find({
+    username: req.body.username,
+  }).exec();
+  res.send(RequestAccesses);
+});
+
+router.get("/getCourses", async (req, res) => {
+  const courses = await Courses.find({}).exec();
+  res.send(courses);
+});
+
+router.get("/getCorporateTrainees", async (req, res) => {
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/Instructor?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  await client.connect();
+
+  var output = await client
+    .db("corporate")
+    .collection("corporate")
+    .find()
+    .toArray();
+  res.send(output);
 });
 
 router.post("/GetInstructor", async (req, res) => {

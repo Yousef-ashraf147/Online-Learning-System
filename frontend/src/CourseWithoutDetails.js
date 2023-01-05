@@ -82,7 +82,7 @@ const CourseWithoutDetails = () => {
     cookie.save("Courseid", id, { path: "/" });
 
     axios
-      .post("http://localhost:3000/requestCourse", {
+      .post("http://localhost:3000/requestAccess", {
         id: id,
         username: username,
       })

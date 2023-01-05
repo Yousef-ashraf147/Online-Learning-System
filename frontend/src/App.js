@@ -49,6 +49,10 @@ import RefundPolicy from "./RefundPolicy";
 import ResponsiveAppBar from "./ResponsiveAppBar";
 
 import SolveExercise from "./SolveExercise";
+import ViewAdmins from "./ViewAdmins";
+import ViewIndividualTrainees from "./ViewIndividualTrainees";
+import ViewCorporateTrainees from "./ViewCorporateTrainees";
+import ViewInstructors from "./ViewInstructors";
 function App() {
   return (
     <Router>
@@ -135,6 +139,11 @@ function App() {
         <Route path="/courses+/:id" element={<CourseDetails />} />
         <Route path="/exercise/:id" element={<SolveExercise />} />
         <Route path="/instructors/:id" element={<InstructorDetails />} />
+
+        <Route path="/viewAdmins" element={<ViewAdmins />} />
+        <Route path="/viewTrainees" element={<ViewIndividualTrainees />} />
+        <Route path="/viewCorporateTrainees" element={<ViewCorporateTrainees />} />
+        <Route path="/viewInstructors" element={<ViewInstructors />} />
       </Routes>
     </Router>
   );

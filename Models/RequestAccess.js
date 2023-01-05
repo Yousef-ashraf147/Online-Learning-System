@@ -8,5 +8,5 @@ const requestAccessSchema = new mongoose.Schema({
   },
 });
 
-const RequestAccess = mongoose.model("Courses", requestAccessSchema);
+const RequestAccess = mongoose.model("RequestAccess", requestAccessSchema);
 module.exports = RequestAccess;
