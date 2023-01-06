@@ -749,6 +749,40 @@ router.post("/CheckCourse", async (req, res) => {
   }
 });
 
+router.post("/CheckCourseCorp", async (req, res) => {
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/corporate?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  await client.connect();
+
+  var output = await client
+    .db("corporate")
+    .collection("corporate")
+    .find()
+    .toArray();
+
+  const id = parseInt(req.body.id);
+  var username = req.body.username;
+  var bool = false;
+  console.log(" id:" + id + " usname" + username);
+  var myCourse = output.filter((item) => item.username == username);
+  console.log(myCourse);
+  myCourse.forEach((item) => {
+    if (item.courses.includes(id)) {
+      bool = true;
+    }
+  });
+  if (bool) {
+    res.send("250");
+  } else {
+    res.send("500");
+  }
+});
+
 router.post("/BuyCourse", async (req, res) => {
   var { MongoClient } = require("mongodb");
   var url =

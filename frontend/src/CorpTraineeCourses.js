@@ -51,8 +51,8 @@ function zabatny(x) {
   console.log(cookie.load("username"));
   const username = cookie.load("username");
   const type = cookie.load("type");
-  cookie.save("username", username, { path: `/courses/${x}` });
-  cookie.save("type", type, { path: `/courses/${x}` });
+  cookie.save("username", username, { path: `/coursesc/${x}` });
+  cookie.save("type", type, { path: `/coursesc/${x}` });
 }
 
 const CorpTraineeCourses = () => {
@@ -165,7 +165,7 @@ const CorpTraineeCourses = () => {
                   <TableCell align="left">{row.instructor}</TableCell>
                   <TableCell align="left">{row.summary}</TableCell>
                   <TableCell align="left">
-                    <a href={`/courses/${row.id}`} onClick={zabatny(row.id)}>
+                    <a href={`/coursesc/${row.id}`} onClick={zabatny(row.id)}>
                       {" "}
                       Click here to view Course page
                     </a>

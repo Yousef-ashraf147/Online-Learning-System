@@ -14,7 +14,7 @@ import TextField from "@mui/material/TextField";
 import { jsPDF } from "jspdf";
 import CourseProgress from "./CourseProgress";
 
-const CourseDetails = () => {
+const CourseDetailsc = () => {
   console.log(cookie.load("username"));
   const navigate = useNavigate();
 
@@ -60,22 +60,31 @@ const CourseDetails = () => {
       });
   }
   useEffect(() => {
-    axios.post(
-      "http://localhost:3000/AddCount",
-      { id: id },
+    axios
+      .post(
+        "http://localhost:3000/AddCount",
+        { id: id },
 
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      }
-    );
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      )
+      .then(
+        axios
+          .post("http://localhost:3000/GetCourse", {
+            id: id,
+          })
+          .then((response) => {
+            setCourse(response.data);
+          })
+      );
   }, [rating]);
 
   useEffect(() => {
-  
     axios
-      .post("http://localhost:3000/GetCourse", {
+      .post("http://localhost:3000/CheckCourseCorp", {
         id: id,
       })
       .then((response) => {
@@ -285,4 +294,4 @@ const CourseDetails = () => {
   );
 };
 
-export default CourseDetails;
+export default CourseDetailsc;
