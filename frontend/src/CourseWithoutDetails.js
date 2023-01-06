@@ -5,16 +5,7 @@ import Button from "@mui/material/Button";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import Rating from "@mui/material/Rating";
 import cookie from "react-cookies";
-import Stack from "@mui/material/Stack";
-import { RepeatOneSharp } from "@material-ui/icons";
 import { Box } from "@mui/system";
 
 const CourseWithoutDetails = () => {
@@ -24,7 +15,7 @@ const CourseWithoutDetails = () => {
 
   const [open, setOpen] = React.useState(false);
   const { id } = useParams();
-  const [rows, setRows] = React.useState([]);
+  const [course, setCourse] = React.useState();
   const [rating, setRating] = React.useState(0);
   var i = 0;
   const type = cookie.load("type");
@@ -57,7 +48,7 @@ const CourseWithoutDetails = () => {
             id: id,
           })
           .then((response) => {
-            setRows(response.data);
+            setCourse(response.data);
           })
       )
       .catch((error) => {
@@ -92,11 +83,11 @@ const CourseWithoutDetails = () => {
   }
 
   return (
-    <div className="div">
-      {rows &&
-        rows.map((row) => (
+    <>
+      {course ? (
+        <div className="div">
           <div>
-            <h1 style={{ fontSize: "2rem" }}> {row.title} Course page</h1>
+            <h1 style={{ fontSize: "2rem" }}> {course.title} Course page</h1>
             <br />
             {type == "corporate" ? (
               <Button variant="contained" onClick={requestAccess}>
@@ -106,7 +97,7 @@ const CourseWithoutDetails = () => {
               <Button
                 variant="contained"
                 onClick={() => {
-                  Register(row.price, row.instructor);
+                  Register(course.price, course.instructor);
                 }}
               >
                 Register for course
@@ -114,16 +105,16 @@ const CourseWithoutDetails = () => {
             )}
             <hr style={{ color: "black" }}></hr>
             <p style={{ fontSize: "1.2rem" }}>
-              <img src={row.img} width="250" height="400"></img>
+              <img src={course.img} width="250" height="400"></img>
               <br />
-              Instructor: Dr.{row.instructor}
+              Instructor: Dr.{course.instructor}
               <br />
-              Subject : {row.subject}
+              Subject : {course.subject}
               <br></br>
-              Price : {row.price} $<br></br>
-              Total hours : {row.totalHours} hrs <br />
-              rating : {row.rating} out of 5 <br></br>
-              Summary : {row.summary}.
+              Price : {course.price} $<br></br>
+              Total hours : {course.totalHours} hrs <br />
+              rating : {course.rating} out of 5 <br></br>
+              Summary : {course.summary}.
             </p>
 
             <h2 style={{ fontSize: "2rem" }}>Course preview video:</h2>
@@ -133,7 +124,7 @@ const CourseWithoutDetails = () => {
                 allowFullScreen="true"
                 width="800"
                 height="400"
-                src={row.video}
+                src={course.video}
                 title="TWISTED - Worth Nothing (slowed & reverb)"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write;
@@ -147,7 +138,7 @@ const CourseWithoutDetails = () => {
               border={"2px solid black"}
             >
               <h2 style={{ fontSize: "1.3rem", backgroundColor: "beige" }}>
-                subtitle 1: {row.subtitles[i++]}
+                subtitle 1: {course.subtitles[i++]}
               </h2>
             </Box>
             <br />
@@ -158,13 +149,16 @@ const CourseWithoutDetails = () => {
                 border: "2px solid black",
               }}
             >
-              subtitle 2: {row.subtitles[i++]}
+              subtitle 2: {course.subtitles[i++]}
             </h2>
           </div>
-        ))}
-      <br></br>
-      <br></br>
-    </div>
+          <br></br>
+          <br></br>
+        </div>
+      ) : (
+        <></>
+      )}
+    </>
   );
 };
 

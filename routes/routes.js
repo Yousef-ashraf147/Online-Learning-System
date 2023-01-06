@@ -5,7 +5,7 @@ const session = require("express-session");
 const Courses = require("../models/Courses");
 var nodemailer = require("nodemailer");
 const RequestAccess = require("../models/RequestAccess");
-const CourseProgress = require("../models/CourseProgress");
+const CourseProgresses = require("../models/CourseProgresses");
 
 router.get("/corpHome", async (req, res) => {
   if (req.session.isLoggedIn && req.session.userType == "Corp") {
@@ -793,7 +793,8 @@ router.post("/BuyCourse", async (req, res) => {
     });
   });
 
-  await CourseProgress.create({
+  console.log("courseID: " + id);
+  await CourseProgresses.create({
     username: username,
     courseID: id,
     subtitles: subtitles,
@@ -936,6 +937,44 @@ router.post("/addCourse", async (req, res) => {
   } else {
     alert("please fill all required fields");
   }
+});
+
+router.post("/getProgress", async (req, res) => {
+  const username = req.body.username;
+  const id = req.body.id;
+
+  let done = 0;
+  const courseProgress = await CourseProgresses.findOne(
+    {
+      username: username,
+      courseID: id,
+    },
+    { _id: 0, subtitles: 1 }
+  ).exec();
+  console.log(courseProgress);
+  courseProgress.subtitles.forEach((item) => {
+    if (item.isDone) done++;
+  });
+
+  console.log((done * 100) / courseProgress.subtitles.length);
+  res.send("" + (done * 100) / courseProgress.subtitles.length);
+});
+
+router.post("/addProgress", async (req, res) => {
+  const username = req.body.username;
+  const id = req.body.id;
+  const subtitle = req.body.subtitle;
+
+  console.log(subtitle);
+
+  const done = await CourseProgresses.updateOne(
+    { courseID: id, username: username, "subtitles.subtitle": subtitle },
+    { $set: { "subtitles.$.isDone": true } }
+  );
+  console.log(done);
+
+  if (done) res.send("done");
+  else res.send("not done");
 });
 
 router.post("/ChangePasswordIntsructor", async (req, res) => {
@@ -1237,6 +1276,65 @@ router.post("/SendEmailTrainee", async (req, res) => {
       res.send("400");
     }
   });
+});
+
+router.post("/sendCertificateEmail", async (req, res) => {
+  const id = req.body.id;
+  const username = req.body.username;
+
+  const certificateSent = await CourseProgresses.findOne(
+    { courseID: id, username: username },
+    { _id: 0, certificateSent: 1 }
+  );
+
+  if (certificateSent.certificateSent) {
+    res.send("Certificate Sent Already!");
+  } else {
+    var { MongoClient } = require("mongodb");
+    var url =
+      "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/Trainee?retryWrites=true&w=majority";
+    var client = new MongoClient(url, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    await client.connect();
+
+    var output = await client
+      .db("Trainee")
+      .collection("Trainee")
+      .findOne({ username: username }, { _id: 0, email: 1 });
+    const course = await Courses.findOne({ id }, { _id: 0, title: 1 });
+
+    const recipient = output.email;
+
+    var transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "yousefashraf147@gmail.com",
+        pass: "nxlggbwcslgrtluc",
+      },
+    });
+
+    var mailOptions = {
+      from: "yousefashraf147@gmail.com",
+      to: recipient,
+      subject: "Course Completion Certificate",
+      text: "Congratulations, you have completed " + course.title + " course!",
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
+    await CourseProgresses.updateOne(
+      { username, courseID: id },
+      { $set: { certificateSent: true } }
+    );
+    res.send("200");
+  }
 });
 
 router.post("/SendEmail", async (req, res) => {
@@ -2099,12 +2197,12 @@ router.post("/TraineeMySearch", async (req, res) => {
 });
 
 router.post("/GetCourse", async (req, res) => {
-  const courses = await Courses.find({}).exec();
   const id = req.body.id;
 
-  var myCourse = courses.filter((item) => item.id == id);
+  const myCourse = await Courses.findOne({ id: id }).exec();
 
-  res.send(myCourse);
+  if (myCourse) res.send(myCourse);
+  else res.send("no course");
 });
 
 router.post("/AddCount", async (req, res) => {
