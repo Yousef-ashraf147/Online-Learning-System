@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 import Rating from "@mui/material/Rating";
 import cookie from "react-cookies";
 import { Box } from "@mui/system";
-import { Stack } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import ReactPlayer from "react-player";
 import TextField from "@mui/material/TextField";
 import { jsPDF } from "jspdf";
@@ -157,7 +157,27 @@ const CourseDetails = () => {
             <br />
             Subject : {course.subject}
             <br></br>
-            Price : {course.price} $<br></br>
+            {course.discount ? (
+              <Stack direction={"row"} spacing={1}>
+                <Typography>Price : </Typography>
+                <Typography style={{ textDecoration: "line-through" }}>
+                  {course.price} $
+                </Typography>
+                <Typography>{course.price * course.discount} $</Typography>
+                {course.discountDuration ? (
+                  <Typography>
+                    {"Discount Ends In " + course.discountDuration + " Days"}
+                  </Typography>
+                ) : (
+                  <></>
+                )}
+              </Stack>
+            ) : (
+              <Stack direction={"row"} spacing={3}>
+                <Typography>Price : </Typography>
+                <Typography>{course.price} $</Typography>
+              </Stack>
+            )}
             Total hours : {course.totalHours} hrs <br />
             rating : {course.rating} out of 5 <br></br>
             Summary : {course.summary}.

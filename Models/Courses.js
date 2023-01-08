@@ -59,6 +59,12 @@ const CoursesSchema = new mongoose.Schema({
   count: {
     type: Number,
   },
+  discount: {
+    type: Number,
+  },
+  discountDuration: {
+    type: Number,
+  },
 });
 
 const course = mongoose.model("Courses", CoursesSchema);

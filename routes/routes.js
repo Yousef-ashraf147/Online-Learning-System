@@ -1313,6 +1313,27 @@ router.post("/SendEmailTrainee", async (req, res) => {
   });
 });
 
+router.post("/addDiscount", async (req, res) => {
+  const { course, discount, discountDuration } = req.body;
+
+  if (discountDuration) {
+    const done = await Courses.updateOne(
+      { title: course },
+      { $set: { discount: discount / 100, discountDuration: discountDuration } }
+    );
+    if (done) res.send("Success");
+    else res.send("Failed");
+    return;
+  } else {
+    const done = await Courses.updateOne(
+      { title: course },
+      { $set: { discount: discount / 100 } }
+    );
+    if (done) res.send("Success");
+    else res.send("Failed");
+  }
+});
+
 router.post("/sendCertificateEmail", async (req, res) => {
   const id = req.body.id;
   const username = req.body.username;
@@ -2155,6 +2176,14 @@ router.post("/instructorSearch1", async (req, res) => {
   } else {
     res.redirect("/login");
   }
+});
+
+router.post("/getInstructorCourses", async (req, res) => {
+  const { instructor } = req.body;
+  const courses = await Courses.find({ instructor }).exec();
+
+  if (courses) res.send(courses);
+  else res.send("No courses found");
 });
 router.post("/InstructorMySearch", async (req, res) => {
   var price1 = 5;
