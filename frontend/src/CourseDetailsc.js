@@ -8,13 +8,13 @@ import { useState, useEffect } from "react";
 import Rating from "@mui/material/Rating";
 import cookie from "react-cookies";
 import { Box } from "@mui/system";
-import { Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import ReactPlayer from "react-player";
 import TextField from "@mui/material/TextField";
 import { jsPDF } from "jspdf";
 import CourseProgress from "./CourseProgress";
 
-const CourseDetails = () => {
+const CourseDetailsc = () => {
   console.log(cookie.load("username"));
   const navigate = useNavigate();
 
@@ -60,22 +60,31 @@ const CourseDetails = () => {
       });
   }
   useEffect(() => {
-    axios.post(
-      "http://localhost:3000/AddCount",
-      { id: id },
+    axios
+      .post(
+        "http://localhost:3000/AddCount",
+        { id: id },
 
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      }
-    );
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      )
+      .then(
+        axios
+          .post("http://localhost:3000/GetCourse", {
+            id: id,
+          })
+          .then((response) => {
+            setCourse(response.data);
+          })
+      );
   }, [rating]);
 
   useEffect(() => {
-  
     axios
-      .post("http://localhost:3000/GetCourse", {
+      .post("http://localhost:3000/CheckCourseCorp", {
         id: id,
       })
       .then((response) => {
@@ -157,27 +166,7 @@ const CourseDetails = () => {
             <br />
             Subject : {course.subject}
             <br></br>
-            {course.discount ? (
-              <Stack direction={"row"} spacing={1}>
-                <Typography>Price : </Typography>
-                <Typography style={{ textDecoration: "line-through" }}>
-                  {course.price} $
-                </Typography>
-                <Typography>{course.price * course.discount} $</Typography>
-                {course.discountDuration ? (
-                  <Typography>
-                    {"Discount Ends In " + course.discountDuration + " Days"}
-                  </Typography>
-                ) : (
-                  <></>
-                )}
-              </Stack>
-            ) : (
-              <Stack direction={"row"} spacing={3}>
-                <Typography>Price : </Typography>
-                <Typography>{course.price} $</Typography>
-              </Stack>
-            )}
+            Price : {course.price} $<br></br>
             Total hours : {course.totalHours} hrs <br />
             rating : {course.rating} out of 5 <br></br>
             Summary : {course.summary}.
@@ -305,4 +294,4 @@ const CourseDetails = () => {
   );
 };
 
-export default CourseDetails;
+export default CourseDetailsc;

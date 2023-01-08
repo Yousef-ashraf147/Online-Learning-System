@@ -219,7 +219,6 @@ const InstructorCourses = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <a href={x}>click here</a>
     </>
   );
 };

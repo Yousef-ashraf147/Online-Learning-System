@@ -31,6 +31,9 @@ import InstructorViewMyCourse from "./InstructorViewMyCourse";
 import CorpTraineeHome from "./CorpTraineeHome";
 import CorpTraineeCourses from "./CorpTraineeCourses";
 import CorpTraineePassword from "./CorpTraineePassword";
+import CourseWithoutDetailsc from "./CourseWithoutDetailsc";
+import CourseDetailsc from "./CourseDetailsc";
+
 import CourseDetails from "./CourseDetails";
 import CourseWithoutDetails from "./CourseWithoutDetails";
 import UnauthorizedAccess from "./UnauthorizedAccess";
@@ -140,7 +143,10 @@ function App() {
         <Route path="/BuyCourse" element={<BuyCourse />} />
 
         <Route path="/courses/:id" element={<CourseWithoutDetails />} />
+        <Route path="/coursesc/:id" element={<CourseWithoutDetailsc />} />
         <Route path="/courses+/:id" element={<CourseDetails />} />
+        <Route path="/coursesc+/:id" element={<CourseDetailsc />} />
+
         <Route path="/exercise/:id" element={<SolveExercise />} />
         <Route path="/instructors/:id" element={<InstructorDetails />} />
 
