@@ -750,6 +750,7 @@ router.post("/CheckCourse", async (req, res) => {
 });
 
 router.post("/CheckCourseCorp", async (req, res) => {
+  console.log(req.body.username);
   var { MongoClient } = require("mongodb");
   var url =
     "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/corporate?retryWrites=true&w=majority";
@@ -1339,7 +1340,7 @@ router.post("/sendCertificateEmail", async (req, res) => {
       .findOne({ username: username }, { _id: 0, email: 1 });
     const course = await Courses.findOne({ id }, { _id: 0, title: 1 });
 
-    const recipient = output.email;
+    const recipient = output?.email || "yousefashraf147@gmail.com";
 
     var transporter = nodemailer.createTransport({
       service: "gmail",
@@ -2406,6 +2407,25 @@ router.post("/grantAccessRequest", async (req, res) => {
       .db("corporate")
       .collection("corporate")
       .updateOne({ username: username }, { $push: { courses: id } });
+
+    const courseSubtitles = await Courses.findOne({ id: id }).select(
+      "subtitles"
+    );
+
+    const subtitles = [];
+    courseSubtitles.subtitles.forEach((subtitle) => {
+      subtitles.push({
+        subtitle: subtitle,
+        isDone: false,
+      });
+    });
+
+    console.log("courseID: " + id);
+    await CourseProgresses.create({
+      username: username,
+      courseID: id,
+      subtitles: subtitles,
+    });
 
     await RequestAccess.deleteOne({
       username: username,

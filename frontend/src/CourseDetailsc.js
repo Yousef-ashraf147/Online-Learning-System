@@ -59,54 +59,42 @@ const CourseDetailsc = () => {
         }
       });
   }
-  useEffect(() => {
-    axios
-      .post(
-        "http://localhost:3000/AddCount",
-        { id: id },
-
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-        }
-      )
-      .then(
-        axios
-          .post("http://localhost:3000/GetCourse", {
-            id: id,
-          })
-          .then((response) => {
-            setCourse(response.data);
-          })
-      );
-  }, [rating]);
 
   useEffect(() => {
     axios
-      .post("http://localhost:3000/CheckCourseCorp", {
+      .post("http://localhost:3000/GetCourse", {
         id: id,
       })
       .then((response) => {
-        setCourse(response.data);
-        console.log(response.data);
         setVideo(response.data.video);
+        setCourse(response.data);
       });
+
     axios
-      .post("http://localhost:3000/getProgress", {
+      .post("http://localhost:3000/CheckCourseCorp", {
         id: id,
         username: cookie.load("username"),
       })
       .then((response) => {
-        setCourseProgress(response.data);
-        if (response.data == 100) {
+        console.log(response.data);
+        if (response.data == "250") {
           axios
-            .post("http://localhost:3000/sendCertificateEmail", {
+            .post("http://localhost:3000/getProgress", {
               id: id,
               username: cookie.load("username"),
             })
             .then((response) => {
-              console.log(response.data);
+              setCourseProgress(response.data);
+              if (response.data == 100) {
+                axios
+                  .post("http://localhost:3000/sendCertificateEmail", {
+                    id: id,
+                    username: cookie.load("username"),
+                  })
+                  .then((response) => {
+                    console.log(response.data);
+                  });
+              }
             });
         }
       });
