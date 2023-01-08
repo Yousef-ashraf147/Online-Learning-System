@@ -6,6 +6,9 @@ const InstructorHome = () => {
   const navigate = useNavigate();
   const type = cookie.load("type");
   useEffect(() => {
+    cookie.save("username", cookie.load("username"), {
+      path: "/AddDiscountMyCourse",
+    });
     if (type != "Instructor") navigate("../UnauthorizedAccess");
   }, []);
   return (
@@ -23,6 +26,8 @@ const InstructorHome = () => {
       <a href="/InstructorEditInfo">Edit info</a>
       <br />
       <a href="/InstructorAddCourse">Add a new course</a>
+      <br />
+      <a href="/AddDiscountMyCourse">Add Discount To Your Courses</a>
       <br />
       <a href="/InstructorSalary">Check money owed (salary) </a>
 

@@ -169,10 +169,41 @@ const InstructorCourses = () => {
                   <TableCell align="left">{row.title}</TableCell>
                   <TableCell align="left">{row.subject}</TableCell>
                   <TableCell align="left">
-                    {currencySymbol + " "}
-                    {Math.round(
-                      (row.price * convertCurrency + Number.EPSILON) * 100
-                    ) / 100}
+                    {row.discount ? (
+                      <>
+                        <Typography variant="subtitle2">
+                          {currencySymbol +
+                            " " +
+                            Math.round(
+                              (row.price * convertCurrency + Number.EPSILON) *
+                                100 *
+                                row.discount
+                            ) /
+                              100}
+                        </Typography>
+                        <Typography
+                          variant="subtitle2"
+                          style={{ textDecoration: "line-through" }}
+                        >
+                          {currencySymbol +
+                            " " +
+                            Math.round(
+                              (row.price * convertCurrency + Number.EPSILON) *
+                                100
+                            ) /
+                              100}
+                        </Typography>
+                      </>
+                    ) : (
+                      <Typography variant="subtitle2">
+                        {currencySymbol +
+                          " " +
+                          Math.round(
+                            (row.price * convertCurrency + Number.EPSILON) * 100
+                          ) /
+                            100}
+                      </Typography>
+                    )}
                   </TableCell>
                   <TableCell align="left">{row.totalHours}</TableCell>
                   <TableCell align="left">{row.rating}</TableCell>

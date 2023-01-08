@@ -53,6 +53,8 @@ import ViewAdmins from "./ViewAdmins";
 import ViewIndividualTrainees from "./ViewIndividualTrainees";
 import ViewCorporateTrainees from "./ViewCorporateTrainees";
 import ViewInstructors from "./ViewInstructors";
+import Promotion from "./PromotionPage";
+import AddDiscountMyCourse from "./AddDiscountMyCourse";
 function App() {
   return (
     <Router>
@@ -84,6 +86,7 @@ function App() {
 
         <Route path="/TraineeCourses" element={<TraineeCourses />} />
         <Route path="/TraineeViewCourses" element={<TraineeViewCourses />} />
+        <Route path="/AddDiscountMyCourse" element={<AddDiscountMyCourse />} />
 
         <Route path="/InstructorCourses" element={<InstructorCourses />} />
 
@@ -96,6 +99,7 @@ function App() {
         <Route path="/InstructorEditInfo" element={<InstructorEditInfo />} />
         <Route path="/InstructorAddCourse" element={<InstructorAddCourse />} />
         <Route path="/InstructorPassword" element={<InstructorPassword />} />
+        <Route path="/AddDiscount" element={<Promotion />} />
         <Route
           path="/InstructorForgotPassword"
           element={<InstructorForgotPassword />}
@@ -142,7 +146,10 @@ function App() {
 
         <Route path="/viewAdmins" element={<ViewAdmins />} />
         <Route path="/viewTrainees" element={<ViewIndividualTrainees />} />
-        <Route path="/viewCorporateTrainees" element={<ViewCorporateTrainees />} />
+        <Route
+          path="/viewCorporateTrainees"
+          element={<ViewCorporateTrainees />}
+        />
         <Route path="/viewInstructors" element={<ViewInstructors />} />
       </Routes>
     </Router>

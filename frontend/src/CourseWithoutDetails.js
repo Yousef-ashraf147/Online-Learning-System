@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import cookie from "react-cookies";
 import { Box } from "@mui/system";
+import { Typography, Stack } from "@mui/material";
 
 const CourseWithoutDetails = () => {
   const username = cookie.load("username");
@@ -111,7 +112,25 @@ const CourseWithoutDetails = () => {
               <br />
               Subject : {course.subject}
               <br></br>
-              Price : {course.price} $<br></br>
+              {course.discount ? (
+                <Stack direction={"row"} spacing={1}>
+                  <Typography>Price : </Typography>
+                  <Typography style={{ textDecoration: "line-through" }}>
+                    {course.price} $
+                  </Typography>
+                  <Typography>{course.price * course.discount} $</Typography>
+                  {course.discountDuration ? (
+                    <Typography>{ "Discount Ends In " +course.discountDuration + " Days"}</Typography>
+                  ) : (
+                    <></>
+                  )}
+                </Stack>
+              ) : (
+                <Stack direction={"row"} spacing={3}>
+                  <Typography>Price : </Typography>
+                  <Typography>{course.price} $</Typography>
+                </Stack>
+              )}
               Total hours : {course.totalHours} hrs <br />
               rating : {course.rating} out of 5 <br></br>
               Summary : {course.summary}.
