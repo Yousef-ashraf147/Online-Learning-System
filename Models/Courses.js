@@ -1,8 +1,15 @@
 const mongoose = require("mongoose");
 const CoursesSchema = new mongoose.Schema({
+  id: {
+    type: Number,
+    required: true,
+  },
   title: {
     type: String,
     required: true,
+  },
+  exercise: {
+    type: Object,
   },
   subject: {
     type: String,
@@ -27,6 +34,36 @@ const CoursesSchema = new mongoose.Schema({
   summary: {
     type: String,
     required: true,
+  },
+  link: {
+    type: String,
+    required: true,
+  },
+  img: {
+    type: String,
+    required: false,
+  },
+  video: {
+    type: String,
+    required: false,
+  },
+  videoLinks: {
+    type: Array,
+  },
+  subtitles: {
+    type: Array,
+  },
+  videos: {
+    type: Array,
+  },
+  count: {
+    type: Number,
+  },
+  discount: {
+    type: Number,
+  },
+  discountDuration: {
+    type: Number,
   },
 });
 

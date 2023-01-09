@@ -18,16 +18,19 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import styles from "./mystyle.module.css";
 
 function Login() {
   return (
-    <div>
+    <div className="a">
       <br />
       <a href="LoginAdmin">Login as an admin</a>
       <br />
       <a href="LoginInstructor">Login as an instructor</a>
       <br />
       <a href="LoginTrainee">Login as a trainee</a>
+      <br />
+      <a href="LoginCorporateTrainee">Login as a Corporate trainee</a>
       <br />
       <a href="Guest">Continue as a guest</a>
       <br />

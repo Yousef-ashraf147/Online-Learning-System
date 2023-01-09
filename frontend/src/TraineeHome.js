@@ -18,57 +18,29 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import cookie from "react-cookies";
+import { useEffect } from "react";
+import ResponsiveAppBar from "./ResponsiveAppBar";
+import { Drawer } from "@material-ui/core";
 
 const TraineeHome = () => {
   const navigate = useNavigate();
-
-  /*function oNavigate() {
-    navigate("./SignupAdmin");
-  }*/
-  var sample = new Array();
-  var l = {};
-  axios
-    .get(
-      "http://localhost:3000/traineeHome",
-
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      }
-    )
-    .then((res) => {
-      sample = res.data;
-      l = res.data;
-      console.log(res.data);
-      console.log(sample);
-    });
-
+  const type = cookie.load("type");
+  useEffect(() => {
+    if (type != "Trainee") navigate("../UnauthorizedAccess");
+  }, []);
   return (
-    <div>
-      <div>
-        <h1>HomePage</h1>
-        <hr />
+    <>
+      <div className="div">
+        <a href="/TraineeCourses">View all courses</a>
+        <br />
+        <a href="/TraineePassword">Change my password</a>
+        <br />
+        <a href="/TraineeRateInstructor">Rate an instructor</a>
+        <br />
+        <a href="/TraineeViewCourses">View enrolled courses</a>
       </div>
-      <p>{l}</p>
-    </div>
+    </>
   );
 };
 

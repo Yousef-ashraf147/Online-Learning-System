@@ -38,6 +38,15 @@ function Copyright(props) {
 
 const theme = createTheme();
 
+/* title: req.body.title,
+    subtitle: req.body.subtitle,
+    price: req.body.price,
+    summary: req.body.summary,
+    totalHours: req.body.totalHours,
+    rating: req.body.rating,
+    subject: req.body.subject,
+    instructor: req.session.username,
+    link: req.body.title,*/
 const SignupAdmin = () => {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -47,20 +56,22 @@ const SignupAdmin = () => {
   function Submit() {
     axios.post(
       "http://localhost:3000/signupAdmin",
-      { username: username, password: password, country: country, email: email },
+      {
+        username: username,
+        password: password,
+        country: country,
+        email: email,
+      },
       {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       }
     );
-    if (username.length > 0 && password.length > 0 && country.length > 0 && email.length > 0) {
-      oNavigate();
-    }
+    Nav();
   }
-
   const navigate = useNavigate();
-  function oNavigate() {
+  function Nav() {
     navigate("/LoginAdmin");
   }
 

@@ -30,9 +30,11 @@ const Signup = () => {
     <div>
       <a href="/signupadmin">Signup as an admin</a>
       <br></br>
-      <a href="/SignupInstruc">Signup as an Instructort</a>
+      <a href="/SignupInstruc">Signup as an Instructor</a>
       <br />
       <a href="/SignupTrainee">Signup as a Trainee</a>
+      <br />
+      <a href="/SignupCorporateTrainee">Signup as a Corporate Trainee</a>
       <br />
     </div>
   );

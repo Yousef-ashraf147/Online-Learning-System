@@ -18,6 +18,8 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import cookie from "react-cookies";
+
 function Copyright(props) {
   return (
     <Typography
@@ -43,26 +45,40 @@ const LoginAdmin = () => {
   const [password, setPassword] = React.useState("");
   const [country, setCountry] = React.useState("");
   const [email, setEmail] = React.useState("");
+  const [koko, setkoko] = React.useState("");
 
-  function Submit() {
-    axios.post(
-      "http://localhost:3000/loginAdmin",
-      { username: username, password: password },
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+  const Submit = async () => {
+    const input = { username, password };
+    axios
+      .post(
+        "http://localhost:3000/loginAdmin",
+        {
+          username: username,
+          password: password,
         },
-      }
-    );
-    if (username.length > 0 && password.length > 0) {
-      oNavigate();
-    }
-  }
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data);
+        if (response.data == "200") {
+          cookie.save("username", username, { path: "/" });
+          cookie.save("type", "admin", { path: "/" });
+
+          navigate("/AdminHome");
+          alert("Successful Login!");
+        } else if (username.length == 0 || password.length == 0) {
+          alert("The password or the username is empty");
+        } else {
+          alert("The password or the username is Wrong");
+        }
+      })
+  };
 
   const navigate = useNavigate();
-  function oNavigate() {
-    navigate("/AdminHome");
-  }
 
   return (
     <Box
@@ -74,7 +90,6 @@ const LoginAdmin = () => {
       autoComplete="off"
     >
       <Stack spacing={2} direction={"column"}>
-
         <TextField
           onChange={(e) => setUsername(e.target.value)}
           id="outlined-basic"
@@ -86,7 +101,9 @@ const LoginAdmin = () => {
           id="filled-basic"
           label="Password"
           variant="outlined"
+          type="password"
         />
+        <a href="AdminForgotPassword">Forgot your password?</a>
 
         <Button onClick={Submit} variant="contained">
           Login
