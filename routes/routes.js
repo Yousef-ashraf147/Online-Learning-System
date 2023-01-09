@@ -152,7 +152,7 @@ router.get("/guestHome", async (req, res) => {
     });
   }
 });
-router.get("/traineeHome", async (req, res) => {
+router.post("/traineeHome", async (req, res) => {
   if (req.session.isLoggedIn && req.session.userType == "Trainee") {
     var price1 = 5;
     var price2 = 20;
