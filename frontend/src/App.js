@@ -157,6 +157,10 @@ function App() {
           element={<ViewCorporateTrainees />}
         />
         <Route path="/viewInstructors" element={<ViewInstructors />} />
+        <Route
+          path="/viewindividualtrainees"
+          element={<ViewIndividualTrainees />}
+        />
       </Routes>
     </Router>
   );

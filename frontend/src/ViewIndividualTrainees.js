@@ -1,9 +1,21 @@
+import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import React, { useEffect } from "react";
-import Users from "./Users2";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Stack,
+  TextField,
+} from "@mui/material";
+import Users3 from "./Users3";
 
-const ViewIndividualTrainees = (props) => {
+const ViewIndividualTrainees = () => {
   const [users, setUsers] = React.useState([]);
+  const [username, setName] = React.useState("");
+  const [password, setPass] = React.useState("");
 
   useEffect(() => {
     axios
@@ -13,9 +25,67 @@ const ViewIndividualTrainees = (props) => {
       });
   }, []);
 
+  const add = () => {
+    axios
+      .post("http://localhost:3000/addCopTrainee", {
+        username: username,
+        password: password,
+      })
+      .then((response) => {
+        alert("Discount Added Successfully!");
+      });
+  };
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <>
-      <Users users={users} type="individualTrainee" />
+      <div style={{ marginLeft: "auto", display: "flex" }}>
+        <Button
+          onClick={handleClickOpen}
+          sx={{
+            marginLeft: "5px",
+          }}
+          variant={"outlined"}
+        >
+          Add Individual Trainee
+        </Button>
+      </div>
+      <Stack alignItems={"end"} direction="column">
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>Add New Individual Trainee</DialogTitle>
+          <DialogContent>
+            <Stack direction="column" spacing={1} marginTop={0.7}>
+              <TextField
+                id="outlined-basic"
+                label="Username"
+                variant="outlined"
+                onChange={(e) => setName(e.target.value)}
+              />
+              <TextField
+                id="outlined-basic"
+                label="Password"
+                variant="outlined"
+                onChange={(e) => setPass(e.target.value)}
+              />
+            </Stack>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={add} href="/admin">
+              Add Individual Trainee
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </Stack>
+      <Users3 users={users} />
     </>
   );
 };

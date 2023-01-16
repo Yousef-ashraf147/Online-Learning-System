@@ -6,6 +6,7 @@ const Courses = require("../models/Courses");
 var nodemailer = require("nodemailer");
 const RequestAccess = require("../models/RequestAccess");
 const CourseProgresses = require("../models/CourseProgresses");
+const RefundCourse = require("../models/RefundCourse");
 
 router.get("/corpHome", async (req, res) => {
   if (req.session.isLoggedIn && req.session.userType == "Corp") {
@@ -1759,6 +1760,22 @@ router.post("/requestAccess", async (req, res) => {
   res.send("Request sent successfully");
 });
 
+router.post("/refundCourse", async (req, res) => {
+  const { id, username } = req.body;
+
+  const course = await Courses.findOne(
+    { id: id },
+    { _id: 0, price: 1, discount: 1 }
+  );
+  const done = await RefundCourse.create({
+    id: id,
+    username: username,
+    price: course.price * course.discount,
+  });
+  if (done) res.send("Request sent successfully");
+  else res.send("Request failed");
+});
+
 router.post("/addingAdmins", async (req, res) => {
   //if (req.session.isLoggedIn && req.session.userType == "admin") {
   var { MongoClient } = require("mongodb");
@@ -2382,6 +2399,55 @@ router.post("/getRequestAccesses", async (req, res) => {
   res.send(RequestAccesses);
 });
 
+router.post("/getRefundRequests", async (req, res) => {
+  const RefundCourses = await RefundCourse.find({
+    username: req.body.username,
+  }).exec();
+  res.send(RefundCourses);
+});
+
+router.post("/acceptRefundRequest", async (req, res) => {
+  const { refundRequest } = req.body;
+  const { id, username, price } = refundRequest;
+  /*
+  Should implement something here to add course
+  */
+
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/Instructor?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  await client.connect();
+
+  const output = client
+    .db("Trainee")
+    .collection("Trainee")
+    .updateOne(
+      { username },
+      { $pull: { courses: id }, $inc: { wallet: price } }
+    );
+
+  if (output) {
+    const done = await RefundCourse.deleteOne({ username, id }).exec();
+    if (done) res.send("Refund Request Accepted");
+    else res.send("Refund Request Accepted");
+  } else res.send("Refund Request Accepted Failed");
+});
+
+router.post("/rejectRefundRequest", async (req, res) => {
+  const { refundRequest } = req.body;
+  const { id, username } = refundRequest;
+  const done = await RefundCourse.deleteOne({
+    id: id,
+    username: username,
+  }).exec();
+  if (done) res.send("Refund Request Rejected");
+  else res.send("Refund Request Rejected Failed");
+});
+
 router.put("/addCourseToCopTrainee", async (req, res) => {
   var { MongoClient } = require("mongodb");
   var url =
@@ -2518,6 +2584,24 @@ router.get("/getCorporateTrainees", async (req, res) => {
   var output = await client
     .db("corporate")
     .collection("corporate")
+    .find()
+    .toArray();
+  res.send(output);
+});
+
+router.get("/getIndividualTrainees", async (req, res) => {
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/Instructor?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  await client.connect();
+
+  var output = await client
+    .db("Trainee")
+    .collection("Trainee")
     .find()
     .toArray();
   res.send(output);
