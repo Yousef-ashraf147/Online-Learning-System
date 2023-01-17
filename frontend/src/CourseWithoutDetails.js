@@ -84,60 +84,90 @@ const CourseWithoutDetails = () => {
   }
 
   return (
-    <>
+    <div>
       {course ? (
-        <div className="div">
-          <div>
-            <h1 style={{ fontSize: "2rem" }}> {course.title} Course page</h1>
-            <br />
-            {type == "corporate" ? (
-              <Button variant="contained" onClick={requestAccess}>
-                Request Access
-              </Button>
-            ) : (
-              <Button
-                variant="contained"
-                onClick={() => {
-                  Register(course.price, course.instructor);
-                }}
-              >
-                Register for course
-              </Button>
-            )}
-            <hr style={{ color: "black" }}></hr>
-            <p style={{ fontSize: "1.2rem" }}>
-              <img src={course.img} width="250" height="400"></img>
-              <br />
-              Instructor: Dr.{course.instructor}
-              <br />
-              Subject : {course.subject}
-              <br></br>
-              {course.discount ? (
-                <Stack direction={"row"} spacing={1}>
-                  <Typography>Price : </Typography>
-                  <Typography style={{ textDecoration: "line-through" }}>
-                    {course.price} $
-                  </Typography>
-                  <Typography>{course.price * course.discount} $</Typography>
-                  {course.discountDuration ? (
-                    <Typography>{ "Discount Ends In " +course.discountDuration + " Days"}</Typography>
-                  ) : (
-                    <></>
-                  )}
-                </Stack>
-              ) : (
-                <Stack direction={"row"} spacing={3}>
-                  <Typography>Price : </Typography>
-                  <Typography>{course.price} $</Typography>
-                </Stack>
-              )}
-              Total hours : {course.totalHours} hrs <br />
-              rating : {course.rating} out of 5 <br></br>
-              Summary : {course.summary}.
-            </p>
+        <div>
+          <h1 style={{ fontSize: "2rem" }}> {course.title} Course page</h1>
+          <br />
 
-            <h2 style={{ fontSize: "2rem" }}>Course preview video:</h2>
-            <div>
+          <div style={{ display: "flex" }}>
+            <div style={{ marginLeft: "auto", marginRight: "auto" }}>
+              {type == "corporate" ? (
+                <div style={{ display: "flex" }}>
+                  <div style={{ marginLeft: "auto", marginRight: "auto" }}>
+                    <Button
+                      style={{ marginLeft: "auto", marginRight: "auto" }}
+                      variant="contained"
+                      onClick={requestAccess}
+                    >
+                      Request Access
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <div style={{ display: "flex" }}>
+                  <div style={{ marginLeft: "auto", marginRight: "auto" }}>
+                    <Button
+                      variant="contained"
+                      onClick={() => {
+                        Register(course.price, course.instructor);
+                      }}
+                    >
+                      Register for course
+                    </Button>
+                  </div>
+                </div>
+              )}
+              <hr
+                style={{
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  color: "black",
+                }}
+              ></hr>
+
+              <div style={{ display: "flex" }}>
+                <div style={{ marginLeft: "auto", marginRight: "auto" }}>
+                  <p style={{ fontSize: "1.2rem" }}>
+                    <img src={course.img} width="250" height="400"></img>
+                    <br />
+                    Instructor: Dr.{course.instructor}
+                    <br />
+                    Subject : {course.subject}
+                    <br></br>
+                    {course.discount ? (
+                      <Stack direction={"row"} spacing={1}>
+                        <Typography>Price : </Typography>
+                        <Typography style={{ textDecoration: "line-through" }}>
+                          {course.price} $
+                        </Typography>
+                        <Typography>
+                          {course.price * course.discount} $
+                        </Typography>
+                        {course.discountDuration ? (
+                          <Typography>
+                            {"Discount Ends In " +
+                              course.discountDuration +
+                              " Days"}
+                          </Typography>
+                        ) : (
+                          <></>
+                        )}
+                      </Stack>
+                    ) : (
+                      <Stack direction={"row"} spacing={3}>
+                        <Typography>Price : </Typography>
+                        <Typography>{course.price} $</Typography>
+                      </Stack>
+                    )}
+                    Total hours : {course.totalHours} hrs <br />
+                    rating : {course.rating} out of 5 <br></br>
+                    Summary : {course.summary}.
+                  </p>
+
+                  <h2 style={{ fontSize: "2rem" }}>Course preview video:</h2>
+                </div>
+              </div>
               <iframe
                 style={{ border: "10px solid black" }}
                 allowFullScreen="true"
@@ -150,34 +180,37 @@ const CourseWithoutDetails = () => {
  encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen
               ></iframe>
-            </div>
-            <Box
-              color={"blue"}
-              borderColor={"black"}
-              border={"2px solid black"}
-            >
-              <h2 style={{ fontSize: "1.3rem", backgroundColor: "beige" }}>
-                subtitle 1: {course.subtitles[i++]}
+
+              <Box
+                color={"blue"}
+                borderColor={"black"}
+                border={"2px solid black"}
+              >
+                <h2 style={{ fontSize: "1.3rem", backgroundColor: "beige" }}>
+                  subtitle 1: {course.subtitles[i++]}
+                </h2>
+              </Box>
+
+              <br />
+              <h2
+                style={{
+                  fontSize: "1.2rem",
+                  backgroundColor: "beige",
+                  border: "2px solid black",
+                }}
+              >
+                subtitle 2: {course.subtitles[i++]}
               </h2>
-            </Box>
-            <br />
-            <h2
-              style={{
-                fontSize: "1.2rem",
-                backgroundColor: "beige",
-                border: "2px solid black",
-              }}
-            >
-              subtitle 2: {course.subtitles[i++]}
-            </h2>
+            </div>
+
+            <br></br>
+            <br></br>
           </div>
-          <br></br>
-          <br></br>
         </div>
       ) : (
         <></>
       )}
-    </>
+    </div>
   );
 };
 

@@ -1,6 +1,7 @@
 import * as React from "react";
 
 const CorpTraineeHome = () => {
+
   return (
     <>
       <h1 style={{ fontSize: "2rem" }}>Corporate Trainee Home</h1>
