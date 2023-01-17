@@ -2409,9 +2409,6 @@ router.post("/getRefundRequests", async (req, res) => {
 router.post("/acceptRefundRequest", async (req, res) => {
   const { refundRequest } = req.body;
   const { id, username, price } = refundRequest;
-  /*
-  Should implement something here to add course
-  */
 
   var { MongoClient } = require("mongodb");
   var url =
