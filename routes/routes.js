@@ -2457,8 +2457,12 @@ router.post("/acceptRefundRequest", async (req, res) => {
     );
 
   if (output) {
+    const done2 = await CourseProgresses.deleteOne({
+      username,
+      courseID: id,
+    }).exec();
     const done = await RefundCourse.deleteOne({ username, id }).exec();
-    if (done) res.send("Refund Request Accepted");
+    if (done && done2) res.send("Refund Request Accepted");
     else res.send("Refund Request Accepted");
   } else res.send("Refund Request Accepted Failed");
 });
