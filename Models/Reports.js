@@ -12,7 +12,11 @@ const ReportSchema = new mongoose.Schema({
   description: {
     type: String,
   },
+  type: {
+    type: String,
+  },
   resolved: { type: Boolean, default: false },
+  seen: { type: Boolean, default: false },
 });
 
 const Reports = mongoose.model("Reports", ReportSchema);

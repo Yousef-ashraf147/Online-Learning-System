@@ -18,6 +18,9 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import cookie from "react-cookies";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 function Copyright(props) {
   return (
     <Typography
@@ -37,6 +40,9 @@ function Copyright(props) {
 }
 
 const InstructorChangeBio = () => {
+  const type = cookie.load("type");
+  const navigate = useNavigate();
+
   /*const [rows, setRows] = React.useState([]);
     const [value, setValue] = React.useState();
   
@@ -45,6 +51,9 @@ const InstructorChangeBio = () => {
         setRows(response.data);
       });
     }, []);*/
+  useEffect(() => {
+    if (type != "Instructor") navigate("../UnauthorizedAccess");
+  });
   const [bio, setBio] = React.useState("");
 
   axios

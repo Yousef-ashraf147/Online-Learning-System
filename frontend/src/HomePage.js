@@ -9,7 +9,6 @@ import Select from "@mui/material/Select";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 //import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from "@mui/material/Typography";
@@ -32,6 +31,7 @@ import FormControl from "@mui/material/FormControl";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
+import Grid from "@mui/material/Unstable_Grid2";
 
 import { CardActionArea, CardActions } from "@mui/material";
 
@@ -140,47 +140,53 @@ function HomePage() {
       <Stack Stack direction={"row"} spacing={15}>
         {rows &&
           rows.map((row) => (
-            <Card
-              sx={{
-                maxWidth: 200,
-                backgroundColor: "rgb(188,188,188)",
-                minWidth: "300px",
-                maxWidth: "300px",
-              }}
+            <Grid
+              container
+              rowSpacing={1}
+              columnSpacing={{ xs: 1, sm: 2, md: 3 }} 
             >
-              <CardActionArea>
-                <CardMedia
-                  component="img"
-                  style={{
-                    minHeight: "250px",
-                    maxHeight: "250px",
-                  }}
-                  image={row.img}
-                  alt="green iguana"
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    {row.title}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Subject: {row.subject}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Rating: {row.rating}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Price: {row.price}$
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-              <CardActions>
-                <Button size="small" color="primary">
-                  <a href={`/courses/${row.id}`}>
-                    Click here to view Course page
-                  </a>
-                </Button>
-              </CardActions>
-            </Card>
+              <Card
+                sx={{
+                  maxWidth: 200,
+                  backgroundColor: "rgb(188,188,188)",
+                  minWidth: "300px",
+                  maxWidth: "300px",
+                }}
+              >
+                <CardActionArea>
+                  <CardMedia
+                    component="img"
+                    style={{
+                      minHeight: "250px",
+                      maxHeight: "250px",
+                    }}
+                    image={row.img}
+                    alt="green iguana"
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      {row.title}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Subject: {row.subject}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Rating: {row.rating}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Price: {row.price}$
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+                <CardActions>
+                  <Button size="small" color="primary">
+                    <a href={`/coursesg/${row.id}`}>
+                      Click here to view Course page
+                    </a>
+                  </Button>
+                </CardActions>
+              </Card>
+            </Grid>
           ))}
       </Stack>
     </>

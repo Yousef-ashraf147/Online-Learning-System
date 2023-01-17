@@ -18,6 +18,9 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
+import cookie from "react-cookies";
+import { useState, useEffect } from "react";
 function Copyright(props) {
   return (
     <Typography
@@ -37,9 +40,15 @@ function Copyright(props) {
 }
 
 const InstructorChangeEmail = () => {
+  const navigate = useNavigate();
+
+  const type = cookie.load("type");
   const [username, setUsername] = React.useState("");
   const [newemail, setNewEmail] = React.useState("");
   const [oldemail, setOldEmail] = React.useState("");
+  useEffect(() => {
+    if (type != "Instructor") navigate("../UnauthorizedAccess");
+  });
 
   function Submit() {
     axios

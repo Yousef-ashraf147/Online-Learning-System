@@ -22,18 +22,22 @@ import styles from "./mystyle.module.css";
 
 function Login() {
   return (
-    <div className="a">
-      <br />
-      <a href="LoginAdmin">Login as an admin</a>
-      <br />
-      <a href="LoginInstructor">Login as an instructor</a>
-      <br />
-      <a href="LoginTrainee">Login as a trainee</a>
-      <br />
-      <a href="LoginCorporateTrainee">Login as a Corporate trainee</a>
-      <br />
-      <a href="Guest">Continue as a guest</a>
-      <br />
+    <div style={{ display: "flex" }}>
+      <div style={{ marginLeft: "auto", marginRight: "auto" }}>
+        <div className="a">
+          <br />
+          <a href="LoginAdmin">Login as an admin</a>
+          <br />
+          <a href="LoginInstructor">Login as an instructor</a>
+          <br />
+          <a href="LoginTrainee">Login as a trainee</a>
+          <br />
+          <a href="LoginCorporateTrainee">Login as a Corporate trainee</a>
+          <br />
+          <a href="Guest">Continue as a guest</a>
+          <br />
+        </div>
+      </div>
     </div>
   );
 }

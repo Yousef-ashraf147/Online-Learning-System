@@ -18,6 +18,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import SuccessfullyCreated from "./SuccessfullyCreated.js";
 import { minWidth } from "@mui/system";
+import { useState, useEffect } from "react";
 
 function Copyright(props) {
   return (
@@ -38,6 +39,7 @@ function Copyright(props) {
 }
 
 const InstructorAddCourse = () => {
+  const type = cookie.load("type");
   const [title, setTitle] = React.useState("");
   const [subtitle, setSubtitle] = React.useState("");
   const [price, setPrice] = React.useState(0);
@@ -60,10 +62,15 @@ const InstructorAddCourse = () => {
 
   const [checked, setChecked] = React.useState(false);
   const [video, setVideo] = React.useState("");
+  const [img, setImg] = React.useState("");
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
+
+  useEffect(() => {
+    if (type != "Instructor") navigate("../UnauthorizedAccess");
+  });
 
   function Submit() {
     console.log(video);
@@ -89,6 +96,7 @@ const InstructorAddCourse = () => {
           subtitle2: subtitle2,
           video1: video1,
           video2: video2,
+          img: img,
         },
         {
           headers: {
@@ -126,6 +134,12 @@ const InstructorAddCourse = () => {
           direction={"column"}
           style={{ minWidth: "250px", maxWidth: "250px" }}
         >
+          <TextField
+            onChange={(e) => setImg(e.target.value)}
+            id="outlined-basic"
+            label="Course img embed"
+            variant="outlined"
+          />
           <TextField
             onChange={(e) => setTitle(e.target.value)}
             id="outlined-basic"

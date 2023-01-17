@@ -96,33 +96,37 @@ const LoginTrainee = () => {
   const navigate = useNavigate();
 
   return (
-    <Box
-      component="form"
-      sx={{
-        "& > :not(style)": { m: 1, width: "25ch" },
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      <Stack spacing={2} direction={"column"}>
-        <TextField
-          onChange={(e) => setUsername(e.target.value)}
-          id="outlined-basic"
-          label="Username"
-          variant="outlined"
-        />
-        <TextField
-          onChange={(e) => setPassword(e.target.value)}
-          id="filled-basic"
-          label="Password"
-          variant="outlined"
-        />
-        <a href="TraineeForgottenPasword">Forgot your password?</a>
-        <Button onClick={Submit} variant="contained">
-          Login
-        </Button>
-      </Stack>
-    </Box>
+    <div style={{ display: "flex" }}>
+      <div style={{ marginLeft: "auto", marginRight: "auto" }}>
+        <Box
+          component="form"
+          sx={{
+            "& > :not(style)": { m: 1, width: "25ch" },
+          }}
+          noValidate
+          autoComplete="off"
+        >
+          <Stack spacing={2} direction={"column"}>
+            <TextField
+              onChange={(e) => setUsername(e.target.value)}
+              id="outlined-basic"
+              label="Username"
+              variant="outlined"
+            />
+            <TextField
+              onChange={(e) => setPassword(e.target.value)}
+              id="filled-basic"
+              label="Password"
+              variant="outlined"
+            />
+            <a href="TraineeForgottenPasword">Forgot your password?</a>
+            <Button onClick={Submit} variant="contained">
+              Login
+            </Button>
+          </Stack>
+        </Box>
+      </div>
+    </div>
   );
 };
 

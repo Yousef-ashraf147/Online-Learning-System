@@ -11,8 +11,8 @@ function AdminHome() {
   }, []);
 
   return (
-    <div style={{ display: "flex" }}>     // Wrap Centered Component Here
-      <div style={{ marginLeft: "auto", marginRight: "auto" }}>  // Centered Component
+    <div style={{ display: "flex" }}>
+      <div style={{ marginLeft: "auto", marginRight: "auto" }}>
         <br />
         <a href="viewadmins">View Admins</a>
         <br />
@@ -27,6 +27,9 @@ function AdminHome() {
         <br />
         <br />
         <a href="AddDiscount">Add Course Promotion</a>
+        <br />
+        <br />
+        <a href="AdminViewReports">View reports</a>
       </div>
     </div>
   );

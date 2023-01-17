@@ -10,6 +10,8 @@ const CorpTraineeHome = () => {
           <a href="/CorpTraineeCourses">View all courses</a>
           <br />
           <a href="/CorpTraineePassword">Change my password</a>
+          <br />
+          <a href="/ViewMyreports">view my reports</a>
         </div>
       </div>
     </>

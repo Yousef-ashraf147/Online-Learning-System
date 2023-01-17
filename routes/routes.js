@@ -8,6 +8,7 @@ const RequestAccess = require("../models/RequestAccess");
 const CourseProgresses = require("../models/CourseProgresses");
 const RefundCourse = require("../models/RefundCourse");
 const Reports = require("../models/Reports");
+const { Report } = require("@material-ui/icons");
 
 router.get("/corpHome", async (req, res) => {
   if (req.session.isLoggedIn && req.session.userType == "Corp") {
@@ -652,12 +653,14 @@ router.post("/signupCorp", async (req, res) => {
   } else if (inputPassword.length == 0 || inputEmail.length == 0) {
     alert("the password or the username is empty");
   } else {
+    let first = [];
     if (bool == false) {
       var user = {
         username: inputUsername,
         password: inputPassword,
         Country: Country,
         email: inputEmail,
+        courses: first,
       };
       await client.db("corporate").collection("corporate").insertOne(user);
       alert("registration successful");
@@ -885,6 +888,35 @@ router.post("/BuyCourse", async (req, res) => {
   res.send(z + "");
 });
 
+router.post("/MarkAsResolved", async (req, res) => {
+  const reports = await Reports.find({}).exec();
+  const title = req.body.title;
+
+  var myReport = reports.filter((item) => item.title == title);
+  myReport.forEach((item) => {
+    console.log(item.resolved);
+
+    item.resolved = true;
+  });
+
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/test?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+
+  await client.connect();
+  var output = await client
+    .db("test")
+    .collection("reports")
+    .findOneAndUpdate({ title: { $eq: title } }, { $set: { resolved: true } });
+  console.log(output);
+  var z = "200";
+  res.send(z + "");
+});
+
 router.post("/rateCourse", async (req, res) => {
   const courses = await Courses.find({}).exec();
   const id = parseInt(req.body.id);
@@ -927,6 +959,7 @@ router.post("/addReport", async (req, res) => {
   const title = req.body.title;
   const username = req.body.username;
   const description = req.body.description;
+  const type = req.body.type;
 
   await Reports.create({
     id: id,
@@ -934,6 +967,8 @@ router.post("/addReport", async (req, res) => {
     username: username,
     description: description,
     resolved: false,
+    type: type,
+    seen: false,
   });
   res.send("200");
 });
@@ -941,7 +976,16 @@ router.post("/addReport", async (req, res) => {
 router.post("/getReports", async (req, res) => {
   const id = req.body.id;
 
-  const reports = await Reports.findOne({ id: id }).exec();
+  const reports = await Reports.find({ id: id }).exec();
+
+  if (reports) res.send(reports);
+  else res.send("no course");
+});
+
+router.post("/getMyReports", async (req, res) => {
+  const username = req.body.username;
+
+  const reports = await Reports.find({ username: username }).exec();
 
   if (reports) res.send(reports);
   else res.send("no course");
@@ -961,6 +1005,7 @@ router.post("/addCourse", async (req, res) => {
   const subtitle2 = req.body.subtitle2;
   const video1 = req.body.video1;
   const video2 = req.body.video2;
+  const img = req.body.img;
   const exercise = {
     questions,
     choices1,
@@ -997,6 +1042,7 @@ router.post("/addCourse", async (req, res) => {
       video: video,
       videos: videos,
       subtitles: subtitles,
+      img: img,
     });
     res.send("course created");
   } else {
@@ -1017,7 +1063,7 @@ router.post("/getProgress", async (req, res) => {
     { _id: 0, subtitles: 1 }
   ).exec();
   console.log(courseProgress);
-  courseProgress.subtitles.forEach((item) => {  
+  courseProgress.subtitles.forEach((item) => {
     if (item.isDone) done++;
   });
 
@@ -1174,6 +1220,39 @@ router.post("/GetSalary", async (req, res) => {
   if (koko.username == inputUsername);
   {
     var output = koko.money;
+    res.send("" + output);
+  }
+  /*output.forEach((item) => {
+        if (item.username == inputUsername) {
+          console.log(inputPassword);
+    
+          item.password = inputPassword;
+          alert("password changed");
+        }
+      });*/
+});
+
+router.post("/GetWallet", async (req, res) => {
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/Trainee?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  await client.connect();
+  const inputUsername = req.body.username;
+
+  /*  username: username,
+          Bio: newBio,
+          oldBio: oldBio,*/
+  var koko = await client
+    .db("Trainee")
+    .collection("Trainee")
+    .findOne({ username: inputUsername });
+  if (koko.username == inputUsername);
+  {
+    var output = koko.wallet;
     res.send("" + output);
   }
   /*output.forEach((item) => {
@@ -2583,6 +2662,11 @@ router.get("/getCourses", async (req, res) => {
   res.send(courses);
 });
 
+router.post("/getAllReports", async (req, res) => {
+  const reports = await Reports.find({}).exec();
+  res.send(reports);
+});
+
 router.post("/getCourseProgress", async (req, res) => {
   const { username, courseID } = req.body;
   const courseProgress = await CourseProgress.findOne(
@@ -3434,8 +3518,8 @@ router.post("/loginCorp", async (req, res) => {
   });
   if (bool) {
     req.session.isLoggedIn = true;
-    req.session.userType = "Corp";
-    res.redirect("/corpHome");
+    req.session.userType = "admin";
+    res.send(200 + "");
   } else alert("The password or the username is incorrect");
 });
 

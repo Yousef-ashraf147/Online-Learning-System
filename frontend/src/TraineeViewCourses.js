@@ -122,9 +122,9 @@ const TraineeViewCourses = () => {
               </CardActionArea>
               <CardActions>
                 <Button size="small" color="primary">
-                <a href={`/courses/${row.id}`} onClick={zabatny(row.id)}>
-                      Click here to view Course page
-                    </a>
+                  <a href={`/courses/${row.id}`} onClick={zabatny(row.id)}>
+                    Click here to view Course page
+                  </a>
                 </Button>
               </CardActions>
             </Card>

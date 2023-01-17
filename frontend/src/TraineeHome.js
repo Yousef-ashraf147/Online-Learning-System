@@ -39,6 +39,12 @@ const TraineeHome = () => {
         <a href="/TraineeRateInstructor">Rate an instructor</a>
         <br />
         <a href="/TraineeViewCourses">View enrolled courses</a>
+        <br></br>
+
+        <a href="/ViewMyReports">View my reports</a>
+        <br></br>
+        <a href="/TraineeViewWallet">View my balance</a>
+        <br></br>
       </div>
     </>
   );

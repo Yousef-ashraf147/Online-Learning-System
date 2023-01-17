@@ -58,11 +58,18 @@ import ViewCorporateTrainees from "./ViewCorporateTrainees";
 import ViewInstructors from "./ViewInstructors";
 import Promotion from "./PromotionPage";
 import AddDiscountMyCourse from "./AddDiscountMyCourse";
+import ViewMyReports from "./ViewMyReports";
+
+import Guestcourse from "./Guestcourse";
+import TraineeViewWallet from "./TraineeViewWallet";
+import AdminViewReports from "./AdminViewReports";
+
 function App() {
   return (
     <Router>
       <ResponsiveAppBar />
       <Routes>
+        <Route path="/HomePage" element={<HomePage />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/signupadmin" element={<SignupAdmin />} />
@@ -97,6 +104,8 @@ function App() {
         <Route path="/TraineeHome" element={<TraineeHome />} />
         <Route path="/InstructorHome" element={<InstructorHome />} />
         <Route path="/InstructorSalary" element={<InstructorSalary />} />
+        <Route path="/InstructorSalary" element={<InstructorSalary />} />
+        <Route path="/TraineeViewWallet" element={<TraineeViewWallet />} />
 
         <Route path="/ViewMyRatings" element={<ViewMyRatings />} />
         <Route path="/InstructorEditInfo" element={<InstructorEditInfo />} />
@@ -119,6 +128,7 @@ function App() {
           path="/TraineeRateInstructor"
           element={<TraineeRateInstructor />}
         />
+        <Route path="/ViewMyReports" element={<ViewMyReports />} />
 
         <Route
           path="/InstructorChangeEmail"
@@ -146,11 +156,14 @@ function App() {
         <Route path="/coursesc/:id" element={<CourseWithoutDetailsc />} />
         <Route path="/courses+/:id" element={<CourseDetails />} />
         <Route path="/coursesc+/:id" element={<CourseDetailsc />} />
+        <Route path="/coursesg/:id" element={<Guestcourse />} />
 
         <Route path="/exercise/:id" element={<SolveExercise />} />
         <Route path="/instructors/:id" element={<InstructorDetails />} />
 
         <Route path="/viewAdmins" element={<ViewAdmins />} />
+        <Route path="/AdminViewReports" element={<AdminViewReports />} />
+
         <Route path="/viewTrainees" element={<ViewIndividualTrainees />} />
         <Route
           path="/viewCorporateTrainees"

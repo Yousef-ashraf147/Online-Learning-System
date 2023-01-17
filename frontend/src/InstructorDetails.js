@@ -27,7 +27,7 @@ const InstructorDetails = () => {
       )
       .then((response) => {
         if (response.data == "200") {
-          alert("Course rated!");
+          alert("Instructor rated!");
         }
       })
       .catch((error) => {
