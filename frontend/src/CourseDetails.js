@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import * as React from "react";
 import Button from "@mui/material/Button";
+import Button1 from "@mui/joy/Button";
 //import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +14,9 @@ import ReactPlayer from "react-player";
 import TextField from "@mui/material/TextField";
 import { jsPDF } from "jspdf";
 import CourseProgress from "./CourseProgress";
+import Tabs from "@mui/joy/Tabs";
+import TabList from "@mui/joy/TabList";
+import Tab from "@mui/joy/Tab";
 
 const CourseDetails = () => {
   console.log(cookie.load("username"));
@@ -25,6 +29,13 @@ const CourseDetails = () => {
   const [video, setVideo] = React.useState();
   const [subtitle, setSubtitle] = React.useState();
   const [courseProgress, setCourseProgress] = React.useState();
+
+  //7gat el report
+  const [index, setIndex] = React.useState(0);
+  const [title, setTitle] = React.useState("");
+  const [description, setDescription] = React.useState("");
+  const [ShowReport, setShowReport] = React.useState(false);
+  const [reports, setReports] = React.useState([]);
 
   const handleExerciseClick = () => {
     navigate(`/exercise/${id}`);
@@ -39,6 +50,41 @@ const CourseDetails = () => {
       .then((response) => {
         alert(response.data);
       });
+  }
+
+  function AddReport() {
+    console.log(video);
+    if (title.length > 0 && description > 0) {
+      axios
+        .post(
+          "http://localhost:3000/addReport",
+          {
+            id: id,
+            title: title,
+            username: cookie.load("username"),
+            description: description,
+          },
+          {
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+          }
+        )
+        .then((response) => {
+          if (response.data == "200") {
+            alert("Report added!");
+          } else {
+            alert("Report fe moshkela!");
+          }
+        })
+        .catch((error) => {
+          if (error.response) {
+            console.log(error.response.data); // => the response payload
+          }
+        });
+    } else {
+      alert("fill all report fields");
+    }
   }
 
   function Submit() {
@@ -66,6 +112,28 @@ const CourseDetails = () => {
         }
       });
   }
+  useEffect(() => {
+    axios
+      .post(
+        "http://localhost:3000/getReports",
+        { id: id },
+
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      )
+      .then((response) => {
+        setReports(response.data);
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response.data); // => the response payload
+        }
+      });
+  }, [rating]);
+
   useEffect(() => {
     axios.post(
       "http://localhost:3000/AddCount",
@@ -295,6 +363,15 @@ const CourseDetails = () => {
           <Button variant="outlined" onClick={handleExerciseClick}>
             Solve Exercise
           </Button>
+          <br></br>
+
+          <Button variant="outlined" onClick={() => setShowReport(!ShowReport)}>
+            Reports
+          </Button>
+          <br></br>
+          {ShowReport ? <Button>hiiiii</Button> : <></>}
+          <br></br>
+
           <Rating
             name="simple-controlled"
             value={rating}

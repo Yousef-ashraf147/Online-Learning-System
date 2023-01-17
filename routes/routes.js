@@ -7,6 +7,7 @@ var nodemailer = require("nodemailer");
 const RequestAccess = require("../models/RequestAccess");
 const CourseProgresses = require("../models/CourseProgresses");
 const RefundCourse = require("../models/RefundCourse");
+const Reports = require("../models/Reports");
 
 router.get("/corpHome", async (req, res) => {
   if (req.session.isLoggedIn && req.session.userType == "Corp") {
@@ -916,6 +917,34 @@ router.post("/rateCourse", async (req, res) => {
   console.log(output);
   var z = "200";
   res.send(z + "");
+});
+
+router.post("/addReport", async (req, res) => {
+  const reports = await Reports.find({}).exec();
+  console.log(reports);
+
+  const id = req.body.id;
+  const title = req.body.title;
+  const username = req.body.username;
+  const description = req.body.description;
+
+  await Reports.create({
+    id: id,
+    title: title,
+    username: username,
+    description: description,
+    resolved: false,
+  });
+  res.send("200");
+});
+
+router.post("/getReports", async (req, res) => {
+  const id = req.body.id;
+
+  const reports = await Reports.findOne({ id: id }).exec();
+
+  if (reports) res.send(reports);
+  else res.send("no course");
 });
 
 router.post("/addCourse", async (req, res) => {
