@@ -12,8 +12,9 @@ import axios from "axios";
 import React from "react";
 
 const ViewRefundRequests = (props) => {
-  const { open, setOpen } = props;
+  const { username, open, setOpen } = props;
   const [refundRequests, setRefundRequests] = React.useState([]);
+  const [courses, setCourses] = React.useState([]);
   function handleClickOpen() {
     setOpen(true);
   }
@@ -22,9 +23,22 @@ const ViewRefundRequests = (props) => {
   }
 
   React.useEffect(() => {
-    axios.get("http://localhost:3000/getRefundRequests").then((response) => {
-      setRefundRequests(response.data);
-    });
+    axios
+      .post("http://localhost:3000/getRefundRequests", { username: username })
+      .then((response) => {
+        setRefundRequests(response.data);
+        const coursesIDs = [];
+        response.data.forEach((refundRequest) => {
+          coursesIDs.push(refundRequest.id);
+        });
+        axios
+          .post("http://localhost:3000/getCoursesByID", {
+            coursesIDs: coursesIDs,
+          })
+          .then((response) => {
+            setCourses(response.data.reverse());
+          });
+      });
   }, []);
 
   function acceptHandle(refundRequest) {
@@ -34,9 +48,22 @@ const ViewRefundRequests = (props) => {
       })
       .then((response) => {
         axios
-          .get("http://localhost:3000/getRefundRequests")
+          .post("http://localhost:3000/getRefundRequests", {
+            username: username,
+          })
           .then((response) => {
             setRefundRequests(response.data);
+            const coursesIDs = [];
+            response.data.forEach((refundRequest) => {
+              coursesIDs.push(refundRequest.id);
+            });
+            axios
+              .post("http://localhost:3000/getCoursesByID", {
+                coursesIDs: coursesIDs,
+              })
+              .then((response) => {
+                setCourses(response.data.reverse());
+              });
           });
       });
   }
@@ -48,9 +75,22 @@ const ViewRefundRequests = (props) => {
       })
       .then((response) => {
         axios
-          .get("http://localhost:3000/getRefundRequests")
+          .post("http://localhost:3000/getRefundRequests", {
+            username: username,
+          })
           .then((response) => {
             setRefundRequests(response.data);
+            const coursesIDs = [];
+            response.data.forEach((refundRequest) => {
+              coursesIDs.push(refundRequest.id);
+            });
+            axios
+              .post("http://localhost:3000/getCoursesByID", {
+                coursesIDs: coursesIDs,
+              })
+              .then((response) => {
+                setCourses(response.data.reverse());
+              });
           });
       });
   }
@@ -78,7 +118,7 @@ const ViewRefundRequests = (props) => {
             </Stack>
 
             {refundRequests &&
-              refundRequests.map((refundRequest) => (
+              refundRequests.map((refundRequest, idx) => (
                 <>
                   <span className="horizontal-line-thin"></span>
                   <Stack
@@ -90,21 +130,18 @@ const ViewRefundRequests = (props) => {
                       {refundRequest.username}
                     </Typography>
 
-                    <Stack direction={"row"} spacing={2}>
-                      <img
-                        src={refundRequest.courseImg}
-                        style={{
-                          boxShadow: "1px 1px",
-                          borderRadius: "10px",
-                          border: "solid rgb(170,170,170) 1px",
-                          width: "40%",
-                          height: "100%",
-                        }}
-                      />
+                    <Typography variant="h6" marginTop={"2%"}>
+                      {refundRequest.id}
+                    </Typography>
+
+                    {courses[idx] ? (
                       <Typography variant="h6" marginTop={"2%"}>
-                        {refundRequest.courseTitle}
+                        {courses[idx].title}
                       </Typography>
-                    </Stack>
+                    ) : (
+                      <></>
+                    )}
+
                     <div style={{ display: "flex", marginLeft: "auto" }}>
                       <Button
                         onClick={() => acceptHandle(refundRequest)}

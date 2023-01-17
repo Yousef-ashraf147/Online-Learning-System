@@ -18,21 +18,28 @@ const CourseDetails = () => {
   console.log(cookie.load("username"));
   const navigate = useNavigate();
 
-  const [open, setOpen] = React.useState(false);
-  const [show, setShow] = React.useState(false);
   const { id } = useParams();
   const [course, setCourse] = React.useState();
   const [rating, setRating] = React.useState(0);
-  const [notes, setNotes] = React.useState("yousef ashraf");
-  const [exercise, setExercise] = React.useState();
+  const [notes, setNotes] = React.useState("");
   const [video, setVideo] = React.useState();
   const [subtitle, setSubtitle] = React.useState();
   const [courseProgress, setCourseProgress] = React.useState();
-  var i = 0;
 
   const handleExerciseClick = () => {
     navigate(`/exercise/${id}`);
   };
+
+  function refundCourse() {
+    axios
+      .post("http://localhost:3000/refundCourse", {
+        id: id,
+        username: cookie.load("username"),
+      })
+      .then((response) => {
+        alert(response.data);
+      });
+  }
 
   function Submit() {
     axios
@@ -73,7 +80,6 @@ const CourseDetails = () => {
   }, [rating]);
 
   useEffect(() => {
-  
     axios
       .post("http://localhost:3000/GetCourse", {
         id: id,
@@ -198,8 +204,10 @@ const CourseDetails = () => {
             >
               Download Certificate
             </Button>
+          ) : courseProgress < 50 ? (
+            <Button onClick={refundCourse}>Refund Course</Button>
           ) : (
-            <> </>
+            <></>
           )}
           <p />
           <h2 style={{ fontSize: "2rem" }}>Course video:</h2>
