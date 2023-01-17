@@ -1,70 +1,81 @@
-
 # Project Title
 
 Online Learning System
 
-
-
 # Course
+
 Advanced Computer Lab CSEN 704
+
 # Motivation
-what motivated us to put much work in this course, is how useful it is .Because, we got to enhance our skills  with the MERN 
-stack and the usage of Github   
+
+what motivated us to put much work in this course, is how useful it is .Because, we got to enhance our skills with the MERN
+stack and the usage of Github
+
 # Build status
+
 • UI/UX needs improvement in some pages
 
 • Reports being seen instead of unseen isn't working
 
 • The discount feature should be improved. Because , it really doesn't countdown the number of days remaining till the discount ends
 
-
 # Overview
-This project was implement following the agile methodology. we had 3 sprints and We were given 2 weeks as a duration for each sprint. Each sprint had its fair share of functional and non-functional requirments. 
+
+This project was implement following the agile methodology. we had 3 sprints and We were given 2 weeks as a duration for each sprint. Each sprint had its fair share of functional and non-functional requirments.
 
 # Theme
-The theme of the project, is to create an online learning system in which users can enroll in courses and watch vides in those courses as well as solve excercises. 
+
+The theme of the project, is to create an online learning system in which users can enroll in courses and watch vides in those courses as well as solve excercises.
+
 # Objectives
-* Learn how to work as a team using Github.
-* Learn how to work with and master the MERN Stack.
-* Learn how to follow a set of requirments every sprint and Finishing them to build a software.
-* Learn how to build a project using Agile Methodology
+
+- Learn how to work as a team using Github.
+- Learn how to work with and master the MERN Stack.
+- Learn how to follow a set of requirments every sprint and Finishing them to build a software.
+- Learn how to build a project using Agile Methodology
 
 # Code Style
+
 Plain and Simple
+
 # Screenshots
+
 ## Home Page
+
 ![App Screenshot](https://www.linkpicture.com/q/HomePage.png)
 
 ## Login Page
+
 ![App Screenshot](https://www.linkpicture.com/q/LoginPage.png)
+
 ## Course Page
+
 ![App Screenshot](https://www.linkpicture.com/q/BO2.png)
-
-
 
 # Features
 
 the system has 5 different types of users :
 
-* Instructor
-* Corporate trainee
-* Individual trainee
-* Adminstrator 
-* Guest
+- Instructor
+- Corporate trainee
+- Individual trainee
+- Adminstrator
+- Guest
 
-## As an Admin i could 
+## As an Admin i could
 
-* mark reported problems as "resolved" or "pending"
-* refund an amount to a trainee to their wallet
-* add another administrator with a set username and password
-* add instructors and create their usernames and passwords
-* add corporate trainees and create their usernames and passwords
-* view course requests from corporate trainees
-* grant corporate trainees access to specific courses
-* view reported problems - should automaticalled be marked as "unseen"
-* set a promotion (% sale) for specific courses, several courses or all courses
+- mark reported problems as "resolved" or "pending"
+- refund an amount to a trainee to their wallet
+- add another administrator with a set username and password
+- add instructors and create their usernames and passwords
+- add corporate trainees and create their usernames and passwords
+- view course requests from corporate trainees
+- grant corporate trainees access to specific courses
+- view reported problems - should automaticalled be marked as "unseen"
+- set a promotion (% sale) for specific courses, several courses or all courses
 
 ## As an instructor i could
+
 • define a promotion for the course (% discount) and for how long
 
 • view his/her rating and reviews as an instructor
@@ -83,7 +94,7 @@ the system has 5 different types of users :
 
 • view the ratings and reviews on all his/her courses
 
-• view the amount of money owed per month  
+• view the amount of money owed per month
 
 • filter the courses given by him/her based on a subject or price
 
@@ -95,9 +106,8 @@ the system has 5 different types of users :
 
 • view and accept the contract which includes all the rights to the posted videos and materials as well as the % taken by the company on each video per registered trainee
 
-
-
 ## As an Individual Trainee I could
+
 • request a refund only if less than 50% of the course has been attended
 
 • view the amount available in their wallet from refunded courses
@@ -107,10 +117,10 @@ the system has 5 different types of users :
 • request access to a specific course they do not have access to
 
 ## As an Guest I could
+
 • sign up for an account as an individual trainee using a username, email, password, first name, last name and gender
 
 ## As an Individual Trainee/Instructor/Corporate Trainee I could
-
 
 • change his/her password
 
@@ -157,6 +167,7 @@ the system has 5 different types of users :
 • see a list of all the courses he/she is enrolled in on their profile
 
 ## As an Guest/Instructor/individual Trainee/Corporate Trainee I could
+
 • select their country
 
 • filter the courses based on a subject and/or rating
@@ -169,8 +180,8 @@ the system has 5 different types of users :
 
 • view a preview video of the course and the course outline before registering for it
 
-
 ## As an Guest/Instructor/individual Trainee I could
+
 • view and accept the website/ company refund/ payment policy while signing up
 
 • view the price of each course
@@ -179,58 +190,68 @@ the system has 5 different types of users :
 
 • choose a course from the results and view (but not open) its details including course subtitles, excercises , total hours of each subtitle, total hours of the course and price (including % discount if applicable) according to the country selected
 
-# How to use 
+# How to use
 
 ## Installation
 
 Run the following in the root folder of the project and in the Frontend folder to install needed packages
+
 ```bash
   npm i
 ```
-    
 
 ## How to use
 
-Run the following command in the  Frontend folder in a seperate termianl window
+Run the following command in the Frontend folder in a seperate termianl window
+
 ```bash
 cd frontend
 npm start
 ```
-Run the following command in the  Backend folder ("routes.js) in a seperate termianl window
+
+Run the following command in the Backend folder ("routes.js) in a seperate termianl window
+
 ```bash
 cd ../
 npm nodemon
 ```
 
-## Tools and Frameworks 
+## Tools and Frameworks
+
 We used MERN Stack (MongoDB, Express, React, Node) to implement our Website.
 
 ### For the frontend :
 
-#### React.js : 
+#### React.js :
+
 React.js, more commonly known as React, is a free, open-source JavaScript library. It works best to build user interfaces by combining sections of code (components) into full websites. React can be used to create single-page or mobile applications as a foundation.
 
 #### MUI :
+
 MUI is a React User Interface Library. MUI is a comprehensive, flexible, and easily available library of foundational and advanced components that allows you to create your own design system and construct React apps more quickly.
 
 ### For the DB and the Backend :
 
 #### Express.js :
+
 Express.js or simply Express, is a back end web application framework for Node.js, released as free and open-source software under the MIT License. It is designed for building web applications and APIs. It has been called the de facto standard server framework for Node.js.
 
-#### Node.js : 
+#### Node.js :
+
 Node.js is an open-source, cross-platform, back-end JavaScript runtime environment that runs on the V8 engine and executes JavaScript code outside a web browser.
 
-#### Express.js : 
+#### Express.js :
+
 Express.js or simply Express, is a back end web application framework for Node.js, released as free and open-source software under the MIT License. It is designed for building web applications and APIs. It has been called the de facto standard server framework for Node.js.
 
 #### MongoDB:
-MongoDB is a source-available cross-platform document-oriented database program. Classified as a NoSQL database program, MongoDB uses JSON-like documents with optional schemas. MongoDB is developed by MongoDB Inc. and licensed under the Server Side Public License.
 
+MongoDB is a source-available cross-platform document-oriented database program. Classified as a NoSQL database program, MongoDB uses JSON-like documents with optional schemas. MongoDB is developed by MongoDB Inc. and licensed under the Server Side Public License.
 
 # Usage
 
 ### HomePage
+
 The first page of the Website. it shows all available courses as well as filtering of the courses .
 
 ### Login
@@ -239,27 +260,26 @@ This page gives option as to which type of user login to choose
 
 ### SignUp
 
-This page gives option as to which type of user to signup for using ur data 
+This page gives option as to which type of user to signup for using ur data
 
 ## InstructorAddcourse
-A page that Contains a form to add a new course 
 
-## AdminViewReports 
-A page that admins can view reports and mark them as resolved or not 
+A page that Contains a form to add a new course
 
-## BuyCourse 
+## AdminViewReports
 
-Show a form to be filled with credit card details in order to buy the course 
+A page that admins can view reports and mark them as resolved or not
+
+## BuyCourse
+
+Show a form to be filled with credit card details in order to buy the course
 
 ## Exercise
+
 Page where the user can solve an exercise
 
-
-
-
-
-
 ## API Reference
+
 ```javascript
 router.get("/corpHome", async (req, res)
 
@@ -340,33 +360,10 @@ router.put("/addCourseToCopTrainee", async (req, res)
 
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # Code Examples
 
 ### Course Model
+
 ```javascript
 const mongoose = require("mongoose");
 const CoursesSchema = new mongoose.Schema({
@@ -439,11 +436,10 @@ const CoursesSchema = new mongoose.Schema({
 
 const course = mongoose.model("Courses", CoursesSchema);
 module.exports = course;
-
-
-
 ```
+
 ### InstructorAddCourse Page
+
 ```javascript
 import * as React from "react";
 import Button from "@mui/material/Button";
@@ -478,8 +474,7 @@ function Copyright(props) {
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
         Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
+      </Link> {new Date().getFullYear()}
       {"."}
     </Typography>
   );
@@ -705,26 +700,21 @@ const InstructorAddCourse = () => {
 };
 
 export default InstructorAddCourse;
-
-
-
-
 ```
-
-
-
 
 # Contribution
 
 you can contribute to our project using this link :
 https://github.com/Yousef-ashraf147/Milestone1/tree/Milestone3
 
-
 # License
+
 The software is open source under the ISC License.
 
 https://opensource.org/licenses/ISC
+
 # Credits
+
 https://mui.com/
 
 https://stackoverflow.com
@@ -732,7 +722,6 @@ https://stackoverflow.com
 https://www.geeksforgeeks.org
 
 https://www.w3schools.com/
-
 
 # Contact
 
@@ -742,6 +731,6 @@ Youssef Zaky --> Email:(Youssef.zaky@student.guc.edu.eg)
 
 Zeyad Elkott --> Email : (zeyad.elkott@student.guc.edu.eg)
 
-Karim Elsaeed --> Email:(karim.elsaeed@student.guc.edu.eg)
--
+## Karim Elsaeed --> Email:(karim.elsaeed@student.guc.edu.eg)
+
 Ziad Said --> Email:(ziad.said@student.guc.edu.eg)
