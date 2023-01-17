@@ -80,6 +80,9 @@ function ResponsiveAppBar() {
   );
 
   const username = cookie.load("username");
+  console.log("the responsive bar see username: " + cookie.load("username"));
+
+  const type = cookie.load("type");
 
   console.log(username);
   return (
@@ -87,24 +90,100 @@ function ResponsiveAppBar() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <SchoolIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            EduMe
-          </Typography>
 
+          {type == "" ? (
+            <Typography
+              variant="h6"
+              noWrap
+              component="a"
+              href="/HomePage"
+              sx={{
+                mr: 2,
+                display: { xs: "none", md: "flex" },
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
+              EduMe
+            </Typography>
+          ) : type == "Trainee" ? (
+            <Typography
+              variant="h6"
+              noWrap
+              component="a"
+              href="/TraineeHome"
+              sx={{
+                mr: 2,
+                display: { xs: "none", md: "flex" },
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
+              EduMe
+            </Typography>
+          ) : type == "Instructor" ? (
+            <Typography
+              variant="h6"
+              noWrap
+              component="a"
+              href="/InstructorHome"
+              sx={{
+                mr: 2,
+                display: { xs: "none", md: "flex" },
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
+              EduMe
+            </Typography>
+          ) : type == "admin" ? (
+            <Typography
+              variant="h6"
+              noWrap
+              component="a"
+              href="/AdminHome"
+              sx={{
+                mr: 2,
+                display: { xs: "none", md: "flex" },
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
+              EduMe
+            </Typography>
+          ) : type == "corporate" ? (
+            <Typography
+              variant="h6"
+              noWrap
+              component="a"
+              href="/CorpTraineeHome"
+              sx={{
+                mr: 2,
+                display: { xs: "none", md: "flex" },
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
+              EduMe
+            </Typography>
+          ) : (
+            <></>
+          )}
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"

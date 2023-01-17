@@ -1,0 +1,297 @@
+// working ???
+
+int AnaPin = A0;  // Analog pin A3 is specified here
+int value = 0;    // variable declared to store the value read
+
+int enableA = 7;  //fl
+int enableB = 2;  //fr
+int pinA1 = 5;
+int pinA2 = 6;
+int pinB1 = 4;
+int pinB2 = 3;
+
+int enableC = 13;  // br
+int enableD = 8;   // bl
+int pinC1 = 12;
+int pinC2 = 11;
+int pinD1 = 9;
+int pinD2 = 10;
+int leftIR = 24;
+int rightIR = 22;
+int led = 44;
+
+#include <Arduino_FreeRTOS.h>
+
+
+int buzzer = 42;
+void motorOn(int enable, int val) {
+  analogWrite(enable, val);
+}
+
+
+void motorBOn() {
+  digitalWrite(enableB, HIGH);
+}
+//disable motors
+void motorAOff() {
+  digitalWrite(enableB, LOW);
+}
+void motorBOff() {
+
+  digitalWrite(enableA, LOW);
+}
+
+void motorAForward() {
+  digitalWrite(pinA1, HIGH);
+  digitalWrite(pinA2, LOW);
+}
+void motorABackward() {
+  digitalWrite(pinA1, LOW);
+  digitalWrite(pinA2, HIGH);
+}
+
+void motorBForward()
+
+{
+
+  digitalWrite(pinB1, HIGH);
+
+  digitalWrite(pinB2, LOW);
+}
+
+void motorBBackward() {
+
+  digitalWrite(pinB1, LOW);
+  digitalWrite(pinB2, HIGH);
+}
+
+
+void motorACoast() {
+
+  digitalWrite(pinA1, LOW);
+
+  digitalWrite(pinA2, LOW);
+}
+
+void motorABrake() {
+
+  digitalWrite(pinA1, HIGH);
+  digitalWrite(pinA2, HIGH);
+}
+
+void motorBCoast() {
+
+  digitalWrite(pinB1, LOW);
+
+  digitalWrite(pinB2, LOW);
+}
+
+void motorBBrake() {
+
+  digitalWrite(pinB1, HIGH);
+
+  digitalWrite(pinB2, HIGH);
+}
+
+
+void enableMotors() {
+
+  // motorAOn();
+
+  motorBOn();
+}
+
+void disableMotors() {
+
+  motorAOff();
+
+  motorBOff();
+}
+void forward() {
+  digitalWrite(pinA1, LOW);
+  digitalWrite(pinA2, HIGH);
+  digitalWrite(pinB1, LOW);
+  digitalWrite(pinB2, HIGH);
+  digitalWrite(pinC1, LOW);
+  digitalWrite(pinC2, HIGH);
+  digitalWrite(pinD1, LOW);
+  digitalWrite(pinD2, HIGH);
+  analogWrite(enableA, 70);
+  analogWrite(enableB, 70);
+  analogWrite(enableC, 70);
+  analogWrite(enableD, 70);
+}
+
+void backward() {
+
+  digitalWrite(pinA1, LOW);
+  digitalWrite(pinA2, HIGH);
+  digitalWrite(pinB1, LOW);
+  digitalWrite(pinB2, HIGH);
+  digitalWrite(pinC1, LOW);
+  digitalWrite(pinC2, HIGH);
+  digitalWrite(pinD1, LOW);
+  digitalWrite(pinD2, HIGH);
+  analogWrite(enableA, 120);
+  analogWrite(enableB, 120);
+  analogWrite(enableC, 250);
+  analogWrite(enableD, 120);
+}
+
+void turnLeft() {
+
+
+  digitalWrite(pinA1, HIGH);
+  digitalWrite(pinA2, LOW);
+  analogWrite(enableA, 80);
+  analogWrite(enableB, 200);
+
+  analogWrite(enableC, 0);
+  analogWrite(enableD, 100);
+}
+void turnRight() {
+
+  digitalWrite(pinB1, HIGH);
+  digitalWrite(pinB2, LOW);
+  analogWrite(enableB, 80);
+  analogWrite(enableA, 230);
+  analogWrite(enableC, 100);
+  analogWrite(enableD, 0);
+}
+
+
+void coast(int time) {
+  motorACoast();
+  motorBCoast();
+  delay(time);
+}
+
+
+void brake(int time) {
+  motorABrake();
+  motorBBrake();
+  delay(time);
+}
+
+
+void checkTurn() {
+
+
+  int x = digitalRead(leftIR);
+
+  int y = digitalRead(rightIR);
+
+  if (x == y) {
+    motorOn(enableA, 85);
+    motorOn(enableB, 85);
+    motorOn(enableC, 85);
+    motorOn(enableD, 85);
+    digitalWrite(buzzer, LOW);
+  } else if (x == LOW) {
+    turnRight();
+
+    digitalWrite(buzzer, HIGH);
+  } else {
+    turnLeft();
+
+    digitalWrite(buzzer, HIGH);
+  }
+}
+
+
+void checkTurnTask(void* pvParameters) {
+  // TickType_t xLastWakeTime;
+  // const TickType_t xFrequency = pdMS_TO_TICKS(100);
+  // xLastWakeTime = xTaskGetTickCount();
+  while (1) {
+
+
+    int x = digitalRead(leftIR);
+
+    int y = digitalRead(rightIR);
+
+    if (x == y) {
+      forward();
+      digitalWrite(buzzer, LOW);
+    } else if (x == LOW) {
+      digitalWrite(buzzer, HIGH);
+      turnRight();
+      delay(300);
+
+    } else {
+      digitalWrite(buzzer, HIGH);
+      turnLeft();
+      delay(300);
+    }
+    // vTaskDelayUntil(&xLastWakeTime, xFrequency);
+  }
+}
+void adjustLightTask(void* pvParameters) {
+  TickType_t xLastWakeTime;
+  const TickType_t xFrequency = pdMS_TO_TICKS(100);
+  xLastWakeTime = xTaskGetTickCount();
+  while (1) {
+
+    value = analogRead(AnaPin);
+    analogWrite(led, value / 4);
+    vTaskDelayUntil(&xLastWakeTime, xFrequency);
+  }
+}
+
+void setup() {
+
+
+  Serial.begin(4800);
+  pinMode(enableA, OUTPUT);
+  pinMode(enableB, OUTPUT);
+  pinMode(enableC, OUTPUT);
+  pinMode(enableD, OUTPUT);
+  pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(pinA1, OUTPUT);
+  pinMode(pinA2, OUTPUT);
+  pinMode(pinB1, OUTPUT);
+  pinMode(pinB2, OUTPUT);
+  pinMode(pinC1, OUTPUT);
+  pinMode(pinC2, OUTPUT);
+  pinMode(pinD1, OUTPUT);
+  pinMode(pinD2, OUTPUT);
+  pinMode(leftIR, INPUT);
+  pinMode(rightIR, INPUT);
+  pinMode(buzzer, OUTPUT);
+
+  digitalWrite(pinA1, LOW);
+  digitalWrite(pinA2, HIGH);
+  digitalWrite(pinB1, LOW);
+  digitalWrite(pinB2, HIGH);
+  digitalWrite(pinC1, LOW);
+  digitalWrite(pinC2, HIGH);
+  digitalWrite(pinD1, LOW);
+  digitalWrite(pinD2, HIGH);
+  // motorOn(enableA, 150);
+  // motorOn(enableB, 150);
+  // motorOn(enableC, 150);
+  // motorOn(enableD, 150);
+
+  xTaskCreate(checkTurnTask, "Task 1", 256, NULL, 1, NULL);
+  vTaskStartScheduler();
+}
+
+void loop() {
+  // turnRight();
+
+  // analogWrite(enableD, 255);
+  // delay(3000);
+  // analogWrite(enableA, 0);
+  // analogWrite(enableB, 255);
+  // delay(3000);
+  // analogWrite(enableB, 0);
+  // analogWrite(enableC, 255);
+
+  // delay(3000);
+  // analogWrite(enableC, 0);
+
+  // analogWrite(enableD, 255);
+  // delay(3000);
+
+  // analogWrite(enableD, 0);
+}

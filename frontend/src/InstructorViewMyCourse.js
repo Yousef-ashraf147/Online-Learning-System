@@ -179,7 +179,9 @@ const InstructorViewMyCourse = () => {
                   <TableCell align="left">{row.instructor}</TableCell>
                   <TableCell align="left">{row.summary}</TableCell>
                   <TableCell align="left">
-                    <a href={row.link}> Click here to view Course page</a>
+                    <a href={`/courses+/${row.id}`}>
+                      Click here to view Course page
+                    </a>
                   </TableCell>
                 </TableRow>
               ))}

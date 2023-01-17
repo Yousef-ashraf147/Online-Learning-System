@@ -61,11 +61,7 @@ const CourseWithoutDetails = () => {
 
   function Register(x, y) {
     cookie.save("Courseid", id, { path: "/" });
-    cookie.save(
-      "price",
-      Math.round((x * convertCurrency + Number.EPSILON) * 100) / 100,
-      { path: "/" }
-    );
+    cookie.save("price", x, { path: "/" });
     cookie.save("instructorname", y, { path: "/" });
     navigate("/BuyCourse");
   }
@@ -90,20 +86,14 @@ const CourseWithoutDetails = () => {
           <div>
             <h1 style={{ fontSize: "2rem" }}> {course.title} Course page</h1>
             <br />
-            {type == "corporate" ? (
-              <Button variant="contained" onClick={requestAccess}>
-                Request Access
-              </Button>
-            ) : (
-              <Button
-                variant="contained"
-                onClick={() => {
-                  Register(course.price, course.instructor);
-                }}
-              >
-                Register for course
-              </Button>
-            )}
+            <Button
+              variant="contained"
+              onClick={() => {
+                Register(course.price, course.instructor);
+              }}
+            >
+              Register for course
+            </Button>
             <hr style={{ color: "black" }}></hr>
             <p style={{ fontSize: "1.2rem" }}>
               <img src={course.img} width="250" height="400"></img>
@@ -120,7 +110,9 @@ const CourseWithoutDetails = () => {
                   </Typography>
                   <Typography>{course.price * course.discount} $</Typography>
                   {course.discountDuration ? (
-                    <Typography>{ "Discount Ends In " +course.discountDuration + " Days"}</Typography>
+                    <Typography>
+                      {"Discount Ends In " + course.discountDuration + " Days"}
+                    </Typography>
                   ) : (
                     <></>
                   )}
@@ -135,7 +127,6 @@ const CourseWithoutDetails = () => {
               rating : {course.rating} out of 5 <br></br>
               Summary : {course.summary}.
             </p>
-
             <h2 style={{ fontSize: "2rem" }}>Course preview video:</h2>
             <div>
               <iframe

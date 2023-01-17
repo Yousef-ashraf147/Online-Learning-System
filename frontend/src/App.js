@@ -64,6 +64,7 @@ function App() {
       <ResponsiveAppBar />
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/HomePage" element={<HomePage />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/signupadmin" element={<SignupAdmin />} />
         <Route path="/signupInstruc" element={<SignupInstruc />} />
@@ -151,7 +152,10 @@ function App() {
         <Route path="/instructors/:id" element={<InstructorDetails />} />
 
         <Route path="/viewAdmins" element={<ViewAdmins />} />
-        <Route path="/viewTrainees" element={<ViewIndividualTrainees />} />
+        <Route
+          path="/ViewIndividualTrainees"
+          element={<ViewIndividualTrainees />}
+        />
         <Route
           path="/viewCorporateTrainees"
           element={<ViewCorporateTrainees />}

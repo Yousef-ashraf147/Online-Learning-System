@@ -49,6 +49,8 @@ function HomePage() {
   const convertCurrency = cookie.load("convertCurrency");
   const currencySymbol = cookie.load("currencySymbol");
   console.log(cookie.load("type"));
+  console.log(cookie.load("username"));
+
   useEffect(() => {
     axios
       .get("http://localhost:3000/traineeHome")

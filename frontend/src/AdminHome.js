@@ -40,6 +40,9 @@ function AdminHome() {
       <a href="viewcorporatetrainees">View Corporate Trainees</a>
       <br />
       <br />
+      <a href="ViewIndividualTrainees">View Trainees</a>
+      <br />
+      <br />
       <a href="AddDiscount">Add Course Promotion</a>
     </div>
   );

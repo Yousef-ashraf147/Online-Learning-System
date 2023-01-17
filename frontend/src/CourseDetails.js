@@ -73,7 +73,6 @@ const CourseDetails = () => {
   }, [rating]);
 
   useEffect(() => {
-  
     axios
       .post("http://localhost:3000/GetCourse", {
         id: id,
@@ -140,6 +139,20 @@ const CourseDetails = () => {
     doc.save(pdfName + ".pdf");
   };
 
+  function requestRefund(x) {
+    cookie.save("Courseid", id, { path: "/" });
+    console.log(x);
+    axios
+      .post("http://localhost:3000/requestAccess", {
+        id: id,
+        username: cookie.load("username"),
+        price: x,
+      })
+      .then((response) => {
+        alert("Request sent successfully");
+      });
+  }
+
   return (
     <>
       {course ? (
@@ -200,6 +213,16 @@ const CourseDetails = () => {
             </Button>
           ) : (
             <> </>
+          )}
+          {courseProgress <= 50 ? (
+            <Button
+              variant="contained"
+              onClick={() => requestRefund(course.price)}
+            >
+              Request refund
+            </Button>
+          ) : (
+            <></>
           )}
           <p />
           <h2 style={{ fontSize: "2rem" }}>Course video:</h2>

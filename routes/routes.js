@@ -6,6 +6,7 @@ const Courses = require("../models/Courses");
 var nodemailer = require("nodemailer");
 const RequestAccess = require("../models/RequestAccess");
 const CourseProgresses = require("../models/CourseProgresses");
+const RequestRefund = require("../models/RequestRefund");
 
 router.get("/corpHome", async (req, res) => {
   if (req.session.isLoggedIn && req.session.userType == "Corp") {
@@ -176,6 +177,25 @@ router.get("/getInstructors", async (req, res) => {
     .toArray();
   const instructors = output;
   res.send(instructors);
+});
+
+router.get("/getIndividualTrainees", async (req, res) => {
+  var { MongoClient } = require("mongodb");
+  var url =
+    "mongodb+srv://yousef69420:Yousef10white@Cluster0.atly3.mongodb.net/Trainee?retryWrites=true&w=majority";
+  var client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  await client.connect();
+
+  var output = await client
+    .db("Trainee")
+    .collection("Trainee")
+    .find()
+    .toArray();
+  const Trainee = output;
+  res.send(Trainee);
 });
 
 router.get("/traineeHome", async (req, res) => {
@@ -1750,6 +1770,16 @@ router.post("/addingInstructor", async (req, res) => {
 });
 
 router.post("/requestAccess", async (req, res) => {
+  const { id, username } = req.body;
+
+  await RequestAccess.create({
+    id: id,
+    username: username,
+  });
+  res.send("Request sent successfully");
+});
+
+router.post("/requestRefund", async (req, res) => {
   const { id, username } = req.body;
 
   await RequestAccess.create({

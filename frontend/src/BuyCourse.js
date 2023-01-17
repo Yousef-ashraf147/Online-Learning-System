@@ -55,6 +55,8 @@ const BuyCourse = () => {
       alert("Please review your card number!");
     } else if (cvv.length < 3) {
       alert("The cvv should be 3 numbers atleast!");
+    } else if (expiry.length < 5 || expiry.length > 5) {
+      alert("The expiry date should be in MM/YY format!");
     }
 
     //lw dost register w dafa3t 7otly el id bta3 el course fe (array registered) bta3 el trainee w zawed floos el instructor
@@ -120,7 +122,12 @@ const BuyCourse = () => {
           onChange={(e) => setNumber(e.target.value)}
           id="filled-basic"
           label="Card number"
-          placeholder="0000 0000 0000"
+          placeholder="0000 0000 0000 0000"
+          onInput={(e) => {
+            e.target.value = Math.max(0, parseInt(e.target.value))
+              .toString()
+              .slice(0, 16);
+          }}
           variant="outlined"
           type={""}
         />
@@ -146,7 +153,10 @@ const BuyCourse = () => {
           variant="outlined"
           placeholder="MM/YY"
         />
-        <h3>price to be paid is {cookie.load("price")}</h3>
+        <h3>
+          price to be paid is{" "}
+          {cookie.load("price") * cookie.load("convertCurrency")}
+        </h3>
         <Button variant="contained" onClick={Buy}>
           Buy Course
         </Button>

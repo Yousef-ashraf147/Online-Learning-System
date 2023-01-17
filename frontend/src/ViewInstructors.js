@@ -25,7 +25,7 @@ const ViewInstructors = (props) => {
 
   const add = () => {
     axios
-      .post("http://localhost:3000/addInstructor", {
+      .post("http://localhost:3000/addingInstructor", {
         username: username,
         password: password,
       })
