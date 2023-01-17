@@ -25,7 +25,7 @@ const ViewCorporateTrainees = (props) => {
 
   const add = () => {
     axios
-      .post("http://localhost:3000/addCopTrainee", {
+      .post("http://localhost:3000/addingCorpTrainee", {
         username: username,
         password: password,
       })
@@ -77,9 +77,7 @@ const ViewCorporateTrainees = (props) => {
             </Stack>
           </DialogContent>
           <DialogActions>
-            <Button onClick={add} href="/admin">
-              Add Corporate Trainee
-            </Button>
+            <Button onClick={add}>Add Corporate Trainee</Button>
           </DialogActions>
         </Dialog>
       </Stack>

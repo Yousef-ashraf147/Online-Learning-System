@@ -78,11 +78,7 @@ const ViewIndividualTrainees = () => {
               />
             </Stack>
           </DialogContent>
-          <DialogActions>
-            <Button onClick={add} href="/admin">
-              Add Individual Trainee
-            </Button>
-          </DialogActions>
+          <DialogActions></DialogActions>
         </Dialog>
       </Stack>
       <Users3 users={users} />

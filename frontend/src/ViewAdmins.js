@@ -24,7 +24,7 @@ const ViewAdmins = (props) => {
 
   const add = () => {
     axios
-      .post("http://localhost:3000/addAdmin", {
+      .post("http://localhost:3000/addingAdmins", {
         username: username,
         password: password,
       })
@@ -76,9 +76,7 @@ const ViewAdmins = (props) => {
             </Stack>
           </DialogContent>
           <DialogActions>
-            <Button onClick={add} href="/admin">
-              Add Admin
-            </Button>
+            <Button onClick={add}>Add Admin</Button>
           </DialogActions>
         </Dialog>
       </Stack>
