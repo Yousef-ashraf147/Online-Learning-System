@@ -38,7 +38,7 @@ const theme = createTheme({
   },
 });
 
-const pages = ["Products", "Pricing", "Blog"];
+const pages = [];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function ResponsiveAppBar() {
