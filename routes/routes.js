@@ -1017,7 +1017,7 @@ router.post("/getProgress", async (req, res) => {
     { _id: 0, subtitles: 1 }
   ).exec();
   console.log(courseProgress);
-  courseProgress.subtitles.forEach((item) => {
+  courseProgress.subtitles.forEach((item) => {  
     if (item.isDone) done++;
   });
 

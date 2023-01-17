@@ -18,6 +18,20 @@ import Tabs from "@mui/joy/Tabs";
 import TabList from "@mui/joy/TabList";
 import Tab from "@mui/joy/Tab";
 
+import BoxT from "@mui/joy/Box";
+
+import FormControl from "@mui/joy/FormControl";
+import FormLabel from "@mui/joy/FormLabel";
+import Textarea from "@mui/joy/Textarea";
+import IconButton from "@mui/joy/IconButton";
+import Menu from "@mui/joy/Menu";
+import MenuItem from "@mui/joy/MenuItem";
+import ListItemDecorator from "@mui/joy/ListItemDecorator";
+import FormatBold from "@mui/icons-material/FormatBold";
+import FormatItalic from "@mui/icons-material/FormatItalic";
+import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
+import Check from "@mui/icons-material/Check";
+
 const CourseDetails = () => {
   console.log(cookie.load("username"));
   const navigate = useNavigate();
@@ -36,6 +50,10 @@ const CourseDetails = () => {
   const [description, setDescription] = React.useState("");
   const [ShowReport, setShowReport] = React.useState(false);
   const [reports, setReports] = React.useState([]);
+
+  const [italic, setItalic] = React.useState(false);
+  const [fontWeight, setFontWeight] = React.useState("normal");
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleExerciseClick = () => {
     navigate(`/exercise/${id}`);
@@ -360,16 +378,58 @@ const CourseDetails = () => {
             </Box>
           </Stack>
 
-          <Button variant="outlined" onClick={handleExerciseClick}>
+          <Button
+            variant="contained"
+            color="inherit"
+            onClick={handleExerciseClick}
+          >
             Solve Exercise
           </Button>
           <br></br>
+          <br></br>
 
-          <Button variant="outlined" onClick={() => setShowReport(!ShowReport)}>
+          <Button
+            variant="contained"
+            color="inherit"
+            onClick={() => setShowReport(!ShowReport)}
+          >
             Reports
           </Button>
+          <Button
+            variant="contained"
+            color="inherit"
+            onClick={() => setShowReport(!ShowReport)}
+          >
+            Reviews
+          </Button>
+
           <br></br>
-          {ShowReport ? <Button>hiiiii</Button> : <></>}
+          {ShowReport ? (
+            <Stack
+              spacing={1}
+              direction={"column"}
+              style={{ minWidth: "250px", maxWidth: "250px" }}
+            >
+              <TextField
+                style={{ minWidth: "200px", maxWidth: "200px" }}
+                onChange={(e) => setTitle(e.target.value)}
+                id="outlined-basic"
+                label="Report title"
+                variant="outlined"
+              />
+              <TextField
+                style={{ width: "250px" }}
+                onChange={(e) => setDescription(e.target.value)}
+                id="outlined-basic"
+                label="Description..."
+                multiline
+                variant="outlined"
+              />
+              <Button onClick={() => AddReport}>Send Report</Button>
+            </Stack>
+          ) : (
+            <></>
+          )}
           <br></br>
 
           <Rating
