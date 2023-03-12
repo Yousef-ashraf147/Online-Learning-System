@@ -725,12 +725,8 @@ https://www.w3schools.com/
 
 # Contact
 
-Members of the projects :
+project by :
 
 Youssef Zaky --> Email:(Youssef.zaky@student.guc.edu.eg)
 
-Zeyad Elkott --> Email : (zeyad.elkott@student.guc.edu.eg)
 
-## Karim Elsaeed --> Email:(karim.elsaeed@student.guc.edu.eg)
-
-Ziad Said --> Email:(ziad.said@student.guc.edu.eg)
