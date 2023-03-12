@@ -8,7 +8,7 @@ Advanced Computer Lab CSEN 704
 
 # Motivation
 
-what motivated us to put much work in this course, is how useful it is .Because, we got to enhance our skills with the MERN
+what motivated me to put much work in this course, is how useful it is .Because, I got to enhance my skills with the MERN
 stack and the usage of Github
 
 # Build status
