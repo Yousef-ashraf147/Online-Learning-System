@@ -21,7 +21,7 @@ stack and the usage of Github
 
 # Overview
 
-This project was implement following the agile methodology. we had 3 sprints and We were given 2 weeks as a duration for each sprint. Each sprint had its fair share of functional and non-functional requirments.
+This project was implement following the agile methodology. I had 3 sprints and I was given 2 weeks as a duration for each sprint. Each sprint had its fair share of functional and non-functional requirments.
 
 # Theme
 
