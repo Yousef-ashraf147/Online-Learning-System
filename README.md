@@ -702,7 +702,7 @@ export default InstructorAddCourse;
 
 # Contribution
 
-you can contribute to our project using this link :
+you can contribute to my project using this link :
 https://github.com/Yousef-ashraf147/Milestone1/tree/Milestone3
 
 # License
